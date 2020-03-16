@@ -1,0 +1,29 @@
+<table border="1">
+    <thead>
+    <th>idPost</th>
+    <th>idu</th>
+    <th>description</th>
+    <th>source</th>
+    <th>dateCreation</th>
+
+    <th>Modifier</th>
+    <th>Supprimer</th>
+    </thead>
+    <tbody>
+    {% for row in result %}
+        <tr>
+            <td>{{ row.idPost }}</td>
+            <td>{{ row.idu }}</td>
+            <td>{{ row.description }}</td>
+            <td>{{ row.source }}</td>
+            <td>{{ row.dateCreation|date("m/d/Y") }}</td>
+
+            <td><a href="{{path('update_post',{'id':row.idPost})}}">Modifier </a></td>
+            <td><a href="{{path('delete_post',{'id':row.idPost})}}">Supprimer </a></td>
+            <td><a href="{{path('add_comment',{'id':row.idPost})}}">Add comment </a></td>
+            <td><a href="{{path('get_comments',{'id':row.idPost})}}">Display comments </a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<a href="{{ path('add_post') }}">Ajouter Post</a>

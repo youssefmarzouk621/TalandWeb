@@ -1,0 +1,35 @@
+posts_homepage:
+    path:     /
+    defaults: { _controller: PostsBundle:Default:index }
+
+add_post:
+    path:     /AddPost
+    defaults: { _controller: Pos tsBundle:Posts:AddPost }
+
+get_posts:
+    path:     /GetPosts
+    defaults: { _controller: PostsBundle:Posts:GetPosts }
+
+update_post:
+    path:     /UpdatePost/{id}
+    defaults: { _controller: PostsBundle:Posts:UpdatePost }
+
+delete_post:
+    path:     /DeletePost/{id}
+    defaults: { _controller: PostsBundle:Posts:DeletePost }
+
+add_comment:
+    path:     /AddComment/{id}
+    defaults: { _controller: PostsBundle:Comments:AddComment }
+
+get_comments:
+    path:     /GetComments/{id}
+    defaults: { _controller: PostsBundle:Comments:GetComments }
+
+delete_comment:
+    path:     /DeleteComment/Post={id}/Comment={idc}
+    defaults: { _controller: PostsBundle:Comments:DeleteComment }
+
+update_comment:
+    path:     /UpdateComment/Post={id}/Comment={idc}
+    defaults: { _controller: PostsBundle:Comments:UpdateComment }
