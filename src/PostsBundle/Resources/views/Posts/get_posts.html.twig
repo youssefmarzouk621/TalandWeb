@@ -13,7 +13,7 @@
     {% for row in result %}
         <tr>
             <td>{{ row.idPost }}</td>
-            <td>{{ row.idu }}</td>
+            <td>{{ row.idu.id }}</td>
             <td>{{ row.description }}</td>
             <td>{{ row.source }}</td>
             <td>{{ row.dateCreation|date("m/d/Y") }}</td>
