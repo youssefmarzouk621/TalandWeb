@@ -4,7 +4,7 @@ posts_homepage:
 
 add_post:
     path:     /AddPost
-    defaults: { _controller: Pos tsBundle:Posts:AddPost }
+    defaults: { _controller: PostsBundle:Posts:AddPost }
 
 get_posts:
     path:     /GetPosts

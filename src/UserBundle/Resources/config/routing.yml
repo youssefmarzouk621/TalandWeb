@@ -1,7 +1,3 @@
 user_homepage:
     path:     /
     defaults: { _controller: UserBundle:Default:index }
-
-user_login:
-    path:     /Login
-    defaults: { _controller: UserBundle:Default:Login }
