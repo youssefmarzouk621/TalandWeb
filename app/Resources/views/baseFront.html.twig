@@ -95,11 +95,23 @@
                             <!-- Login/Register & Cart Button -->
                             <div class="login-register-cart-button d-flex align-items-center">
                                 <!-- Login/Register -->
-                                <div class="login-register-btn mr-50">
-                                    <a href="{{ path('fos_user_security_login') }}" id="loginBtn">Login</a>
-                                    <a href="#" id="loginBtn">  /  </a>
-                                    <a href="{{ path('fos_user_registration_register') }}" id="loginBtn">Register</a>
-                                </div>
+
+
+                                {% if (connected == null) %}
+                                    <div class="login-register-btn mr-50">
+                                        <a href="{{ path('fos_user_security_login') }}" id="loginBtn">Login</a>
+                                        <a href="#" id="loginBtn">  /  </a>
+                                        <a href="{{ path('fos_user_registration_register') }}" id="loginBtn">Register</a>
+                                    </div>
+                                {% else %}
+                                    <div class="login-register-btn mr-50">
+                                        <a href="{{ path('fos_user_security_logout') }}" id="loginBtn">Logout</a>
+                                    </div>
+                                {% endif %}
+
+
+
+
 
                                 <!-- Cart Button -->
                                 <div class="cart-btn">
