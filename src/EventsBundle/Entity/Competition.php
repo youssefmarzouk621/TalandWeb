@@ -113,9 +113,8 @@ class Competition
     private $photo;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="idU", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="idU", referencedColumnName="id")
      */
     private $idu;
 

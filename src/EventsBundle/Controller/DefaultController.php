@@ -12,7 +12,7 @@ class DefaultController extends Controller
 
 
 
-        
+
         return $this->render('EventsBundle:Default:index.html.twig');
     }
 }

@@ -29,9 +29,8 @@ class Competitionuser
     private $idcomp;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="idu", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="idU", referencedColumnName="id")
      */
     private $idu;
 
