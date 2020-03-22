@@ -30,7 +30,7 @@ class Competitionuser
 
     /**
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
-     * @ORM\JoinColumn(name="idU", referencedColumnName="id")
+     * @ORM\JoinColumn(name="idu", referencedColumnName="id")
      */
     private $idu;
 
