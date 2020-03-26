@@ -8,7 +8,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
-    <title>One Music - Modern Music HTML5 Template</title>
+    <title>Taland</title>
 
     <!-- Favicon -->
     <link rel="icon" href="{{ asset('FrontOffice/img/core-img/favicon.ico')}}">
@@ -19,7 +19,7 @@
 
 
     <link rel="stylesheet" href="{{ asset('FrontOffice/css/bootstrap.min.css')}}">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('FrontOffice/css/font-awesome.min.css')}}"/>
     <link rel="stylesheet" href="{{ asset('FrontOffice/css/themify-icons.css')}}"/>
     <link rel="stylesheet" href="{{ asset('FrontOffice/css/accordion.css')}}"/>
@@ -36,6 +36,7 @@
         <div></div>
     </div>
 </div>
+{% block header %}
 <header class="header-area">
     <!-- Navbar Area -->
     <div class="oneMusic-main-menu">
@@ -63,7 +64,7 @@
                         <!-- Nav Start -->
                         <div class="classynav">
                             <ul>
-                                <li><a href="{{ asset('FrontOffice/index.html') }}">Home</a></li>
+                                <li><a href="/">Home</a></li>
                                 <li><a href="{{ asset('FrontOffice/albums-store.html') }}">Albums</a></li>
                                 <li><a href="#">Pages</a>
                                     <ul class="dropdown">
@@ -94,7 +95,7 @@
                                     </ul>
                                 </li>
                                 <li><a href="{{ asset('FrontOffice/event.html') }}">Events</a></li>
-                                <li><a href="{{ asset('FrontOffice/blog.html') }}">News</a></li>
+                                <li><a href="/Products/getProducts">Store</a></li>
                                 <li><a href="{{ asset('FrontOffice/contact.html') }}">Contact</a></li>
                             </ul>
 
@@ -119,8 +120,9 @@
         </div>
     </div>
 </header>
-<section class="breadcumb-area bg-img bg-overlay" style="background-image: url({{ asset('FrontOffice/img/bg-img/breadcumb3.jpg')}})"></section>
 
+<section class="breadcumb-area bg-img bg-overlay" style="background-image: url({{ asset('FrontOffice/img/bg-img/breadcumb3.jpg')}})"></section>
+{% endblock%}
 
 
 <section style="padding-top: 10px;padding-left: 90px;" class="login-area">
@@ -129,11 +131,11 @@
 
 
 
-
+{% block footer %}
 <footer class="footer-area">
     <div class="container">
         <div class="row d-flex flex-wrap align-items-center">
-            <div class="col-12 col-md-6">
+            <div class="col-4 col-md-2">
                 <a href="#"><img src="{{ asset('FrontOffice/img/core-img/logo.png') }}" alt=""></a>
             </div>
 
@@ -145,6 +147,7 @@
         </div>
     </div>
 </footer>
+{% endblock  %}
 <!-- ##### Footer Area Start ##### -->
 
 <!-- ##### All Javascript Script ##### -->
