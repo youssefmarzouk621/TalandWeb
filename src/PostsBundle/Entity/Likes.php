@@ -36,11 +36,93 @@ class Likes
     private $idu;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="react", type="integer", nullable=true)
+     */
+    private $react;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="dateCreation", type="datetime", nullable=true)
      */
     private $datecreation = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @return int
+     */
+    public function getIdlike()
+    {
+        return $this->idlike;
+    }
+
+
+
+    /**
+     * @return int
+     */
+    public function getIdpost()
+    {
+        return $this->idpost;
+    }
+
+    /**
+     * @param int $idpost
+     */
+    public function setIdpost($idpost)
+    {
+        $this->idpost = $idpost;
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getIdu()
+    {
+        return $this->idu;
+    }
+
+    /**
+     * @param int $idu
+     */
+    public function setIdu($idu)
+    {
+        $this->idu = $idu;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDatecreation()
+    {
+        return $this->datecreation;
+    }
+
+    /**
+     * @param \DateTime $datecreation
+     */
+    public function setDatecreation($datecreation)
+    {
+        $this->datecreation = $datecreation;
+    }
+
+    /**
+     * @return int
+     */
+    public function getReact()
+    {
+        return $this->react;
+    }
+
+    /**
+     * @param int $react
+     */
+    public function setReact($react)
+    {
+        $this->react = $react;
+    }
 
 
 }

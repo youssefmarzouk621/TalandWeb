@@ -17,8 +17,7 @@ class CommentsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('idu')
-                ->add('contenu')
-                ->add('Valider',SubmitType::class);
+                ->add('contenu');
     }/**
      * {@inheritdoc}
      */

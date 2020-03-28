@@ -1,5 +1,20 @@
 {% extends "default/LayoutFront.html.twig" %}
 
 {% block section %}
-{{ form(postform) }}
+
+{{ form_start(postform) }}
+    {{ form_widget(postform.idu) }}
+    {{ form_widget(postform.description) }}
+
+    {{ form_widget(postform.nbrlikes) }}
+    {{ form_widget(postform.nbrcomments) }}
+    <div class="input-group">
+        <div class="custom-file">
+            {{ form_widget(postform.imageFile, { 'attr' : { 'class' : 'custom-file-input','id' : 'fichier' } }) }}
+            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+        </div>
+    </div>
+    <button type="submit">Valider</button>
+    {{ form_end(postform) }}
 {% endblock %}
+

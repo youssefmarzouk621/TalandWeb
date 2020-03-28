@@ -18,6 +18,14 @@ delete_post:
     path:     /DeletePost/{id}
     defaults: { _controller: PostsBundle:Posts:DeletePost }
 
+react_post:
+    path:     /ReactPost/{idp}/{react}
+    defaults: { _controller: PostsBundle:Posts:React }
+
+remove_like:
+    path:     /RemovePost/{idp}
+    defaults: { _controller: PostsBundle:Posts:RemoveLike }
+
 add_comment:
     path:     /AddComment/{id}
     defaults: { _controller: PostsBundle:Comments:AddComment }
@@ -33,3 +41,6 @@ delete_comment:
 update_comment:
     path:     /UpdateComment/Post={id}/Comment={idc}
     defaults: { _controller: PostsBundle:Comments:UpdateComment }
+
+
+

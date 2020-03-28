@@ -26,6 +26,10 @@
     <link rel="stylesheet" href="{{ asset('FrontOffice/css/fresco.css')}}"/>
     <link rel="stylesheet" href="{{ asset('FrontOffice/css/owl.carousel.min.css')}}"/>
     <link rel="stylesheet" href="{{ asset('FrontOffice/css/poststyle.css')}}"/>
+    <link rel="stylesheet" href="{{ asset('FrontOffice/css/grid.css')}}">
+    <link rel="stylesheet" href="{{ asset('FrontOffice/css/modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('FrontOffice/css/react.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('FrontOffice/css/feather/style.min.css')}}">
 </head>
 <body>
 <div class="preloader d-flex align-items-center justify-content-center">
@@ -123,14 +127,14 @@
 
 
 
-<section style="padding-top: 10px;padding-left: 45px;padding-right: 45px;" class="login-area">
+<section style="padding-top: 10px;" class="login-area">
         {% block section %} {% endblock %}
 </section>
 
 
 
 
-<footer class="footer-area">
+<footer style="padding: 11px 0;" class="footer-area">
     <div class="container">
         <div class="row d-flex flex-wrap align-items-center">
             <div class="col-12 col-md-6">
@@ -170,6 +174,15 @@
 <script src="{{ asset('FrontOffice/jstest/pana-accordion.js')}}"></script>
 <script src="{{ asset('FrontOffice/jstest/main.js')}}"></script>
 <script src="{{ asset('FrontOffice/jstest/fresco.min.js')}}"></script>
+<script src="{{ asset('FrontOffice/js/modal.js') }}"></script>
+{% block scripts %}
+
+{% endblock %}
+
+<script>
+    $('.nicescroll-rails.nicescroll-rails-vr').remove();
+</script>
+
 
 
 

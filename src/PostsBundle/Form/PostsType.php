@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class PostsType extends AbstractType
 {
@@ -16,10 +17,9 @@ class PostsType extends AbstractType
     {
         $builder->add('idu')
                 ->add('description')
-                ->add('source')
                 ->add('nbrlikes')
-                ->add('nbrcomments')
-                ->add('Valider',SubmitType::class);
+                ->add('imageFile', VichImageType::class)
+                ->add('nbrcomments');
     }/**
      * {@inheritdoc}
      */
