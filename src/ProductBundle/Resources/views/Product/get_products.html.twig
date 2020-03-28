@@ -78,9 +78,16 @@
                         {% for p in Produit %}
                             <!-- Single Album Area -->
                             <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+
                                 <div class="single-album-area wow fadeInUp" data-wow-delay="100ms">
                                     <div class="single-album">
-                                        <img src="{{ asset('uploads/Products/'~p.imgsrc) }}" alt="">
+                                        <div class="play-icon">
+                                            <a href="{{ path('get_product_by_id',{'id':p.id}) }}"
+                                               class="video--play--btn">
+                                                <img src="{{ asset('uploads/Products/'~p.imgsrc) }}" alt="">
+                                            </a>
+                                        </div>
+
 
                                         <!-- Album Price -->
                                         <div class="album-price">
@@ -89,19 +96,26 @@
                                         <!-- Play Icon -->
                                         <div class="row">
                                             <div class="col-3">
-                                                <div class="play-icon">
-                                                    <a href="{{ path('delete_product',{'id':p.id,'validation':'no'}) }}"
-                                                       class="video--play--btn">
-                                                        <i class="fa fa-close" style="font-size:33px;color:red"></i></a>
-                                                </div>
+                                                <form method="post" action="{{ path('delete_product',{'id':p.id}) }}"
+                                                      onsubmit="return confirm('Etes vous sûr?')">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <input type="hidden" name="_token"
+                                                           value="{{ csrf_token('delete'~p.id) }}">
+                                                    <button class="btn btn-danger">Suprimer</button>
+                                                </form>
+
+                                            </div>
+                                            <div class="col-3">
+                                                <form method="post" action="{{ path('delete_product',{'id':p.id}) }}"
+                                                      onsubmit="return confirm('Etes vous sûr?')">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <input type="hidden" name="_token"
+                                                           value="{{ csrf_token('delete'~p.id) }}">
+                                                    <button class="btn btn-primary">Add to cart</button>
+                                                </form>
+
                                             </div>
 
-                                            <div class="play-icon">
-                                                <a href="{{ path('get_product_by_id',{'id':p.id})}}"
-                                                   class="video--play--btn">
-                                                    <i class="fa fa-eye" style="font-size:33px"></i>
-                                                </a>
-                                            </div>
 
                                         </div>
 

@@ -1,7 +1,7 @@
 <?php
 
 namespace ProductBundle\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,6 +25,7 @@ class Produit
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=20, nullable=false)
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -38,7 +39,7 @@ class Produit
     /**
      * @var float
      *
-     * @ORM\Column(name="price", type="float", precision=10, scale=0, nullable=false)
+     * @ORM\Column(name="price", type="float", precision=10, scale=0, nullable=true)
      */
     private $price;
 

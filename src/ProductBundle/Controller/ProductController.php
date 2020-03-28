@@ -7,9 +7,23 @@ use ProductBundle\Entity\Produit;
 use ProductBundle\Form\ProduitType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use UserBundle\Entity\User;
 
 class ProductController extends Controller
 {
+    private $loggedInUser;
+
+    /**
+     * ProductController constructor.
+     */
+    public function __construct()
+    {
+        $this->loggedInUser = new User();
+
+    }
+
+
+
     public function getProductsAction()
     {
         $product = new Produit();
@@ -40,10 +54,17 @@ class ProductController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $product->setName($form['name']->getData());
-            $product->setCategory($form['category']->getData());
+            $Category = $form['category']->getData();
+            $idCategory = $Category->getId();
+            $product->setCategory($idCategory);
             $product->setPrice($form['price']->getData());
-            $product->setDate($form['date']->getData());
-            $product->setImgsrc($form['imgsrc']->getData());
+            $product->setDate(new \DateTime());
+            if ($form['imgsrc']->getData() == 'NULL') {
+                $product->setImgsrc('products.png');
+            } else {
+                $product->setImgsrc($form['imgsrc']->getData());
+            }
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
@@ -55,17 +76,17 @@ class ProductController extends Controller
             'productForm' => $form->createView()));
     }
 
-    public function deleteProductAction($id,$validation){
-        if ($validation=="yes"){
-            $em=$this->getDoctrine()->getManager();
-            $product=$em->getRepository(Produit::class)->find($id);
+    public function deleteProductAction($id, Request $request)
+    {
+        if ($this->isCsrfTokenValid('delete' . $id, $request->get('_token'))) {
+            $em = $this->getDoctrine()->getManager();
+            $product = $em->getRepository(Produit::class)->find($id);
             $em->remove($product);
             $em->flush();
-
+            return $this->redirectToRoute('get_products');
         }
 
-        return $this->render('@Product/Product/delete_product.html.twig',array('id'=>$id));
-      //  return $this->redirectToRoute('delete_product');
+        //  return $this->redirectToRoute('delete_product');
 
 
     }

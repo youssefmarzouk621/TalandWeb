@@ -12,6 +12,9 @@ add_product:
     defaults: { _controller: ProductBundle:Product:addProduct }
 
 delete_product:
-    path:     /deletProduct/{id}/{validation}
+    path:     /deletProduct/{id}
     defaults: { _controller: ProductBundle:Product:deleteProduct }
 
+get_carts:
+    path:     /getCarts
+    defaults: { _controller: ProductBundle:Cart:getCarts }

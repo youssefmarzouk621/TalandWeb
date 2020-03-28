@@ -1,6 +1,40 @@
 {% extends "default/Layout.html.twig" %}
 {% block header %}{% endblock %}
 {% block section %}
-    {{ form(productForm) }}
+    <div class="container mt-6">
+        <h1>Add product to sell</h1>
+        {{ form_start(productForm) }}
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(productForm.name)}}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(productForm.category) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(productForm.imgsrc) }}
+            </div>
+            <div class="col-md-6">
+                <input type="button" value="hello">
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(productForm.price)}}
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(productForm.Valider) }}
+            </div>
+        </div>
+    </div>
+    {{ form_end(productForm) }}
+
+
 {% endblock %}
 {% block footer %}{% endblock %}
