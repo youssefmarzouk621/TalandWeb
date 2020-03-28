@@ -1,0 +1,20 @@
+
+get_products:
+    path:     /getProducts
+    defaults: { _controller: ProductBundle:Product:getProducts }
+
+get_product_by_id:
+    path:     /getProducts/{id}
+    defaults: { _controller: ProductBundle:Product:getProductById }
+
+add_product:
+    path:     /addProduct
+    defaults: { _controller: ProductBundle:Product:addProduct }
+
+delete_product:
+    path:     /deletProduct/{id}
+    defaults: { _controller: ProductBundle:Product:deleteProduct }
+
+get_carts:
+    path:     /getCarts
+    defaults: { _controller: ProductBundle:Cart:getCarts }
