@@ -22,9 +22,8 @@ class Basket
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="userId", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="userId", referencedColumnName="id")
      */
     private $userid;
 
@@ -45,7 +44,7 @@ class Basket
     }
 
     /**
-     * @return int
+     * @return mixed
      */
     public function getUserid()
     {
@@ -53,12 +52,14 @@ class Basket
     }
 
     /**
-     * @param int $userid
+     * @param mixed $userid
      */
     public function setUserid($userid)
     {
         $this->userid = $userid;
     }
+
+
 
     /**
      * @return float

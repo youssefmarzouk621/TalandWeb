@@ -18,3 +18,15 @@ delete_product:
 get_carts:
     path:     /getCarts
     defaults: { _controller: ProductBundle:Cart:getCarts }
+
+cart_index:
+    path:     /Cart/myCart
+    defaults: { _controller: ProductBundle:Cart:index }
+
+cart_add:
+    path:     /Cart/add/{id}
+    defaults: { _controller: ProductBundle:Cart:add }
+
+cart_remove:
+    path:     /Cart/remove/{id}
+    defaults: { _controller: ProductBundle:Cart:remove }

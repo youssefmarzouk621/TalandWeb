@@ -1,0 +1,46 @@
+{% extends "default/Layout.html.twig" %}
+{% block title %}My Cart{% endblock %}
+{% block section %}
+
+    <div class="bg-light p3">
+        <h1>Your Cart</h1>
+    </div>
+    {% if items | length >0%}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in items %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td class="text-right">{{ item.product.price }}</td>
+                    <td><a href="{{ path('cart_remove',{'id':item.product.id}) }}" class="btn btn-danger btn-sm">
+                            <i class="fa fa-trash"></i>
+                        </a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <td class="text-right">Total:</td>
+                <td class="text-right">{{ total }}</td>
+                <td></td>
+            </tr>
+            </tfoot>
+        </table>
+    {% else %}
+        <p>Your cart is empty..</p>
+    {% endif %}
+
+    <script>
+        $(window).load(function () {
+            const iCount =document.querySelector('span.js-quantityProductInCart');
+            iCount.textContent={{ nbrProduct }};
+        });
+    </script>
+{% endblock %}

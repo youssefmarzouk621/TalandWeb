@@ -9,7 +9,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-heading style-2">
-                        <p>See what’s new</p>
+                        <p>See what’s new
+                        <p>{% if is_granted('IS_AUTHENTICATED_FULLY') %}Username: {{ app.user.username }}
+                           {% endif %}</p></p>
                         <h2>Buy What’s New</h2>
                     </div>
                 </div>
@@ -95,27 +97,33 @@
                                         </div>
                                         <!-- Play Icon -->
                                         <div class="row">
-                                            <div class="col-3">
-                                                <form method="post" action="{{ path('delete_product',{'id':p.id}) }}"
-                                                      onsubmit="return confirm('Etes vous sûr?')">
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <input type="hidden" name="_token"
-                                                           value="{{ csrf_token('delete'~p.id) }}">
-                                                    <button class="btn btn-danger">Suprimer</button>
-                                                </form>
+                                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                                {% if app.user.id == p.userid %}
+                                                    <div class="col-3">
+                                                        <form method="post"
+                                                              action="{{ path('delete_product',{'id':p.id}) }}"
+                                                              onsubmit="return confirm('Etes vous sûr?')">
+                                                            <input type="hidden" name="_method" value="DELETE">
+                                                            <input type="hidden" name="_token"
+                                                                   value="{{ csrf_token('delete'~p.id) }}">
+                                                            <button class="btn btn-danger">Suprimer</button>
+                                                        </form>
 
-                                            </div>
-                                            <div class="col-3">
-                                                <form method="post" action="{{ path('delete_product',{'id':p.id}) }}"
-                                                      onsubmit="return confirm('Etes vous sûr?')">
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <input type="hidden" name="_token"
-                                                           value="{{ csrf_token('delete'~p.id) }}">
-                                                    <button class="btn btn-primary">Add to cart</button>
-                                                </form>
+                                                    </div>
 
-                                            </div>
+                                                {% else %}
+                                                    <div class="row">
+                                                        <div class="col-md-3 offset-4">
+                                                            <a href="{{ path('cart_add',{'id':p.id}) }}"
+                                                               class="btn btn-primary js-addToCart">
+                                                                <i class="fa fa-cart-plus"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
 
+
+                                                {% endif %}
+                                            {% endif %}
 
                                         </div>
 
@@ -166,5 +174,29 @@
     <script src="{{ asset('FrontOffice/js/plugins/plugins.js') }}"></script>
     <!-- Active js -->
     <script src="{{ asset('FrontOffice/js/active.js') }}"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        function onClickAddToCart(event) {
+            event.preventDefault();
+
+            const url = this.href;
+            const iCount = document.querySelector('span.js-quantityProductInCart');
+
+            axios.get(url).then(function (response) {
+                iCount.textContent = response.data.nbrProduct;
+                console.log(response)
+            });
+        }
+
+        document.querySelectorAll('a.js-addToCart').forEach(function (link) {
+            link.addEventListener('click', onClickAddToCart);
+        })
+    </script>
+    <script>
+        $(window).load(function () {
+            const iCount = document.querySelector('span.js-quantityProductInCart');
+            iCount.textContent={{ nbrProduct }}
+        });
+    </script>
 
 {% endblock %}

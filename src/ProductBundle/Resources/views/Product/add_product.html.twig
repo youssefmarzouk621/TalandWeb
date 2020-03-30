@@ -3,6 +3,12 @@
 {% block section %}
     <div class="container mt-6">
         <h1>Add product to sell</h1>
+        {% for message in app.flashes('success') %}
+
+        <div class="alert alert-success">{{ message }}
+            <button class="btn btn-danger" onclick="f">Quit</button>
+        </div>
+        {% endfor %}
         {{ form_start(productForm) }}
         <div class="row">
             <div class="col-md-6">
@@ -35,6 +41,13 @@
     </div>
     {{ form_end(productForm) }}
 
+    <script>
+        function f() {
 
+            window.close();
+
+        }
+
+    </script>
 {% endblock %}
 {% block footer %}{% endblock %}

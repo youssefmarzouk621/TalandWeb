@@ -7,6 +7,7 @@ use ProductBundle\Entity\Produit;
 use ProductBundle\Form\ProduitType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use UserBundle\Entity\User;
 
 class ProductController extends Controller
@@ -24,13 +25,14 @@ class ProductController extends Controller
 
 
 
-    public function getProductsAction()
-    {
+    public function getProductsAction(SessionInterface $session)
+    {   $cart=$session->get('cart',[]);
+
         $product = new Produit();
 
         $em = $this->getDoctrine()->getManager();
         $product = $em->getRepository('ProductBundle:Produit')->findAll();
-        return $this->render('@Product/Product/get_products.html.twig', array('Produit' => $product));
+        return $this->render('@Product/Product/get_products.html.twig', array('Produit' => $product,'nbrProduct'=>sizeof($cart)));
     }
 
     public function getProductByIdAction($id)
@@ -43,15 +45,19 @@ class ProductController extends Controller
     }
 
     public function addProductAction(Request $request)
-    {
+    {   $user=$this->getUser();
         $product = new Produit();
         $product->setDate(new \DateTime());
-        $product->setUserid(1);
+        $product->setUserid($user->getId());
         $product->setValidation(0);
         $form = $this->createForm(ProduitType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $file=$request->files->get('productbundle_produit')['imgsrc'];
+            $uploads_directory=$this->getParameter('uploads_directory');
+            $fileName=$file->getClientOriginalName();
+            $file->move($uploads_directory,$fileName);
 
             $product->setName($form['name']->getData());
             $Category = $form['category']->getData();
@@ -62,14 +68,16 @@ class ProductController extends Controller
             if ($form['imgsrc']->getData() == 'NULL') {
                 $product->setImgsrc('products.png');
             } else {
-                $product->setImgsrc($form['imgsrc']->getData());
+                $product->setImgsrc($fileName);
+                //$product->setImgsrc($form['imgsrc']->getData());
             }
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
+            $this->addFlash('success', 'Product added.');
 
-            return $this->redirectToRoute('get_products');
+            return $this->redirectToRoute('add_product');
 
         }
         return $this->render('@Product/Product/add_product.html.twig', array(

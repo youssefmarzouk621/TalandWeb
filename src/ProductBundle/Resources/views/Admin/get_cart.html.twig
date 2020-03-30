@@ -1,3 +1,15 @@
-{% for c in carts %}
-{{ c.userid }}
-{% endfor %}
+{% extends "default/LayoutBack.html.twig" %}
+{% block section %}
+<section id="drag-area">
+    <div class="row" Style="margin-top:100px;">
+        {% for c in carts %}
+            <div class="col-md-3">
+                <h3>{{ c.userid.firstname }}</h3>
+            </div>
+
+        {% endfor %}
+
+    </div>
+</section>
+
+{% endblock %}

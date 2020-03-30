@@ -48,7 +48,7 @@ class Produit
      *
      * @ORM\Column(name="userId", type="integer", nullable=true)
      */
-    private $userid = 'NULL';
+    private $userid;
 
     /**
      * @var \DateTime

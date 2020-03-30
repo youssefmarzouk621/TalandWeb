@@ -43,7 +43,10 @@ class ProduitType extends AbstractType
                 'placeholder' =>'you need to chose category!'
             ])
             ->add('price')
-            ->add('imgsrc')
+            ->add('imgsrc', FileType::class,[
+                'mapped'=>false,
+                'label'=>'choose picture'
+            ])
             ->add('Valider', SubmitType::class);
     }
 
