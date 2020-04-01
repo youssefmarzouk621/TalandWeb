@@ -24,17 +24,16 @@ class Comments
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Posts")
-     * @ORM\JoinColumn(name="idPost", referencedColumnName="idPost", onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="PostsBundle\Entity\Posts")
+     * @ORM\JoinColumn(name="idPost", referencedColumnName="idPost")
      */
     private $idpost;
 
 
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="idU", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="idU", referencedColumnName="id")
      */
     private $idu;
 
@@ -43,9 +42,6 @@ class Comments
      *
      * @ORM\Column(name="contenu", type="string", length=255, nullable=false)
      */
-
-
-
     private $contenu;
 
     /**
@@ -53,8 +49,6 @@ class Comments
      *
      * @ORM\Column(name="dateCreation", type="datetime", nullable=false)
      */
-
-
 
     private $datecreation = 'CURRENT_TIMESTAMP';
 
@@ -76,6 +70,7 @@ class Comments
     }
 
 
+
     /**
      * @return mixed
      */
@@ -92,9 +87,8 @@ class Comments
         $this->idpost = $idpost;
     }
 
-
     /**
-     * @return int
+     * @return mixed
      */
     public function getIdu()
     {
@@ -102,12 +96,20 @@ class Comments
     }
 
     /**
-     * @param int $idu
+     * @param mixed $idu
      */
     public function setIdu($idu)
     {
         $this->idu = $idu;
     }
+
+
+
+
+
+
+
+
 
     /**
      * @return string

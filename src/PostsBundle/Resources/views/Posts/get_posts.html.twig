@@ -10,8 +10,9 @@
             <div class="col">
                 <h2 style="margin-left: 25px;">Trending</h2>
                 <h6 style="margin-left: 25px;margin-top: 8px">Watch the latest posts from our community</h6>
+                <a id="redirectlogin" href="{{ path('fos_user_security_login') }}"></a>
                 <div class="contain">
-
+                    {% set i = 0 %}
                     {% for row in result %}
 
                     <div class="boxes">
@@ -31,19 +32,76 @@
 
                                 <span class="info">
 
-                                    <div id="reacts" class="reacts">
-                                      <div class="circle"><button onclick="react({{ row.idPost }},1);" style="background: none;border: none;cursor: pointer;"><img style="margin-left: -6px;" src="{{ asset('uploads/reacts/heart.png') }}" alt=""/></button>
-                                        <p>Love</p>
-                                      </div>
-                                      <div class="circle"><button onclick="react({{ row.idPost }},2);" style="background: none;border: none;cursor: pointer;"><img src="{{ asset('uploads/reacts/haha.png') }}" alt=""/></button>
-                                        <p>Haha</p>
-                                      </div>
-                                      <div class="circle"><button onclick="react({{ row.idPost }},3);" style="background: none;border: none;cursor: pointer;"><img style="margin-left: 6px;" src="{{ asset('uploads/reacts/triste.png') }}" alt=""/></button>
-                                        <p>Sad</p>
-                                      </div>
-                                    </div>
 
+
+
+                                    {% if (connected==null) %}
+                                        <div id="reacts" class="reacts">
+                                          <div class="circle"><button onclick="react(0,{{ row.idPost }},1);" style="background: none;border: none;cursor: pointer;"><img style="margin-left: -6px;" src="{{ asset('uploads/reacts/heart.png') }}" alt=""/></button>
+                                            <p>Love</p>
+                                          </div>
+                                          <div class="circle"><button onclick="react(0,{{ row.idPost }},2);" style="background: none;border: none;cursor: pointer;"><img src="{{ asset('uploads/reacts/haha.png') }}" alt=""/></button>
+                                            <p>Haha</p>
+                                          </div>
+                                          <div class="circle"><button onclick="react(0,{{ row.idPost }},3);" style="background: none;border: none;cursor: pointer;"><img style="margin-left: 6px;" src="{{ asset('uploads/reacts/triste.png') }}" alt=""/></button>
+                                            <p>Sad</p>
+                                          </div>
+                                          <div style="margin-left: 6px;" class="circle"><button onclick="react(0,{{ row.idPost }},4);" style="background: none;border: none;cursor: pointer;"><img src="{{ asset('uploads/reacts/grr.png') }}" alt=""/></button>
+                                            <p>Grr</p>
+                                          </div>
+                                        </div>
                                         <button id="likecontainer{{ row.idPost }}" style="background-color: #dc35457d;border-color: #dc35457d;border-radius: 30px" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><i class="ft-heart"></i></button>
+                                    {% endif %}
+
+
+                                    {% if (connected!=null) %}
+                                        <div id="reacts" class="reacts">
+                                          <div class="circle"><button onclick="react({{ connected.id }},{{ row.idPost }},1);" style="background: none;border: none;cursor: pointer;"><img style="margin-left: -6px;" src="{{ asset('uploads/reacts/heart.png') }}" alt=""/></button>
+                                            <p>Love</p>
+                                          </div>
+                                          <div class="circle"><button onclick="react({{ connected.id }},{{ row.idPost }},2);" style="background: none;border: none;cursor: pointer;"><img src="{{ asset('uploads/reacts/haha.png') }}" alt=""/></button>
+                                            <p>Haha</p>
+                                          </div>
+                                          <div class="circle"><button onclick="react({{ connected.id }},{{ row.idPost }},3);" style="background: none;border: none;cursor: pointer;"><img style="margin-left: 3px;" src="{{ asset('uploads/reacts/triste.png') }}" alt=""/></button>
+                                            <p>Sad</p>
+                                          </div>
+
+                                          <div style="margin-left: 6px;" class="circle"><button onclick="react({{ connected.id }},{{ row.idPost }},4);" style="background: none;border: none;cursor: pointer;"><img src="{{ asset('uploads/reacts/grr.png') }}" alt=""/></button>
+                                            <p>Grr</p>
+                                          </div>
+                                        </div>
+
+
+
+
+                                            {% if likes!=null %}
+
+
+                                                {% if i!=likes|length %}
+                                                    {% if likes[i].idPost==row.idPost %}
+                                                        {% if likes[i].react==1 %}
+                                                            <button id="likecontainer{{ row.idPost }}" style="background-color: #dc35457d;border-color: #dc35457d;border-radius: 30px" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><img style="margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;" src="{{ asset('uploads/reacts/heart.png')}}" alt=""></button>
+                                                            {% elseif likes[i].react==2 %}
+                                                            <button id="likecontainer{{ row.idPost }}" style="background-color: rgba(255, 193, 7, 0.51); border-color: rgba(255, 193, 7, 0.51); border-radius: 30px;" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><img style="margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;" src="{{ asset('uploads/reacts/haha.png')}}" alt=""></button>
+                                                                {% elseif likes[i].react==3 %}
+                                                            <button id="likecontainer{{ row.idPost }}" style="background-color: rgba(255, 193, 7, 0.51); border-color: rgba(255, 193, 7, 0.51); border-radius: 30px;" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><img style="margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;" src="{{ asset('uploads/reacts/triste.png')}}" alt=""></button>
+                                                                    {% elseif likes[i].react==4 %}
+                                                            <button id="likecontainer{{ row.idPost }}" style="background-color: rgba(255, 193, 7, 0.51); border-color: rgba(255, 193, 7, 0.51); border-radius: 30px;" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><img style="margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;" src="{{ asset('uploads/reacts/grr.png')}}" alt=""></button>
+                                                        {% endif %}
+                                                        {% set i = i + 1 %}
+                                                    {% else %}
+                                                        <button id="likecontainer{{ row.idPost }}" style="background-color: #dc35457d;border-color: #dc35457d;border-radius: 30px" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><i class="ft-heart"></i></button>
+                                                    {% endif %}
+                                                {% else %}
+                                                        <button id="likecontainer{{ row.idPost }}" style="background-color: #dc35457d;border-color: #dc35457d;border-radius: 30px" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><i class="ft-heart"></i></button>
+                                                {% endif %}
+                                            {% else %}
+                                                <button id="likecontainer{{ row.idPost }}" style="background-color: #dc35457d;border-color: #dc35457d;border-radius: 30px" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><i class="ft-heart"></i></button>
+                                            {% endif %}
+                                    {% endif %}
+
+
+
 
                                     <button style="background-color: #ffffff85;border-color: #ffffff85;margin-left: 10px;color: black;border-radius: 30px" class="btn btn-outline-dark mr-1 comments"><i id="com" class="ft-message-square"></i></button>
                                     <a class="btn btn-outline-dark mr-1 fresco showmore"
@@ -67,24 +125,26 @@
 
 
 
-            <div style="height:300px;position: sticky;top: 0;" class="col">
-                <div style="margin-top: 20px;margin-bottom: 20px;" class="media border-0">
-                    <div class="media-left pr-1">
+            <div style="max-width: 383px;height:300px;position: sticky;top: 0;" class="col">
+                {% if connected!=null %}
+                    <div style="margin-top: 20px;margin-bottom: 20px;" class="media border-0">
+                        <div class="media-left pr-1">
                                 <span class="avatar avatar-md avatar-online">
-                                    <img style="height: 50px;margin-right: 10px;" class="media-object rounded-circle" src="{{ asset('BackOffice/images/portrait/small/avatar-s-7.png')}}" alt="Generic placeholder image">
+                                    <img style="height: 50px;margin-right: 10px;" class="media-object rounded-circle" src="{{ asset('uploads/posts/' ~ connected.imageName) }}" alt="Generic placeholder image">
                                     <i></i>
                                 </span>
-                    </div>
-                    <div class="media-body w-100">
-                                <span class="list-group-item-heading">Kristopher Candy
+                        </div>
+                        <div class="media-body w-100">
+                                <span class="list-group-item-heading">{{ connected.firstname }} {{ connected.lastname }}
 
                                 </span>
-                        <p class="list-group-item-text mb-0">
-                            <span class="blue-grey lighten-2 font-small-3"> #INV-12332 </span>
-                        </p>
+                            <p class="list-group-item-text mb-0">
+                                <span class="blue-grey lighten-2 font-small-3"> @{{ connected.username }} </span>
+                            </p>
 
+                        </div>
                     </div>
-                </div>
+                {% endif %}
 
                 <div  style="padding-top: 10px;margin-right: 14px;height: 375px;" class="popular-artists-area mb-100 nice-scroll">
                     <div class="section-heading text-left wow fadeInUp" data-wow-delay="50ms" style="margin-bottom: 20px ;visibility: visible; animation-delay: 50ms; animation-name: fadeInUp;">
@@ -209,6 +269,7 @@
 
 {% block scripts %}
     <script>
+
         $(function() {
             var reaction = $('.reacts'),
                 like = $('.like'),
@@ -248,71 +309,103 @@
     
 <script>
 
-    function react(idPost,typereact) {
-        $.ajax({
-            url: 'ReactPost/' + idPost + '/' + typereact,
-            success: function (data) {
+    function react(idu,idPost,typereact) {
+        if (idu==0){
 
-                console.log("data :",data);
-                var container="likecontainer".concat(idPost);
-                document.getElementById(container).click();
+            swal({
+                title: 'Login first',
+                text: "You have to login fisrt then react",
+                type: 'info',
+                footer: "<a style='color: dimgray;margin-top: -12px;margin-bottom: -12px;' href='{{ path('fos_user_registration_register') }}'>Register</a>",
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Login now!'
+            }).then((result) => {
+                if (result.value) {
 
-                if (data == "added"){
-                    if (typereact==1){
-                        document.getElementById(container).innerHTML="<img style='margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;' src='{{ asset('uploads/reacts/heart.png') }}' alt=''/>";
+                    document.getElementById('redirectlogin').click();
+                    document.getElementById(container).innerHTML="<i class='ft-heart'></i>";
+                    document.getElementById(container).style.backgroundColor= "#dc35457d";
+                    document.getElementById(container).style.borderColor= "#dc35457d";
+                    document.getElementById(container).style.borderRadius= "30px";
+                }
+            })
 
-                        document.getElementById(container).style.backgroundColor= "#dc35457d";
-                        document.getElementById(container).style.borderColor= "#dc35457d";
-                        document.getElementById(container).style.borderRadius= "30px";
-                    }else if (typereact==2){
-                        document.getElementById(container).innerHTML="<img style='margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;' src='{{ asset('uploads/reacts/haha.png') }}' alt=''/>";
+        }else{
+            $.ajax({
+                url: 'ReactPost/' + idPost + '/' + typereact,
+                success: function (data) {
 
-                        document.getElementById(container).style.backgroundColor= "#ffc10782";
-                        document.getElementById(container).style.borderColor= "#ffc10782";
-                        document.getElementById(container).style.borderRadius= "30px";
-                    }else if (typereact==3)  {
-                        document.getElementById(container).innerHTML="<img style='margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;' src='{{ asset('uploads/reacts/triste.png') }}' alt=''/>";
-                        document.getElementById(container).style.backgroundColor= "#ffc10782";
-                        document.getElementById(container).style.borderColor= "#ffc10782";
-                        document.getElementById(container).style.borderRadius= "30px";
-                    }
-                }else if (data == "exists") {
+                    console.log("data :",data);
+                    var container="likecontainer".concat(idPost);
+                    document.getElementById(container).click();
 
-                        swal({
+                    if (data == "added"){
+                        if (typereact==1){
+                            document.getElementById(container).innerHTML="<img style='margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;' src='{{ asset('uploads/reacts/heart.png') }}' alt=''/>";
+
+                            document.getElementById(container).style.backgroundColor= "#dc35457d";
+                            document.getElementById(container).style.borderColor= "#dc35457d";
+                            document.getElementById(container).style.borderRadius= "30px";
+                        }else if (typereact==2){
+                            document.getElementById(container).innerHTML="<img style='margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;' src='{{ asset('uploads/reacts/haha.png') }}' alt=''/>";
+
+                            document.getElementById(container).style.backgroundColor= "#ffc10782";
+                            document.getElementById(container).style.borderColor= "#ffc10782";
+                            document.getElementById(container).style.borderRadius= "30px";
+                        }else if (typereact==3)  {
+                            document.getElementById(container).innerHTML="<img style='margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;' src='{{ asset('uploads/reacts/triste.png') }}' alt=''/>";
+                            document.getElementById(container).style.backgroundColor= "#ffc10782";
+                            document.getElementById(container).style.borderColor= "#ffc10782";
+                            document.getElementById(container).style.borderRadius= "30px";
+                        }else if (typereact==4)  {
+                            document.getElementById(container).innerHTML="<img style='margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;' src='{{ asset('uploads/reacts/grr.png') }}' alt=''/>";
+                            document.getElementById(container).style.backgroundColor= "#ffc10782";
+                            document.getElementById(container).style.borderColor= "#ffc10782";
+                            document.getElementById(container).style.borderRadius= "30px";
+                        }
+                    }else if (data == "exists") {
+                        Swal.fire({
                             title: 'Are you sure?',
-                            text: 'You won\'t be able to revert this!',
-                            type: 'warning',
+                            text: "You won't be able to revert this!",
+                            icon: 'warning',
                             showCancelButton: true,
                             confirmButtonColor: '#3085d6',
                             cancelButtonColor: '#d33',
-                            confirmButtonText: 'Yes, delete it!'
-                        }).then(function () {
+                            confirmButtonText: 'Yes, delete it!',
+                            cancelButtonText: 'Modify'
+                        }).then((result) => {
+                            if (result.value) {
+                                $.ajax({
+                                    url: 'RemoveLike/' + idPost,
+                                    success: function (data) {
+                                        swal('Deleted!', 'Your react has been deleted!', 'success');
+                                        console.log(data);
+                                        document.getElementById(container).innerHTML="<i class='ft-heart'></i>";
+                                        document.getElementById(container).style.backgroundColor= "#dc35457d";
+                                        document.getElementById(container).style.borderColor= "#dc35457d";
+                                        document.getElementById(container).style.borderRadius= "30px";
+                                    },
+                                    error: function (xhr, textStatus, errorThrown) {
+                                        console.log("Ajax request failed.");
 
-                            $.ajax({
-                                url: 'RemovePost/' + idPost,
-                                success: function (data) {
-                                    swal('Deleted!', 'Your react has been deleted!', 'success')
-                                    document.getElementById(container).innerHTML="<i class='ft-heart'></i>";
-                                    document.getElementById(container).style.backgroundColor= "#dc35457d";
-                                    document.getElementById(container).style.borderColor= "#dc35457d";
-                                    document.getElementById(container).style.borderRadius= "30px";
-                                },
-                                error: function (xhr, textStatus, errorThrown) {
-                                    console.log("Ajax request failed. data :");
+                                    }
+                                });
+                            }else{
+                                        console.log("modify plz");
+                            }
+                        })
 
-                                }
-                            });
 
-                        }).catch(swal.noop)
+                    }
+
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log("Ajax request failed. data :");
 
                 }
-
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                console.log("Ajax request failed. data :");
-
-            }
-        });
+            });
+        }
     }
 
 

@@ -23,12 +23,12 @@ react_post:
     defaults: { _controller: PostsBundle:Posts:React }
 
 remove_like:
-    path:     /RemovePost/{idp}
+    path:     /RemoveLike/{id}
     defaults: { _controller: PostsBundle:Posts:RemoveLike }
 
 add_comment:
-    path:     /AddComment/{id}
-    defaults: { _controller: PostsBundle:Comments:AddComment }
+    path:     /AddComment/{id}/{contenu}
+    defaults: { _controller: PostsBundle:Posts:AddComment }
 
 get_comments:
     path:     /GetComments/{id}
@@ -42,5 +42,8 @@ update_comment:
     path:     /UpdateComment/Post={id}/Comment={idc}
     defaults: { _controller: PostsBundle:Comments:UpdateComment }
 
+single_post:
+    path:     /SinglePost/{id}
+    defaults: { _controller: PostsBundle:Posts:SinglePost }
 
 

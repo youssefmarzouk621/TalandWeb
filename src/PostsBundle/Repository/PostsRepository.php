@@ -4,6 +4,7 @@ namespace PostsBundle\Repository;
 
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * PostsRepository
@@ -26,17 +27,42 @@ class PostsRepository extends \Doctrine\ORM\EntityRepository
         }
     }
 
+
+
+
+
+
+
+
+
     public function GetPostLike($idPost,$idu)
     {
         $query = $this->getEntityManager()
             ->createQuery("SELECT l FROM PostsBundle:Likes l WHERE l.idu ='$idu' AND l.idpost = '$idPost' ");
-
         try {
             return $query->getSingleResult();
         } catch (NoResultException $e) {
         } catch (NonUniqueResultException $e) {
         }
-
-
     }
+
+
+    public function GetPostComments($idpost){
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT c FROM PostsBundle:Comments c WHERE c.idpost ='$idpost' ");
+        return $query->getResult();
+    }
+
+    public function GetPostReacts($idpost){
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT l FROM PostsBundle:Likes l WHERE l.idpost ='$idpost' ");
+        return $query->getResult();
+    }
+
+    public function getLikes(){
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT l FROM PostsBundle:Likes l ORDER BY l.idpost ASC ");
+        return $query->getResult();
+    }
+
 }

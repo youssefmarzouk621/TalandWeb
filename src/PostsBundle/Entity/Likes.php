@@ -29,9 +29,8 @@ class Likes
     private $idpost;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="idU", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="idU", referencedColumnName="id")
      */
     private $idu;
 
@@ -75,9 +74,8 @@ class Likes
         $this->idpost = $idpost;
     }
 
-
     /**
-     * @return int
+     * @return mixed
      */
     public function getIdu()
     {
@@ -85,12 +83,15 @@ class Likes
     }
 
     /**
-     * @param int $idu
+     * @param mixed $idu
      */
     public function setIdu($idu)
     {
         $this->idu = $idu;
     }
+
+
+
 
     /**
      * @return \DateTime

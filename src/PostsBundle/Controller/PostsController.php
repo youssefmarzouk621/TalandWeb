@@ -3,9 +3,11 @@
 namespace PostsBundle\Controller;
 
 use mysql_xdevapi\Result;
+use PostsBundle\Entity\Comments;
 use PostsBundle\Entity\Likes;
 use PostsBundle\Entity\Posts;
 use PostsBundle\Form\PostsType;
+use PostsBundle\PostsBundle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,8 +38,12 @@ class PostsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $posts = $em->getRepository("PostsBundle:Posts")->findAll();
+        $likes = $em->getRepository("PostsBundle:Posts")->getLikes();
+
+
         return $this->render('@Posts/Posts/get_posts.html.twig', array(
             'result' => $posts,
+            'likes' => $likes,
             'connected' => $this->getUser()
         ));
     }
@@ -77,7 +83,7 @@ class PostsController extends Controller
         }else{
             $like=new Likes();
             $like->setIdpost($idp);
-            $like->setIdu($this->getUser()->getId());
+            $like->setIdu($this->getUser());
             $like->setDatecreation(new \DateTime());
             $like->setReact($react);
             $em->persist($like);
@@ -85,15 +91,44 @@ class PostsController extends Controller
             return new JsonResponse("added");
         }
     }
-    public function RemoveLikeAction($idp){
+    public function RemoveLikeAction($id){
         $em=$this->getDoctrine()->getManager();
-        $result=$em->getRepository(Posts::class)->GetPostLike($idp,$this->getUser()->getId());
-        $em->remove($result);
+        $result=$em->getRepository(Posts::class)->GetPostLike($id,$this->getUser()->getId());
+        $like=$em->getRepository(Likes::class)->find($result->getIdlike());
+        $em->remove($like);
         $em->flush();
-        return new JsonResponse("deleted");
-
-
-
+        return new JsonResponse("removed ?");
     }
 
+    public function SinglePostAction($id)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $post=$em->getRepository(Posts::class)->find($id);
+        $comments=$em->getRepository(Posts::class)->GetPostComments($id);
+        $reacts=$em->getRepository(Posts::class)->GetPostReacts($id);
+
+        return $this->render('@Posts/Posts/single_post.html.twig', array(
+            'single_post' => $post,
+            'comments' => $comments,
+            'reacts' => $reacts,
+            'connected' => $this->getUser()
+        ));
+    }
+    public function AddCommentAction($id,$contenu)
+    {
+        $comment=new Comments();
+        $comment->setDatecreation(new \DateTime());
+        $comment->setEtat(0);
+        $comment->setContenu($contenu);
+        $emanager=$this->getDoctrine()->getManager();
+        $post=$emanager->getRepository(Posts::class)->find($id);
+
+        $comment->setIdpost($post);
+        $comment->setIdu($this->getUser());
+
+        $em=$this->getDoctrine()->getManager();
+        $em->persist($comment);
+        $em->flush();
+        return new JsonResponse("comment added");
+    }
 }
