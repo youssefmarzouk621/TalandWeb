@@ -10,8 +10,12 @@
                 <div class="col-12">
                     <div class="section-heading style-2">
                         <p>See what’s new
-                        <p>{% if is_granted('IS_AUTHENTICATED_FULLY') %}Username: {{ app.user.username }}
-                           {% endif %}</p></p>
+                        <p>
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                Username: {{ app.user.username }}
+                            {% endif %}
+                        </p>
+                        </p>
                         <h2>Buy What’s New</h2>
                     </div>
                 </div>
@@ -76,7 +80,7 @@
                         {% endfor %}
                     </div>
                     {#end here---------------------#}
-                    <div class="row">
+                    <div class="row js-addLoadedData">
                         {% for p in Produit %}
                             <!-- Single Album Area -->
                             <div class="col-12 col-sm-6 col-md-4 col-lg-2">
@@ -98,7 +102,7 @@
                                         <!-- Play Icon -->
                                         <div class="row">
                                             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                                                {% if app.user.id == p.userid %}
+                                                {% if app.user.id == p.userid.id %}
                                                     <div class="col-3">
                                                         <form method="post"
                                                               action="{{ path('delete_product',{'id':p.id}) }}"
@@ -151,7 +155,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="load-more-btn text-center wow fadeInUp" data-wow-delay="300ms">
-                        <a href="#" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
+                        <a href="{{ path('product_loadmore',{'start':12,'limit':12}) }}" class="btn oneMusic-btn js-loadMore">Load More <i class="fa fa-angle-double-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -184,7 +188,10 @@
 
             axios.get(url).then(function (response) {
                 iCount.textContent = response.data.nbrProduct;
-                console.log(response)
+                console.log(response);
+                if (window.Notification && Notification.permission === "granted") {
+                    var n = new Notification("Added to cart");
+                }
             });
         }
 
@@ -193,9 +200,27 @@
         })
     </script>
     <script>
+        function onClickLoadMore(event){
+            event.preventDefault();
+            const url =this.href;
+            axios.get(url).then(function (response) {
+               console.log(response);
+               for (p in response.data){
+
+                   var product=response.data[p];
+
+                   document.querySelector('div.js-addLoadedData').innerHTML+='<h6>'+product.name+'</h6>';
+                   //document.querySelector('div.js-addLoadedData').append('<h1>'+product.name+'</h1>');
+               }
+
+            });
+        }
+        document.querySelector('a.js-loadMore').addEventListener('click',onClickLoadMore);
+    </script>
+    <script>
         $(window).load(function () {
             const iCount = document.querySelector('span.js-quantityProductInCart');
-            iCount.textContent={{ nbrProduct }}
+            iCount.textContent ={{ nbrProduct }}
         });
     </script>
 

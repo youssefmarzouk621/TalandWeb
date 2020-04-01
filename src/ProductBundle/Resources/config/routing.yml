@@ -3,6 +3,10 @@ get_products:
     path:     /getProducts
     defaults: { _controller: ProductBundle:Product:getProducts }
 
+product_loadmore:
+    path:     /loadMore/{start}/{limit}
+    defaults: { _controller: ProductBundle:Product:loadMoreProducts }
+
 get_product_by_id:
     path:     /getProducts/{id}
     defaults: { _controller: ProductBundle:Product:getProductById }

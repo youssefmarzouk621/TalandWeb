@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Produit
  *
  * @ORM\Table(name="produit", indexes={@ORM\Index(name="category", columns={"category"}), @ORM\Index(name="userId", columns={"userId"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ProductBundle\Repository\ProductRepository")
  */
 class Produit
 {
@@ -28,11 +28,9 @@ class Produit
      * @Assert\NotBlank()
      */
     private $name;
-
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="category", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="ProductBundle\Entity\Category")
+     * @ORM\JoinColumn(name="category", referencedColumnName="id")
      */
     private $category;
 
@@ -44,9 +42,8 @@ class Produit
     private $price;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="userId", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="userId", referencedColumnName="id")
      */
     private $userid;
 
@@ -97,7 +94,7 @@ class Produit
     }
 
     /**
-     * @return int
+     * @return mixed
      */
     public function getCategory()
     {
@@ -105,12 +102,14 @@ class Produit
     }
 
     /**
-     * @param int $category
+     * @param mixed $category
      */
     public function setCategory($category)
     {
         $this->category = $category;
     }
+
+
 
     /**
      * @return float
@@ -129,7 +128,7 @@ class Produit
     }
 
     /**
-     * @return int
+     * @return mixed
      */
     public function getUserid()
     {
@@ -137,12 +136,14 @@ class Produit
     }
 
     /**
-     * @param int $userid
+     * @param mixed $userid
      */
     public function setUserid($userid)
     {
         $this->userid = $userid;
     }
+
+
 
     /**
      * @return \DateTime
