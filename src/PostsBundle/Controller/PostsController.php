@@ -18,7 +18,10 @@ class PostsController extends Controller
     public function AddPostAction(Request $request)
     {
         $post=new Posts();
+        $post->setIdu($this->getUser());
         $post->setDatecreation(new \DateTime());
+        $post->setNbrlikes(0);
+        $post->setNbrcomments(0);
         $Form=$this->createForm(PostsType::class,$post);
         $Form->handleRequest($request);
 
@@ -34,8 +37,29 @@ class PostsController extends Controller
         ));
     }
 
+    public function AddPAction($img,$des,Request $request)
+    {
+        $post=new Posts();
+        $post->setDatecreation(new \DateTime());
+        $post->setIdu($this->getUser());
+        $post->setNbrlikes(0);
+        $post->setNbrcomments(0);
+        $post->setImageName($img);
+        $post->setDescription($des);
+
+
+        $em=$this->getDoctrine()->getManager();
+        $em->persist($post);
+        $em->flush();
+
+
+
+        return new JsonResponse("img :".$img." des : ".$des);
+    }
+
     public function GetPostsAction()
     {
+
         $em = $this->getDoctrine()->getManager();
         $posts = $em->getRepository("PostsBundle:Posts")->findAll();
         $likes = $em->getRepository("PostsBundle:Posts")->getLikes();
@@ -73,7 +97,15 @@ class PostsController extends Controller
         $em->flush();
         return $this->redirectToRoute('get_posts');
     }
+    public function RemovePAction($id)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $post=$em->getRepository(Posts::class)->find($id);
+        $em->remove($post);
+        $em->flush();
 
+        return new JsonResponse("deleted");
+    }
 
     public function ReactAction($idp,$react){
         $em=$this->getDoctrine()->getManager();

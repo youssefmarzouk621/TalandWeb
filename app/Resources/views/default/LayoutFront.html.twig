@@ -30,9 +30,25 @@
     <link rel="stylesheet" href="{{ asset('FrontOffice/css/modal.css') }}">
     <link rel="stylesheet" href="{{ asset('FrontOffice/css/react.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('FrontOffice/css/feather/style.min.css')}}">
-    {% block imports %}
 
-    {% endblock %}
+
+
+
+
+
+
+    <link rel="stylesheet" href="{{ asset('FrontOffice/css/glide.core.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('FrontOffice/css/glide.theme.min.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('FrontOffice/css/glidestyle.css')}}">
+
+    <link rel="stylesheet" href="{{ asset('FrontOffice/css/emojionearea.min.css')}}">
+
+<style>
+    .emojionearea .emojionearea-editor {
+        min-height: 288px;
+    }
+</style>
 </head>
 <body>
 <div class="preloader d-flex align-items-center justify-content-center">
@@ -126,7 +142,9 @@
         </div>
     </div>
 </header>
-<section class="breadcumb-area bg-img bg-overlay" style="background-image: url({{ asset('FrontOffice/img/bg-img/breadcumb3.jpg')}})"></section>
+<section class="breadcumb-area bg-img bg-overlay" style="height: 410px;background-image: url({{ asset('FrontOffice/img/bg-img/breadcumb3.jpg')}})">
+    {% block header %} {% endblock %}
+</section>
 
 
 
@@ -178,6 +196,7 @@
 <script src="{{ asset('FrontOffice/jstest/main.js')}}"></script>
 <script src="{{ asset('FrontOffice/jstest/fresco.min.js')}}"></script>
 <script src="{{ asset('FrontOffice/js/modal.js') }}"></script>
+<script src="{{ asset('FrontOffice/js/glide.min.js')}}" charset="utf-8"></script>
 {% block scripts %}
 
 {% endblock %}

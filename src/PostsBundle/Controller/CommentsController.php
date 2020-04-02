@@ -45,7 +45,7 @@ class CommentsController extends Controller
         $comment=$em->getRepository(Comments::class)->find($idc);
         $em->remove($comment);
         $em->flush();
-        return $this->redirectToRoute('get_comments', array('id' => $id));
+        return $this->redirectToRoute('single_post', array('id' => $id));
     }
 
     public function UpdateCommentAction($id,$idc,Request $request)

@@ -38,7 +38,12 @@
                             <h7>{{ single_post.description }}</h7>
                         </div>
                         <div style="margin-bottom: 30px;" class="media border-0">
-                            <h7>Liked by</h7> <h6 style="margin-top: 2px;margin-right: 3px;margin-left: 3px;"><img style="height: 20px;margin-right: 2px;" class="media-object rounded-circle" src="{{ asset('uploads/posts/' ~ reacts[0].idu.imageName) }}" alt="">{{ reacts[0].idu.firstname }}</h6><h7>And by</h7><h6 style="margin-top: 3px;margin-right: 3px;margin-left: 3px;">{{ reacts|length-1 }}</h6><h7>more</h7>
+                            {% if reacts|length==0 %}
+                                <h7>No one liked this post</h7>
+                            {% else %}
+                                <h7>Liked by</h7> <h6 style="margin-top: 2px;margin-right: 3px;margin-left: 3px;"><img style="height: 20px;margin-right: 2px;" class="media-object rounded-circle" src="{{ asset('uploads/posts/' ~ reacts[0].idu.imageName) }}" alt="">{{ reacts[0].idu.firstname }}</h6><h7>And by</h7><h6 style="margin-top: 3px;margin-right: 3px;margin-left: 3px;">{{ reacts|length-1 }}</h6><h7>more</h7>
+                            {% endif %}
+
                         </div>
                         <div  style="background: none;border: none;padding-left: 13px;padding-top: 10px;margin-left: -20px;height: 399px;width: 382px;box-shadow: rgba(0, 0, 0, 0.06) -8px 10px 20px 0;margin-bottom: 10px;" class="popular-artists-area nice-scroll">
                             <div class="section-heading text-left wow fadeInUp" data-wow-delay="50ms" style="margin-bottom: 7px ;visibility: visible; animation-delay: 50ms; animation-name: fadeInUp;">
@@ -54,7 +59,7 @@
                                     <div class="content-">
                                         <p>{{ row.idu.firstname }} {{ row.idu.lastname }} {% if connected!=null %}
                                                 {% if (connected.id==row.idu.id) %}
-                                                    <a style="background: none;border:none;color: #00000082;position: relative;top: -2px;" class="btn"><i class="fa fa-times"></i></a>
+                                                    <a href="{{path('delete_comment',{ 'id':row.idPost.idPost,'idc':row.idComment })}}" style="background: none;border:none;color: #00000082;position: relative;top: -2px;" class="btn"><i class="fa fa-times"></i></a>
                                                 {% endif %}
                                             {% endif %}</p>
                                         <p style="line-height: 1.2;color: black;">{{ row.contenu }}</p>

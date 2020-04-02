@@ -6,6 +6,10 @@ add_post:
     path:     /AddPost
     defaults: { _controller: PostsBundle:Posts:AddPost }
 
+add_p:
+    path:     /AddP/{img}/{des}
+    defaults: { _controller: PostsBundle:Posts:AddP }
+
 get_posts:
     path:     /GetPosts
     defaults: { _controller: PostsBundle:Posts:GetPosts }
@@ -15,8 +19,12 @@ update_post:
     defaults: { _controller: PostsBundle:Posts:UpdatePost }
 
 delete_post:
-    path:     /DeletePost/{id}
-    defaults: { _controller: PostsBundle:Posts:DeletePost }
+    path:     /RemoveP/{id}
+    defaults: { _controller: PostsBundle:Posts:RemoveP }
+
+remove_post:
+  path:     /DeletePost/{id}
+  defaults: { _controller: PostsBundle:Posts:DeletePost }
 
 react_post:
     path:     /ReactPost/{idp}/{react}

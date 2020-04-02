@@ -22,6 +22,11 @@
                                 <div class="media-left pr-1">
                                     <span class="avatar avatar-md avatar-online">
                                         <img  data-toggle="tooltip" data-placement="right" title="{{ row.idu.firstname }} {{ row.idu.lastname }}" style="height: 50px;margin-right: 10px;" class="media-object rounded-circle" src="{{ asset('uploads/posts/' ~ row.idu.imageName) }}" alt="Generic placeholder image">
+                                        {% if connected!=null %}
+                                            {% if connected.id==row.idu.id %}
+                                                <a onclick="removepost({{ row.idpost }})" style="background: none;color: gray;position: relative;left: 91px;top: -10px;" class="btn"><i class="fa fa-trash"></i></a>
+                                            {% endif %}
+                                        {% endif %}
                                     </span>
                                 </div>
                             </div>
@@ -55,6 +60,7 @@
 
 
                                     {% if (connected!=null) %}
+
                                         <div id="reacts" class="reacts">
                                           <div class="circle"><button onclick="react({{ connected.id }},{{ row.idPost }},1);" style="background: none;border: none;cursor: pointer;"><img style="margin-left: -6px;" src="{{ asset('uploads/reacts/heart.png') }}" alt=""/></button>
                                             <p>Love</p>
@@ -103,7 +109,7 @@
 
 
 
-                                    <button style="background-color: #ffffff85;border-color: #ffffff85;margin-left: 10px;color: black;border-radius: 30px" class="btn btn-outline-dark mr-1 comments"><i id="com" class="ft-message-square"></i></button>
+                                    <a href="{{path('single_post',{'id':row.idPost})}}" style="background-color: #ffffff85;border-color: #ffffff85;margin-left: 10px;color: black;border-radius: 30px" class="btn btn-outline-dark mr-1 comments"><i id="com" class="ft-message-square"></i></a>
                                     <a class="btn btn-outline-dark mr-1 fresco showmore"
                                        href="{{ asset('uploads/posts/' ~ row.imageName) }}"
                                        data-fresco-group="projects"
@@ -308,6 +314,40 @@
     
     
 <script>
+
+    function removepost(idp) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.value) {
+                console.log("delete");
+                $.ajax({
+                    url: 'RemoveP/' + idp,
+                    success: function (data) {
+                        swal('Deleted!', 'Your Post has been deleted!', 'success');
+                        console.log(data);
+                        document.getElementById(container).innerHTML="<i class='ft-heart'></i>";
+                        document.getElementById(container).style.backgroundColor= "#dc35457d";
+                        document.getElementById(container).style.borderColor= "#dc35457d";
+                        document.getElementById(container).style.borderRadius= "30px";
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.log("Ajax request failed.");
+
+                    }
+                });
+            }else{
+                console.log("modify plz");
+            }
+        })
+    }
+
 
     function react(idu,idPost,typereact) {
         if (idu==0){
