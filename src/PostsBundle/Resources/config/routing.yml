@@ -54,4 +54,6 @@ single_post:
     path:     /SinglePost/{id}
     defaults: { _controller: PostsBundle:Posts:SinglePost }
 
-
+display_stories:
+  path:     /DisplayStories
+  defaults: { _controller: PostsBundle:Posts:DisplayStories }

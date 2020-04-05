@@ -14,28 +14,43 @@
                 <div class="contain">
                     {% set i = 0 %}
                     {% for row in result %}
+                        {% if row.type ==1 or row.archive==1 %}
+                            <div style="display: none;" class="boxes">
+                        {% else %}
+                            <div class="boxes">
+                        {% endif %}
 
-                    <div class="boxes">
-                        <img src="{{ asset('uploads/posts/' ~ row.imageName) }}">
+                                {% set foo = row.imageName|split('.') %}
+                                {% if foo[1]=="mp4" %}
+                                    <video class="vid" style="border-radius: 13px;max-width: 100%;box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);object-fit: cover;" loop>
+                                      <source src="{{ asset('uploads/posts/' ~ row.imageName) }}" type="video/mp4">
+                                    </video>
+                                    <div style="  background-image: url({{ asset('uploads/posts/play.png') }});background-repeat: no-repeat;width: 24%;height: 50%;position: absolute;left: 0%;right: 0%;top: 0%;bottom: 0%;margin: auto;background-size: contain;background-position: center;opacity: 0.9;" class="playpause"></div>
+                                {% else %}
+                                    <img src="{{ asset('uploads/posts/' ~ row.imageName) }}">
+                                {% endif %}
 
-                            <div style="position: absolute;top: -3px;left: 17px;margin-top: 20px;margin-bottom: 20px;" class="media border-0">
-                                <div class="media-left pr-1">
+
+
+
+                                <div style="position: absolute;top: -3px;left: 17px;margin-top: 20px;margin-bottom: 20px;" class="media border-0">
+                                    <div class="media-left pr-1">
                                     <span class="avatar avatar-md avatar-online">
                                         <img  data-toggle="tooltip" data-placement="right" title="{{ row.idu.firstname }} {{ row.idu.lastname }}" style="height: 50px;margin-right: 10px;" class="media-object rounded-circle" src="{{ asset('uploads/posts/' ~ row.idu.imageName) }}" alt="Generic placeholder image">
                                         {% if connected!=null %}
                                             {% if connected.id==row.idu.id %}
-                                                <a onclick="removepost({{ row.idpost }})" style="background: none;color: gray;position: relative;left: 91px;top: -10px;" class="btn"><i class="fa fa-trash"></i></a>
+                                                <a onclick="removepost({{ row.idpost }})" style="background: none;color: gray;position: relative;left: 91px;top: -10px;z-index: 1" class="btn"><i class="fa fa-trash"></i></a>
                                             {% endif %}
                                         {% endif %}
                                     </span>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="details">
+                                <div class="details">
 
-                                <span class="info">{{ row.description }}</span>
+                                    <span class="info">{{ row.description }}</span>
 
-                                <span class="info">
+                                    <span class="info">
 
 
 
@@ -59,9 +74,9 @@
                                     {% endif %}
 
 
-                                    {% if (connected!=null) %}
+                                        {% if (connected!=null) %}
 
-                                        <div id="reacts" class="reacts">
+                                            <div id="reacts" class="reacts">
                                           <div class="circle"><button onclick="react({{ connected.id }},{{ row.idPost }},1);" style="background: none;border: none;cursor: pointer;"><img style="margin-left: -6px;" src="{{ asset('uploads/reacts/heart.png') }}" alt=""/></button>
                                             <p>Love</p>
                                           </div>
@@ -83,28 +98,28 @@
                                             {% if likes!=null %}
 
 
-                                                {% if i!=likes|length %}
-                                                    {% if likes[i].idPost==row.idPost %}
-                                                        {% if likes[i].react==1 %}
-                                                            <button id="likecontainer{{ row.idPost }}" style="background-color: #dc35457d;border-color: #dc35457d;border-radius: 30px" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><img style="margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;" src="{{ asset('uploads/reacts/heart.png')}}" alt=""></button>
+                                            {% if i!=likes|length %}
+                                                {% if likes[i].idPost==row.idPost %}
+                                                    {% if likes[i].react==1 %}
+                                                        <button id="likecontainer{{ row.idPost }}" style="background-color: #dc35457d;border-color: #dc35457d;border-radius: 30px" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><img style="margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;" src="{{ asset('uploads/reacts/heart.png')}}" alt=""></button>
                                                             {% elseif likes[i].react==2 %}
-                                                            <button id="likecontainer{{ row.idPost }}" style="background-color: rgba(255, 193, 7, 0.51); border-color: rgba(255, 193, 7, 0.51); border-radius: 30px;" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><img style="margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;" src="{{ asset('uploads/reacts/haha.png')}}" alt=""></button>
+                                                        <button id="likecontainer{{ row.idPost }}" style="background-color: rgba(255, 193, 7, 0.51); border-color: rgba(255, 193, 7, 0.51); border-radius: 30px;" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><img style="margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;" src="{{ asset('uploads/reacts/haha.png')}}" alt=""></button>
                                                                 {% elseif likes[i].react==3 %}
-                                                            <button id="likecontainer{{ row.idPost }}" style="background-color: rgba(255, 193, 7, 0.51); border-color: rgba(255, 193, 7, 0.51); border-radius: 30px;" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><img style="margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;" src="{{ asset('uploads/reacts/triste.png')}}" alt=""></button>
+                                                        <button id="likecontainer{{ row.idPost }}" style="background-color: rgba(255, 193, 7, 0.51); border-color: rgba(255, 193, 7, 0.51); border-radius: 30px;" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><img style="margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;" src="{{ asset('uploads/reacts/triste.png')}}" alt=""></button>
                                                                     {% elseif likes[i].react==4 %}
-                                                            <button id="likecontainer{{ row.idPost }}" style="background-color: rgba(255, 193, 7, 0.51); border-color: rgba(255, 193, 7, 0.51); border-radius: 30px;" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><img style="margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;" src="{{ asset('uploads/reacts/grr.png')}}" alt=""></button>
-                                                        {% endif %}
+                                                        <button id="likecontainer{{ row.idPost }}" style="background-color: rgba(255, 193, 7, 0.51); border-color: rgba(255, 193, 7, 0.51); border-radius: 30px;" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><img style="margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;" src="{{ asset('uploads/reacts/grr.png')}}" alt=""></button>
+                                                    {% endif %}
                                                         {% set i = i + 1 %}
                                                     {% else %}
-                                                        <button id="likecontainer{{ row.idPost }}" style="background-color: #dc35457d;border-color: #dc35457d;border-radius: 30px" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><i class="ft-heart"></i></button>
-                                                    {% endif %}
-                                                {% else %}
-                                                        <button id="likecontainer{{ row.idPost }}" style="background-color: #dc35457d;border-color: #dc35457d;border-radius: 30px" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><i class="ft-heart"></i></button>
+                                                    <button id="likecontainer{{ row.idPost }}" style="background-color: #dc35457d;border-color: #dc35457d;border-radius: 30px" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><i class="ft-heart"></i></button>
                                                 {% endif %}
-                                            {% else %}
+                                                {% else %}
                                                 <button id="likecontainer{{ row.idPost }}" style="background-color: #dc35457d;border-color: #dc35457d;border-radius: 30px" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><i class="ft-heart"></i></button>
                                             {% endif %}
-                                    {% endif %}
+                                            {% else %}
+                                            <button id="likecontainer{{ row.idPost }}" style="background-color: #dc35457d;border-color: #dc35457d;border-radius: 30px" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><i class="ft-heart"></i></button>
+                                        {% endif %}
+                                        {% endif %}
 
 
 
@@ -117,8 +132,9 @@
                                        style="background-color: #ffffff85;border-color: #ffffff85;margin-left: 10px;color: black;border-radius: 30px" ><i id="maxi" class="ft-maximize-2"></i></a>
                                 </span>
 
+                                </div>
                             </div>
-                    </div>
+
                     {% endfor %}
 
 
@@ -150,82 +166,41 @@
 
                         </div>
                     </div>
-                {% endif %}
 
+
+
+
+
+                {% endif %}
                 <div  style="padding-top: 10px;margin-right: 14px;height: 375px;" class="popular-artists-area mb-100 nice-scroll">
                     <div class="section-heading text-left wow fadeInUp" data-wow-delay="50ms" style="margin-bottom: 20px ;visibility: visible; animation-delay: 50ms; animation-name: fadeInUp;">
+                    {% if stories==null %}
+                        <p>No available stories</p>
+                    {% else %}
                         <p>See what’s new</p>
                         <h2>Stories</h2>
+                        <a href="{{ path('display_stories') }}" style="position: absolute;top: 0;left: 189px;background: none;color: black;font-weight: 100;">Watch All</a>
+                    {% endif %}
                     </div>
-                    <!-- Single Artist -->
-                    <div class="single-artists d-flex align-items-center wow fadeInUp" data-wow-delay="100ms" style="margin-bottom: 10px;visibility: visible; animation-delay: 100ms; animation-name: fadeInUp;">
-                        <div class="thumbnail">
-                            <img src="{{ asset('FrontOffice/img/bg-img/pa1.jpg')}}" alt="">
-                        </div>
-                        <div class="content-">
-                            <p>Sam Smith</p>
-                        </div>
-                    </div>
+                    {% if stories!=null %}
 
-                    <!-- Single Artist -->
-                    <div class="single-artists d-flex align-items-center wow fadeInUp" data-wow-delay="150ms" style="margin-bottom: 10px;visibility: visible; animation-delay: 150ms; animation-name: fadeInUp;">
-                        <div class="thumbnail">
-                            <img src="{{ asset('FrontOffice/img/bg-img/pa2.jpg')}}" alt="">
-                        </div>
-                        <div class="content-">
-                            <p>William Parker</p>
-                        </div>
-                    </div>
+                    {% for s in stories %}
 
-                    <!-- Single Artist -->
-                    <div class="single-artists d-flex align-items-center wow fadeInUp" data-wow-delay="200ms" style="margin-bottom: 10px;visibility: visible; animation-delay: 200ms; animation-name: fadeInUp;">
-                        <div class="thumbnail">
-                            <img src="{{ asset('FrontOffice/img/bg-img/pa3.jpg')}}" alt="">
+                        <!-- Single Artist -->
+                        <div class="single-artists d-flex align-items-center wow fadeInUp" data-wow-delay="100ms" style="margin-bottom: -22px;visibility: visible; animation-delay: 100ms; animation-name: fadeInUp;">
+                            <div class="thumbnail circle">
+                                <img src="{{ asset('uploads/posts/' ~ s.idu.imageName) }}" alt="">
+                                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="enable-background:new -580 439 577.9 194;" xml:space="preserve"><circle cx="50" cy="50" r="40" /></svg>
+                            </div>
+                            <div class="content-" style="margin-bottom: 35px;">
+                                <p>{{ s.idu.firstname }} {{ s.idu.lastname }}</p>
+                            </div>
                         </div>
-                        <div class="content-">
-                            <p>Jessica Walsh</p>
-                        </div>
-                    </div>
+                        {% endfor %}
 
-                    <!-- Single Artist -->
-                    <div class="single-artists d-flex align-items-center wow fadeInUp" data-wow-delay="250ms" style="margin-bottom: 10px;visibility: visible; animation-delay: 250ms; animation-name: fadeInUp;">
-                        <div class="thumbnail">
-                            <img src="{{ asset('FrontOffice/img/bg-img/pa4.jpg')}}" alt="">
-                        </div>
-                        <div class="content-">
-                            <p>Tha Stoves</p>
-                        </div>
-                    </div>
+                    {% endif %}
 
-                    <!-- Single Artist -->
-                    <div class="single-artists d-flex align-items-center wow fadeInUp" data-wow-delay="300ms" style="margin-bottom: 10px;visibility: visible; animation-delay: 300ms; animation-name: fadeInUp;">
-                        <div class="thumbnail">
-                            <img src="{{ asset('FrontOffice/img/bg-img/pa5.jpg')}}" alt="">
-                        </div>
-                        <div class="content-">
-                            <p>DJ Ajay</p>
-                        </div>
-                    </div>
 
-                    <!-- Single Artist -->
-                    <div class="single-artists d-flex align-items-center wow fadeInUp" data-wow-delay="350ms" style="margin-bottom: 10px;visibility: visible; animation-delay: 350ms; animation-name: fadeInUp;">
-                        <div class="thumbnail">
-                            <img src="{{ asset('FrontOffice/img/bg-img/pa6.jpg')}}" alt="">
-                        </div>
-                        <div class="content-">
-                            <p>Radio Vibez</p>
-                        </div>
-                    </div>
-
-                    <!-- Single Artist -->
-                    <div class="single-artists d-flex align-items-center wow fadeInUp" data-wow-delay="400ms" style="margin-bottom: 10px;visibility: visible; animation-delay: 400ms; animation-name: fadeInUp;">
-                        <div class="thumbnail">
-                            <img src="{{ asset('FrontOffice/img/bg-img/pa7.jpg')}}" alt="">
-                        </div>
-                        <div class="content-">
-                            <p>Music 4u</p>
-                        </div>
-                    </div>
 
                 </div>
             </div>
@@ -314,7 +289,12 @@
     
     
 <script>
-
+    $('.vid').parent().click(function () {
+  if($(this).children(".vid").get(0).paused){        $(this).children(".vid").get(0).play();   $(this).children(".playpause").fadeOut();
+    }else{       $(this).children(".vid").get(0).pause();
+  $(this).children(".playpause").fadeIn();
+    }
+});
     function removepost(idp) {
         Swal.fire({
             title: 'Are you sure?',

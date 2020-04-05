@@ -93,6 +93,20 @@ class Posts
      */
     private $imageName;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="type", type="integer", nullable=true)
+     */
+    private $type=0;
+
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="archive", type="integer", nullable=true)
+     */
+    private $archive=0;
 
     /**
      * @return int
@@ -181,6 +195,40 @@ class Posts
     {
         $this->datecreation = $datecreation;
     }
+
+    /**
+     * @return int
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param int $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return int
+     */
+    public function getArchive()
+    {
+        return $this->archive;
+    }
+
+    /**
+     * @param int $archive
+     */
+    public function setArchive($archive)
+    {
+        $this->archive = $archive;
+    }
+
+
 
 
 

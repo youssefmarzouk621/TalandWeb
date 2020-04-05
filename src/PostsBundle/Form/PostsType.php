@@ -17,7 +17,8 @@ class PostsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('description', TextareaType::class)
-                ->add('imageFile', VichImageType::class);
+                ->add('imageFile', VichImageType::class)
+                ->add('ajouter',SubmitType::class);
     }/**
      * {@inheritdoc}
      */

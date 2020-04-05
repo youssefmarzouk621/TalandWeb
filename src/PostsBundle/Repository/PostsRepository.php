@@ -65,4 +65,15 @@ class PostsRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
     }
 
+    public function getStoriesDistinct(){
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT s FROM PostsBundle:Posts s WHERE s.type =1 GROUP BY s.idu ");
+        return $query->getResult();
+    }
+
+    public function getStories(){
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT s FROM PostsBundle:Posts s WHERE s.type =1 ORDER BY s.idu");
+        return $query->getResult();
+    }
 }

@@ -5,13 +5,15 @@ namespace PostsBundle\Controller;
 use mysql_xdevapi\Result;
 use PostsBundle\Entity\Comments;
 use PostsBundle\Entity\Likes;
+
 use PostsBundle\Entity\Posts;
 use PostsBundle\Form\PostsType;
 use PostsBundle\PostsBundle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
+
 use PostsBundle\Repository\PostsRepository;
+use Symfony\Component\HttpFoundation\Request;
 
 class PostsController extends Controller
 {
@@ -63,13 +65,29 @@ class PostsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $posts = $em->getRepository("PostsBundle:Posts")->findAll();
         $likes = $em->getRepository("PostsBundle:Posts")->getLikes();
-
+        $stories = $em->getRepository("PostsBundle:Posts")->getStoriesDistinct();
 
         return $this->render('@Posts/Posts/get_posts.html.twig', array(
             'result' => $posts,
             'likes' => $likes,
+            'stories' => $stories,
             'connected' => $this->getUser()
         ));
+    }
+
+    public function DisplayStoriesAction(){
+        $em = $this->getDoctrine()->getManager();
+        $storyusers = $em->getRepository("PostsBundle:Posts")->getStoriesDistinct();
+        $stories = $em->getRepository("PostsBundle:Posts")->getStories();
+
+
+        return $this->render('@Posts/Posts/get_stories.html.twig', array(
+            'storyusers' => $storyusers,
+            'stories' => $stories,
+            'connected' => $this->getUser()
+        ));
+
+
     }
 
     public function UpdatePostAction($id,Request $request)
