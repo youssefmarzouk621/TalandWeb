@@ -1,0 +1,72 @@
+{% extends "default/LayoutFront.html.twig" %}
+{% block section %}
+
+
+<!-- ##### Blog Area Start ##### -->
+<div class="blog-area section-padding-100">
+    <div class="container">
+        <form action="{{ path('showArticleFront') }}" method="get" class="search-form">
+
+            <div class="form-group">
+                <span  class="icon icon-search"></span>
+                <input name="filter" type="text" class="form-control" placeholder="recherche Article">
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-12 col-lg-9">
+                {% for article in articles %}
+                <!-- Single Post Start -->
+
+
+                <div class="single-blog-post mb-100 wow fadeInUp" data-wow-delay="100ms">
+                    <!-- Post Thumb -->
+
+                    <div class="blog-post-thumb mt-30">
+
+                        <a href="{{ path('article', {'id':article.getIdArticle() }) }}"><img src="{{  asset('../public/uploads/'~article.getImageArticle() )}}"alt="image"  ></a>
+                        <!-- Post Date -->
+                        <div class="post-date">
+                            <p>{{article.getDateArticle() }}</p>
+
+
+                        </div>
+                    </div>
+
+                    <!-- Blog Content -->
+                    <div class="blog-content">
+                        <!-- Post Title -->
+                        <a href="#" class="post-title">{{article.getNomArticle()}}</a>
+                        <!-- Post Meta -->
+                      {#
+                       <div class="post-meta d-flex mb-30">
+                            <p class="post-author">By<a href="#"> </a></p>
+                            <p class="tags">in<a href="#"> </a></p>
+                            <p class="tags"><a href="#">2 </a></p>
+                        </div>
+                      #}
+                        <!-- Post Excerpt -->
+                        <p>{{article.getContenuArticle()}}</p>
+
+                    </div>
+                </div>
+                <td> <a href="{{ path('imprimer', {'id':article.getIdArticle()}) }}"  >
+                        <button class="btn btn-primary">Telecharger </button></a>
+
+
+                    {% endfor %}
+
+
+
+     <!-- Pagination -->
+                <div style="padding-left: 300px;" class="oneMusic-pagination-area wow fadeInUp" data-wow-delay="300ms">
+                    {{ knp_pagination_render(articles) }}
+                </div>
+
+
+
+
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+forum_homepage:
+    path:     /
+    defaults: { _controller: ForumBundle:Default:index }
+
+publications:
+    path:     /ajoutersujet
+    defaults: { _controller: ForumBundle:Forum:ajoutersujet }
+afficher_messujets:
+    path:     /afficherforums
+    defaults: { _controller: ForumBundle:Forum:mesForums }
+supprimer_sujet:
+    path:     /supprimersujey/{id}
+    defaults: { _controller: ForumBundle:Forum:supprimerSujet }
+modifier_sujet:
+    path:     /modifiersujet/{id}
+    defaults: { _controller: ForumBundle:Forum:modifierSujet }
+list_forum:
+    path:     /listforum
+    defaults: { _controller: ForumBundle:Forum:affichageforum }
+back_forum:
+    path:     /backforum
+    defaults: { _controller: ForumBundle:Forum:reloadback  }
+
+validersujet:
+    path:     /{id}/validerSujet
+    defaults: { _controller: ForumBundle:Forum:validersujet }
+
+refusersujet:
+    path:     /{id}/refuserSujet
+    defaults: { _controller: ForumBundle:Forum:refusersujet }
+detail_sujet:
+    path:     /detailssujet/{id}
+    defaults: { _controller: ForumBundle:Forum:detailssujet }
+like:
+    path:     /like/{id}
+    defaults: { _controller: ForumBundle:Forum:like }
+modifier_comment:
+    path:     /modifiercomment/{id}
+    defaults: { _controller: ForumBundle:Forum:modifierComment }
+supprimer_comment:
+    path:     /supprimercomment/{id}
+    defaults: { _controller: ForumBundle:Forum:supprimerComment }
+aman:
+    path:     /aman/{id}
+    defaults: { _controller: ForumBundle:Forum:aman }
+chart:
+    path:     /chart
+    defaults: { _controller: ForumBundle:Forum:chart }
+
+

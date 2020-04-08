@@ -1,0 +1,50 @@
+{% extends "default/LayoutBack.html.twig" %}
+{% block section %}
+    <br><br><br><br>
+    <div class="table-responsive">
+        <table class="table table-padded table-xl mb-0" id="recent-project-table">
+            <thead>
+            <tr>
+                <th class="border-top-0" >  Article Name </th>
+                <th class="border-top-0" >  Article Content </th>
+                <th class="border-top-0" > Picture </th>
+                <th class="border-top-0"> Title </th>
+                <th class="border-top-0"> Date  </th>
+                <th class="border-top-0"> Supprimer  </th>
+
+                <th class="border-top-0"> Modifier </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for article in article %}
+
+
+                <tr>
+                    <td align="center"> {{ article.getNomArticle() }} </td>
+                    <td align="center"> {{ article.getContenuArticle() }} </td>
+                    <td align="center"> <img src="{{ asset('../public/uploads/'~article.getImageArticle() ) }} "alt="images" width="80" height="60" > </td>
+                    <td align="center"> {{ article.getTitreEvent() }} </td>
+                    <td align="center"> {{ article.getDateArticle() }} </td>
+
+                    <td class="text-truncate align-middle"> <a href="{{ path('articleDelete', {'id':article.getIdArticle() }) }}" class ="btn btn-glow btn-round btn-bg-gradient-x-blue-green" onclick="return confirm('comfirmer la supprission !  ')" >
+                            supprimer </a> </br>
+                    </td>
+                    <td class="text-truncate align-middle">
+                        <a href="{{ path('articleUpdate', {'id':article.getIdArticle() }) }}" class ="btn btn-glow btn-round btn-bg-gradient-x-blue-purple-2">modifier</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="navigation text-center">
+
+            <div class="text-center">{{ knp_pagination_render(article) }}</div>
+
+        </div>
+        <br>
+
+        <a href="{{ path('ajoutArticle') }}">
+            <button  class="btn btn-glow btn-round btn-bg-gradient-x-blue-cyan">ajouter</button>
+        </a>
+    </div>
+{% endblock %}

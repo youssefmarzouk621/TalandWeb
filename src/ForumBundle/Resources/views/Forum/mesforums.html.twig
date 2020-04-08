@@ -1,0 +1,63 @@
+{% extends "default/LayoutFront.html.twig" %}
+{% block section %}
+
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+
+    <div class="blog-content">
+        <div  style="padding-left: 625px;padding-top: 10px"><a href="{{ path('publications') }}" class="btn oneMusic-btn mt-30"> Add Subject  </a></div>
+    </div>
+
+
+    {% for i in forums %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8">
+                <div class="login-content">
+
+
+                    <div class="form-group">
+
+                        <a href="{{ path('modifier_sujet',{'id':i.idF}) }}"  class="generic-btn info-border radius"><i class="fa fa-edit" style="font-size:30px;"></i> </a>
+                        <a href="{{path('supprimer_sujet',{'id':i.idF})}}" class="generic-btn info-border radius"><i class="fa fa-trash" style="font-size:30px;color:red"></i> </a>
+
+
+                        <h4>Added :{{ i.date | date("m/d/Y")  }}  </h4>
+                        <p>Published by :  <b>Me</b></p>
+                        <div class="form-group">
+                        <h6> {{ i.descriptionF |raw  }} </h6>
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {%  endfor %}
+
+    {% elseif is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+        <br><br><br>
+
+        <div class="alert alert-warning" role="alert">
+            <h3>
+                Oops
+                you can join us by clicking <a href="{{ path('fos_user_registration_register') }}">HERE</a>
+                Or if you already have an account click <a href="{{ path('fos_user_security_login') }}" >HERE</a> to connect !
+            </h3>
+
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+

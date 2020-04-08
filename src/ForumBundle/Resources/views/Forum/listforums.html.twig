@@ -1,0 +1,57 @@
+{% extends "default/LayoutFront.html.twig" %}
+
+{% block section %}
+    {% for i in forums %}
+        {% if i.Etat == 1 %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8">
+            <div class="login-content">
+
+                <div class="form-group">
+                    <a href="#">Added :{{ i.date | date("m/d/Y") }}  </a>
+                </div>
+
+                <div class="form-group">
+                    <a> <b> {{ i.idUser.username }} </b></a>
+                </div>
+
+                <div class="form-group">
+                  {#   <p>Published by :  <b>{{ i.id_user.lastname }}</b></p>  #}
+                   <h6>  {{ censorF.censorString(i.descriptionf )['clean'] |raw  }} </h6>
+                </div>
+
+                <div class="form-group">
+                    <a href="{{ path('detail_sujet', { 'id': i.idF }) }}" class="generic-btn info-border radius"><i class="fa fa-external-link-square" style="font-size:30px; color: royalblue"></i> </a>
+
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+    {% endif %}
+    {% endfor %}
+
+    <div style="padding-left: 625px;padding-top: 10px" class="oneMusic-pagination-area wow fadeInUp" data-wow-delay="300ms">
+        {{ knp_pagination_render(forums) }}
+    </div>
+<br>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+

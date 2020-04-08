@@ -1,3 +1,11 @@
+news:
+    resource: "@NewsBundle/Resources/config/routing.yml"
+    prefix:   /Article
+
+forum:
+    resource: "@ForumBundle/Resources/config/routing.yml"
+    prefix:   /Forum
+
 user:
     resource: "@UserBundle/Resources/config/routing.yml"
     prefix:   /User
@@ -12,4 +20,8 @@ posts:
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+
+mgilet_notification:
+    resource: "@MgiletNotificationBundle/Controller/"
+    prefix: /notifications
 

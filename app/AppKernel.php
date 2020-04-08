@@ -20,6 +20,12 @@ class AppKernel extends Kernel
             new PostsBundle\PostsBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new UserBundle\UserBundle(),
+            new ForumBundle\ForumBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new NewsBundle\NewsBundle(),
+            new Gregwar\CaptchaBundle\GregwarCaptchaBundle(),
+            new Mgilet\NotificationBundle\MgiletNotificationBundle(),
+            new FOS\CKEditorBundle\FOSCKEditorBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
