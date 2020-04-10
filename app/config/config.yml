@@ -85,3 +85,8 @@ fos_user:
 sensio_framework_extra:
    router:
         annotations: false
+
+gregwar_captcha:
+    width: 200
+    height: 50
+    length: 6

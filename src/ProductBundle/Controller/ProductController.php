@@ -34,7 +34,7 @@ class ProductController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 //        $product = $em->getRepository('ProductBundle:Produit')->findAll();
-        $product = $em->getRepository(Produit::class)->loadMoreProducts(12,0);
+        $product = $em->getRepository(Produit::class)->loadMoreProducts(18,0);
 
         return $this->render('@Product/Product/get_products.html.twig', array('Produit' => $product, 'nbrProduct' => sizeof($cart)));
     }

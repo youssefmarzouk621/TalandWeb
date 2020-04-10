@@ -2,6 +2,7 @@
 
 namespace ProductBundle\Form;
 
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 use ProductBundle\Entity\Category;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -47,6 +48,11 @@ class ProduitType extends AbstractType
                 'mapped'=>false,
                 'label'=>'choose picture'
             ])
+            ->add('captcha', CaptchaType::class, array(
+                'width' => 200,
+                'height' => 50,
+                'length' => 6,
+            ))
             ->add('Valider', SubmitType::class);
     }
 
