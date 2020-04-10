@@ -1,5 +1,4 @@
 
-
 $('.flipBtn').on('click', function() {
   var itemNum = $('.pane.one .active');  // get an active item in a stack
   var crnt = $('.pane.one .card').index( itemNum );  // find out the index of an active card

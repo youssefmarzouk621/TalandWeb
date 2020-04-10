@@ -1,3 +1,14 @@
 tvshow_homepage:
     path:     /new
     defaults: { _controller: tvshowBundle:Default:index }
+suppcommntaire:
+    path:     /suppcommentaire/{id}
+    defaults: { _controller: tvshowBundle:commentairetvshow:supprimercommentTvshow }
+supptvshow:
+    path:     /supptvshow/{id}
+    defaults: { _controller: tvshowBundle:Tvshow:supprimerTvshow }
+modifiertvshow:
+    path:     /modifiertvshow/{id}
+    defaults: { _controller: tvshowBundle:Tvshow:modifiertvshow }
+
+

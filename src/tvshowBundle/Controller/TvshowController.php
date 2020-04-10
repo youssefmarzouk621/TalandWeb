@@ -5,11 +5,13 @@ namespace tvshowBundle\Controller;
 use tvshowBundle\Entity\commentairetvshow;
 use tvshowBundle\Entity\Tvshow;
 use tvshowBundle\Entity\ratingtvshow;
+use Symfony\Component\HttpFoundation\File\File;
 use tvshowBundle\Repository\ratingtvshowRepository;
 use tvshowBundle\Repository\commentairetvshowRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use tvshowBundle\Repository\TvshowRepository;
 
 /**
  * Tvshow controller.
@@ -47,7 +49,7 @@ class TvshowController extends Controller
        $data  = $this->get('knp_paginator')->paginate(
             $dat,
             $request->query->get('page', 1),
-      1
+      2
         );
         $data2 = $recenttvshows->getQuery()->getResult();
         return $this->render('@tvshow/tvshow/index.html.twig', array(
@@ -66,24 +68,51 @@ class TvshowController extends Controller
         $tvshow = new Tvshow();
         $form = $this->createForm('tvshowBundle\Form\TvshowType', $tvshow);
         $form->handleRequest($request);
+        /*
+        $twilio = $this->get('twilio.api');
 
+        $message = $twilio->account->messages->sendMessage(
+            '+12055284180', // From a Twilio number in your account
+            '+21652847468', // Text any number
+            "Hello monkey!"
+        );
+
+        //get an instance of \Service_Twilio
+        $otherInstance = $twilio->createInstance('BBBB', 'CCCCC');
+        return new Response($message->sid);
+*/
         if ($form->isSubmitted() && $form->isValid()) {
+            $tvshow->uploadProfilePicture();
+            $tvshow->uploadgaleriepicture1();
+            $tvshow->uploadgaleriepicture2();
+            $tvshow->uploadgaleriepicture3();
+            $tvshow->uploadgaleriepicture4();
+            $tvshow->uploadgaleriepicture5();
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($tvshow);
             $em->flush();
-  $rating=new ratingtvshow();
-  $rating->setTvshow($tvshow);
-            $em->persist($rating);
-            $em->flush();
-            return $this->redirectToRoute('tvshow_show', array('id' => $tvshow->getId()));
+            return $this->redirectToRoute('adminshows', array('id' => $tvshow->getId()));
         }
 
         return $this->render('@tvshow/tvshow/new.html.twig', array(
             'tvshow' => $tvshow,
             'form' => $form->createView(),
         ));
+
     }
 
+    /**
+     * Lists all tvshow entities.
+     *
+     * @Route("/tvshow_report", name="tvshow_report")
+     * @Method("GET")
+     */
+
+   public function reportAction(){
+
+       return $this->render('@tvshow/tvshow/report.html.twig');
+    }
     /**
      * Finds and displays a tvshow entity.
      * @Route("/{id}", name="tvshow_show")
@@ -114,6 +143,7 @@ class TvshowController extends Controller
         else{
             $existerating=100;
         }
+        if($current != 'anon.') {
      if($existerating ==0){
 
          if ($formrating->isSubmitted() && $formrating->isValid()) {
@@ -139,7 +169,7 @@ class TvshowController extends Controller
             $editForm->handleRequest($request);
         }
 
-
+        }
         $form = $this->createForm('tvshowBundle\Form\commentairetvshowType', $commentairetadd);
         $form->handleRequest($request);
 
@@ -170,10 +200,10 @@ class TvshowController extends Controller
     /**
      * Displays a form to edit an existing tvshow entity.
      *
-     * @Route("/{id}/edit", name="tvshow_edit")
+     * @Route("/{id}/modifiertvshow", name="modifiertvshow")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Tvshow $tvshow)
+    public function modifiertvshowAction(Request $request, Tvshow $tvshow)
     {
         $deleteForm = $this->createDeleteForm($tvshow);
         $editForm = $this->createForm('tvshowBundle\Form\TvshowType', $tvshow);
@@ -182,7 +212,7 @@ class TvshowController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('tvshow_edit', array('id' => $tvshow->getId()));
+            return $this->redirectToRoute('modifiertvshow', array('id' => $tvshow->getId()));
         }
 
         return $this->render('@tvshow/tvshow/edit.html.twig', array(
@@ -200,19 +230,24 @@ class TvshowController extends Controller
      */
     public function deleteAction(Request $request, Tvshow $tvshow)
     {
-        $form = $this->createDeleteForm($tvshow);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($tvshow);
-            $em->flush();
-        }
+        $id = $tvshow->getId();
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($tvshow);
+        $em->flush();
 
         return $this->redirectToRoute('tvshow_index');
     }
 
 
+    public function supprimerTvshowAction($id)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $tvshow= $em->getRepository('tvshowBundle:Tvshow')->findOneBy(array('id'=>$id));
+        $em->remove($tvshow);
+        $em->flush();
+        return $this->redirectToRoute('adminshows');
+    }
 
     /**
      * Creates a form to delete a tvshow entity.
@@ -228,5 +263,27 @@ class TvshowController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    /**
+     * displays a tvshow entity.
+     * @Route("/affichetvshowadmin/", name="adminshows")
+     * @Method("GET")
+     */
+
+    public function affichagetvshowadminAction()
+    {   $em = $this->getDoctrine()->getManager();
+
+        $nomb = $em->createQueryBuilder();
+        $nombre =
+        $nomb->select('count(t)')
+            ->from(Tvshow::class, 't')
+            ->getQuery()
+
+            ->getSingleScalarResult();
+
+
+        $tvshows = $em->getRepository('tvshowBundle:Tvshow')->findAll();
+        return $this->render('@tvshow/tvshow/showadmin.html.twig',array('tvshows'=>$tvshows,'nombre'=>$nombre));
     }
 }

@@ -21,6 +21,15 @@ class TvshowRepository extends \Doctrine\ORM\EntityRepository
 
      ->getResult();
     }
+    public function nombretvshow()
+    {
+        return $this->createQueryBuilder('t')
 
+            ->select('COUNT(t)')
+
+            ->getQuery()
+
+            ->getSingleScalarResult();
+    }
 
 }

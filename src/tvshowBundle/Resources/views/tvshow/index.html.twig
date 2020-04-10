@@ -20,6 +20,7 @@
         <!-- Stylesheet -->
         <link rel="stylesheet" href="{{ asset('FrontOffice/style.css') }}">
         <link rel="stylesheet" href="{{ asset('FrontOffice/search.css') }}">
+
     </head>
 
     <body>
@@ -252,6 +253,11 @@
         </div>
     </div>
     <!-- ##### Add Area End ##### -->
+    <div style="position: fixed;bottom: 110px; right: 25px;">
+        <a href="{{ path('tvshow_report') }}">
+        <img id="msgToggle"  src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Facebook_Messenger_4_Logo.svg/600px-Facebook_Messenger_4_Logo.svg.png" width="60" height="auto" style="cursor: pointer;">
+        </a>
+        </div>
 
     <!-- ##### Song Area Start ##### -->
     <div class="one-music-songs-area mb-70">
@@ -417,9 +423,12 @@
     <script src="{{ asset('FrontOffice/js/plugins/plugins.js') }}"></script>
     <!-- Active js -->
     <script src="{{ asset('FrontOffice/js/active.js') }}"></script>
+
+
     <script>
 
         $(function() {
+
             $("#search").on("keyup", function() {
                 $field = $(this);
 
@@ -452,7 +461,7 @@
 
     </script>
 
-
+siwar
 
     <script type="text/javascript">
         function filter() {
@@ -472,6 +481,5 @@
         }
     </script>
     </body>
-
     </html>
 {% endblock %}

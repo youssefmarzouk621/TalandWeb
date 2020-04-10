@@ -136,4 +136,13 @@ class commentairetvshowController extends Controller
             ->getForm()
         ;
     }
+
+    public function supprimercommentTvshowAction($id)
+{$em = $this->getDoctrine()->getManager();
+    $commentaire= $em->getRepository('tvshowBundle:commentairetvshow')->findOneBy(array('id'=>$id));
+
+    $em->remove($commentaire);
+    $em->flush();
+    //return $this->redirectToRoute('tvshow_show', array('id' => $tvshow->getId()));
+}
 }

@@ -26,6 +26,13 @@
         <link rel="stylesheet" href="{{ asset('FrontOffice/style.css') }}">
         <link rel="stylesheet" href="{{ asset('FrontOffice/galerie.css') }}">
         <link rel="stylesheet" href="{{ asset('FrontOffice/rate.css') }}">
+
+        <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js') }}" type="text/javascript"></script>
+
+        <link rel="stylesheet" href="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css') }}">
+
+        <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js') }}"></script>
+
     </head>
 
     <body>
@@ -122,6 +129,8 @@
                                     &nbsp;
                                     <h1 onclick="changeColorblack();" id="lampekahla"  >💡</h1>
                                     <h1 onclick="changeColorwhite();" id="lampe" style="display: none;" >💡</h1>
+
+
                                 </div>
                             </div>
 
@@ -150,6 +159,7 @@
 
     <!-- ##### Contact Area Start ##### -->
     <section class="contact-area section-padding-100-0">
+
         <div class="container">
             <div class="row">
                <IFRAME SRC="{{ asset(tvshow.link)}}" FRAMEBORDER=0  MARGINWIDTH=0 MARGINHEIGHT=0 SCROLLING=NO WIDTH=720 HEIGHT=460 allowfullscreen></IFRAME>
@@ -158,7 +168,7 @@
                         <!-- Title -->
                         <div class="contact-title mb-50">
                             <h5>Episode : {{ tvshow.episodenum }}</h5>
-                            {{ rated }}
+
                         </div>
 
 
@@ -175,35 +185,24 @@
                         </div>
 
                         <!-- Single Contact Info -->
-                        <div class="single-contact-info d-flex align-items-center">
-                            Description : &nbsp;
+                            <div class="single-contact-info d-flex align-items-center">
+                                Description : &nbsp;
 
                         </div>
                         <p>{{ tvshow.description }}</p>
 
 
                         <!-- Contact Social Info -->
-                        <div class="contact-social-info mt-50" >
-                            &nbsp;
-                            &nbsp;
-                            &nbsp;
-                            &nbsp;
-                            &nbsp;
-                            &nbsp;
-                            &nbsp;
-                            &nbsp;
-                            &nbsp;
-                            <iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fshorturl.at%2FimozP&layout=button&size=large&appId=1643671389118563&width=77&height=28" width="77" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>    </div>
-
-
-                    </div>
+                        <div class="single-contact-info d-flex align-items-center">
+                        {{ socialButtons() }}
+                        </div>
 
                     <br/>
                     &nbsp; <br/>
                     &nbsp;
                     <br/>
                     &nbsp; <br/>
-                    <div class="accordian" style="margin-left: -735px; margin-top: -70px">
+                    <div class="accordian" style="margin-left: -735px;">
                         <ul>
                             <li>
 
@@ -244,10 +243,11 @@
 
             </div>
         </div>
+        </div>
         {% if nombre == 0 %}
 
 
-            <nav class="rating" style="margin-left: 250px" >
+            <nav class="rating" style="margin-left: 300px" >
                 <ul>
                     <li title="{{ somm1 }} Voted for 1 Star" >
                         <svg>
@@ -288,7 +288,7 @@
             </svg><a class="dribbble" href="{{ asset('https://dribbble.com/shots/7170398-Stars-rating-animation') }}" target="_blank"></a>
         {% elseif (somm // nombre) == 1  %}
 
-            <nav class="rating" style="margin-left: 250px" >
+            <nav class="rating" style="margin-left: 300px" >
                 <ul>
                     <li class="current" title="{{ somm1 }} Voted for 1 Star">
                         <svg>
@@ -330,7 +330,7 @@
 
         {% elseif  (somm // nombre)  == 2 %}
 
-            <nav class="rating" style="margin-left: 250px" >
+            <nav class="rating" style="margin-left: 300px" >
                 <ul>
                     <li title="{{ somm1 }} Voted for 1 Star" >
                         <svg>
@@ -372,7 +372,7 @@
 
         {% elseif (somm // nombre)  == 3 %}
 
-            <nav class="rating" style="margin-left: 250px" >
+            <nav class="rating" style="fmargin-left: 300px" >
                 <ul>
                     <li title="{{ somm1 }} Voted for 1 Star" >
                         <svg>
@@ -414,7 +414,7 @@
 
         {% elseif (somm // nombre)  == 4 %}
 
-            <nav class="rating" style="margin-left: 250px">
+            <nav class="rating" style="margin-left: 300px">
                 <ul>
                     <li title="{{ somm1 }} Voted for 1 Star" >
                         <svg>
@@ -456,7 +456,7 @@
 
         {% elseif  (somm // nombre)  == 5 %}
 
-            <nav class="rating" style="margin-left: 250px" >
+            <nav class="rating" style=" margin-left: 300px" >
                 <ul>
                     <li title="{{ somm1 }} Voted for 1 Star">
                         <svg>
@@ -9741,7 +9741,7 @@
 
                         <label for="newsletterSearch">{{ commentairetvsho.content }}
                             {% if  commentairetvsho.Userid.username == user %}
-                                <label for="newsletterSearch" style="margin-left: 500px; margin-top: -20px;  "> <h5> 🗑️</h5> </label>
+                                <label for="newsletterSearch" style="margin-left: 500px; margin-top: -20px;  "> <h5> <a href="{{ path('suppcommntaire',{'id' :  commentairetvsho.id}) }}">🗑️</a></h5> </label>
                             {% endif %}
                     </div>
 
@@ -9759,8 +9759,14 @@
     </div>
 
     <!-- ##### Contact Area End ##### -->
+    <div style="position: fixed;bottom: 110px; right: 25px;">
+        <a href="{{ path('tvshow_report') }}">
+            <img id="msgToggle"    src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Facebook_Messenger_4_Logo.svg/600px-Facebook_Messenger_4_Logo.svg.png" width="60" height="auto" style="cursor: pointer;">
+        </a>
+    </div>
 
-        <!-- ##### Footer Area Start ##### -->
+
+    <!-- ##### Footer Area Start ##### -->
     <footer class="footer-area">
         <div class="container">
             <div class="row d-flex flex-wrap align-items-center">
@@ -9857,6 +9863,7 @@
         })
 
     </script>
+
     </body>
 
     </html>

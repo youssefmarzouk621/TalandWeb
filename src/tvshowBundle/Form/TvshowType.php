@@ -13,7 +13,7 @@ class TvshowType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name')->add('episodenum')->add('description')->add('duree')->add('type')->add('link')->add('year')->add('coverimage')->add('galeryimage1')->add('galeryimage2')->add('galeryimage3')->add('galeryimage4')->add('galeryimage5');
+        $builder->add('name')->add('episodenum')->add('description')->add('duree')->add('type')->add('link')->add('year')->add('file')->add('file1')->add('file2')->add('file3')->add('file4')->add('file5');
     }/**
      * {@inheritdoc}
      */
