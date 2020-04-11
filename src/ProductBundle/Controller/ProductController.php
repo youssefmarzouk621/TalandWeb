@@ -47,10 +47,12 @@ class ProductController extends Controller
         $product = $em->getRepository(Produit::class)->loadMoreProducts($limit,$start);
         $products=array();
         foreach ($product as $key=>$p){
+            $products[$key]['id']=$p->getId();
             $products[$key]['name']=$p->getName();
             $products[$key]['price']=$p->getPrice();
             $products[$key]['imgsrc']=$p->getImgsrc();
-            $products[$key]['userId']=$this->getEntityUserJson($p);
+        //dump($p->getUserid());
+           // $products[$key]['userId']=$this->getEntityUserJson($p);
             $products[$key]['date']=$p->getDate();
             $products[$key]['category']=$p->getCategory();
         }
@@ -60,9 +62,13 @@ class ProductController extends Controller
     }
 
     function getEntityUserJson(Produit $entity){
+
         $user=array();
         $u=$entity->getUserid();
-        $user['name']=$u;
+        dump($u);
+        $userr=$this->getDoctrine()->getRepository('UserBundle:User')->findOneBy($u);
+
+        $user['name']=$userr->setFirstname();
         return new JsonResponse($user);
 
     }
