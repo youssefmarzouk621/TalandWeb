@@ -154,7 +154,7 @@
 
             <div class="row">
                 <div class="col-12">
-                    <div class="load-more-btn text-center wow fadeInUp" data-wow-delay="300ms">
+                    <div class="load-more-btn text-center wow fadeInUp js-loadMoreDiv" data-wow-delay="300ms">
                         <a href="{{ path('product_loadmore',{'start':12,'limit':12}) }}"
                            class="btn oneMusic-btn js-loadMore">Load More <i class="fa fa-angle-double-right"></i></a>
                     </div>
@@ -206,28 +206,32 @@
             const url = this.href;
             axios.get(url).then(function (response) {
                 console.log(response);
+                if (response.data.length<12) {
+                    //document.querySelector('a.js-loadMore').style.visibility = "hidden";
+                    document.querySelector('div.js-loadMoreDiv').innerHTML = "no more data";
+                }
                 for (p in response.data) {
 
                     var product = response.data[p];
 
                     //document.querySelector('div.js-addLoadedData').innerHTML += '<h6>' + product.name + '</h6><br/>';
                     var singleAlbumId = "<a href=\"{{ path('get_product_by_id',{'id':'pid'}) }}\" class=\"video--play--btn\">";
-                    singleAlbumId=singleAlbumId.replace("pid",product.id);
-                    var singleAlbumImg="<img src=\"{{ asset('uploads/Products/'~'pimgsrc') }}\" alt=\"\">";
-                    singleAlbumImg=singleAlbumImg.replace("pimgsrc",product.imgsrc);
+                    singleAlbumId = singleAlbumId.replace("pid", product.id);
+                    var singleAlbumImg = "<img src=\"{{ asset('uploads/Products/'~'pimgsrc') }}\" alt=\"\">";
+                    singleAlbumImg = singleAlbumImg.replace("pimgsrc", product.imgsrc);
                     var singleAlbum = "<!-- Single Album Area -->\n" +
                         "                            <div class=\"col-12 col-sm-6 col-md-4 col-lg-2\">\n" +
                         "\n" +
                         "                                <div class=\"single-album-area wow fadeInUp\" data-wow-delay=\"100ms\">\n" +
                         "                                    <div class=\"single-album\">\n" +
-                        "                                        <div class=\"play-icon\">\n" + singleAlbumId +singleAlbumImg+
+                        "                                        <div class=\"play-icon\">\n" + singleAlbumId + singleAlbumImg +
                         "                                            </a>\n" +
                         "                                        </div>\n" +
                         "\n" +
                         "\n" +
                         "                                        <!-- Album Price -->\n" +
                         "                                        <div class=\"album-price\">\n" +
-                        "                                            <p>$"+product.price+"</p>\n" +
+                        "                                            <p>$" + product.price + "</p>\n" +
                         "                                        </div>\n" +
                         "                                        <!-- Play Icon -->\n" +
                         "                                        <div class=\"row\">\n" +
@@ -243,14 +247,21 @@
                         "\n" +
                         "                                </div>\n" +
                         "                            </div>";
-                    document.querySelector('div.js-addLoadedData').innerHTML +=singleAlbum;
+                    document.querySelector('div.js-addLoadedData').innerHTML += singleAlbum;
 
                     //document.querySelector('div.js-addLoadedData').append('<h1>'+product.name+'</h1>');
                 }
 
             });
+            newStart +=12;
+            var newHref = "{{ path('product_loadmore',{'start':'start','limit':12}) }}";
+            newHref = newHref.replace("start", newStart);
+            console.log('js here');
+            this.href = newHref;
+
         }
 
+        var newStart=12;
         document.querySelector('a.js-loadMore').addEventListener('click', onClickLoadMore);
     </script>
     <script>

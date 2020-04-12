@@ -52,6 +52,7 @@ class ProductController extends Controller
             $products[$key]['price']=$p->getPrice();
             $products[$key]['imgsrc']=$p->getImgsrc();
         //dump($p->getUserid());
+
            // $products[$key]['userId']=$this->getEntityUserJson($p);
             $products[$key]['date']=$p->getDate();
             $products[$key]['category']=$p->getCategory();
