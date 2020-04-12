@@ -34,44 +34,38 @@ class ProductController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 //        $product = $em->getRepository('ProductBundle:Produit')->findAll();
-        $product = $em->getRepository(Produit::class)->loadMoreProducts(18,0);
+        $product = $em->getRepository(Produit::class)->loadMoreProducts(18, 0);
 
         return $this->render('@Product/Product/get_products.html.twig', array('Produit' => $product, 'nbrProduct' => sizeof($cart)));
     }
 
-    public function loadMoreProductsAction($start,$limit){
+    public function loadMoreProductsAction($start, $limit)
+    {
         $product = new Produit();
-
         $em = $this->getDoctrine()->getManager();
 //        $product = $em->getRepository('ProductBundle:Produit')->findAll();
-        $product = $em->getRepository(Produit::class)->loadMoreProducts($limit,$start);
-        $products=array();
-        foreach ($product as $key=>$p){
-            $products[$key]['id']=$p->getId();
-            $products[$key]['name']=$p->getName();
-            $products[$key]['price']=$p->getPrice();
-            $products[$key]['imgsrc']=$p->getImgsrc();
-        //dump($p->getUserid());
-
-           // $products[$key]['userId']=$this->getEntityUserJson($p);
-            $products[$key]['date']=$p->getDate();
-            $products[$key]['category']=$p->getCategory();
+        $product = $em->getRepository(Produit::class)->loadMoreProducts($limit, $start);
+        $products = array();
+        foreach ($product as $key => $p) {
+            $products[$key]['id'] = $p->getId();
+            $products[$key]['name'] = $p->getName();
+            $products[$key]['price'] = $p->getPrice();
+            $products[$key]['imgsrc'] = $p->getImgsrc();
+            $products[$key]['userId'] = $this->getEntityUserJson($p);
+            $products[$key]['date'] = $p->getDate();
+            $products[$key]['category'] = $p->getCategory();
         }
         return new JsonResponse($products);
-       // return $this->json(['products'=>$product],200);
-
     }
 
-    function getEntityUserJson(Produit $entity){
-
-        $user=array();
-        $u=$entity->getUserid();
-        dump($u);
-        $userr=$this->getDoctrine()->getRepository('UserBundle:User')->findOneBy($u);
-
-        $user['name']=$userr->setFirstname();
-        return new JsonResponse($user);
-
+    function getEntityUserJson(Produit $entity)
+    {
+        $user = array();
+        $ppp = $entity->getUserid();
+        $ch = $this->getDoctrine()->getRepository('UserBundle:User')->find($ppp);
+        $user['name'] = $ch->getFirstname();
+        $user['id']=$ch->getId();
+       return $user;
     }
 
     public function getProductByIdAction($id)
@@ -80,7 +74,6 @@ class ProductController extends Controller
         $em = $this->getDoctrine()->getManager();
         $product = $em->getRepository('ProductBundle:Produit')->find($id);
         return $this->render('@Product/Product/product_details.html.twig', array('product' => $product));
-
     }
 
     public function addProductAction(Request $request)
