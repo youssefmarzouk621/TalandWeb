@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 use PostsBundle\Repository\PostsRepository;
 use Symfony\Component\HttpFoundation\Request;
+use UserBundle\Entity\User;
 
 class PostsController extends Controller
 {
@@ -180,5 +181,37 @@ class PostsController extends Controller
         $em->persist($comment);
         $em->flush();
         return new JsonResponse("comment added");
+    }
+ 
+
+
+    public function GetSearchAction(){
+        $idc=array();
+        $em=$this->getDoctrine()->getManager();
+        $result=$em->getRepository(Posts::class)->getdbusers();
+
+        foreach ($result as $row){
+
+            array_push($idc,$row['username']);
+        }
+
+        //var_dump($result);
+        return new JsonResponse($idc);
+    }
+
+
+
+    public function GetSearchImgAction(){
+        $ids=array();
+        $em=$this->getDoctrine()->getManager();
+        $result=$em->getRepository(Posts::class)->getdbusers();
+
+        foreach ($result as $row){
+
+            array_push($ids,$row['image_name']);
+        }
+
+        //var_dump($idc);
+        return new JsonResponse($ids);
     }
 }

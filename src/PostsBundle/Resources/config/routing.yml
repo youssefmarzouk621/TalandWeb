@@ -57,3 +57,12 @@ single_post:
 display_stories:
   path:     /DisplayStories
   defaults: { _controller: PostsBundle:Posts:DisplayStories }
+
+
+get_search:
+  path:     /GetSearch
+  defaults: { _controller: PostsBundle:Posts:GetSearch }
+
+get_search_img:
+  path:     /GetSearchImg
+  defaults: { _controller: PostsBundle:Posts:GetSearchImg }

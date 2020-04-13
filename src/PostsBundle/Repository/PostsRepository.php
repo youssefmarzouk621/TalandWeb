@@ -2,6 +2,7 @@
 
 namespace PostsBundle\Repository;
 
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -76,4 +77,23 @@ class PostsRepository extends \Doctrine\ORM\EntityRepository
             ->createQuery("SELECT s FROM PostsBundle:Posts s WHERE s.type =1 ORDER BY s.idu");
         return $query->getResult();
     }
+
+
+    public function getdbusers(){
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT * FROM fos_user';
+
+        try {
+            $stmt = $conn->prepare($sql);
+        } catch (DBALException $e) {
+
+        }
+
+        $stmt->execute();
+        return $stmt->fetchAll();
+
+
+    }
+
+
 }
