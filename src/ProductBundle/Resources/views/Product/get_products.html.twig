@@ -206,7 +206,7 @@
             const url = this.href;
             axios.get(url).then(function (response) {
                 console.log(response);
-                if (response.data.length<12) {
+                if (response.data.length < 12) {
                     //document.querySelector('a.js-loadMore').style.visibility = "hidden";
                     document.querySelector('div.js-loadMoreDiv').innerHTML = "no more data";
                 }
@@ -219,16 +219,31 @@
                     singleAlbumId = singleAlbumId.replace("pid", product.id);
                     var singleAlbumImg = "<img src=\"{{ asset('uploads/Products/'~'pimgsrc') }}\" alt=\"\">";
                     singleAlbumImg = singleAlbumImg.replace("pimgsrc", product.imgsrc);
+                    var pathWithUserId = "<a href=\"{{ path('cart_add',{'id':'pid'}) }}\"class=\"btn btn-primary js-addToCart\">";
+
+                    pathWithUserId = pathWithUserId.replace("pid", product.userId);
+
+                    formForDelete="<form method=\"post\"  action=\"{{ path('delete_product',{'id':'pid'}) }}\" onsubmit=\"return confirm('Etes vous sûr?')\">";
+                    formForDelete=formForDelete.replace("pid",product.userId);
+
+                    var a="{% set x="x" %}";
+
+                    a=a.replace("x",product.userId);
+                   var z= "{{ x }}";
+                   console.log(z);
+
+
+                    console.log(55555);
+                    // conditionUser = conditionUser.replace("x", product.userId);
+
+
                     var singleAlbum = "<!-- Single Album Area -->\n" +
                         "                            <div class=\"col-12 col-sm-6 col-md-4 col-lg-2\">\n" +
-                        "\n" +
                         "                                <div class=\"single-album-area wow fadeInUp\" data-wow-delay=\"100ms\">\n" +
                         "                                    <div class=\"single-album\">\n" +
                         "                                        <div class=\"play-icon\">\n" + singleAlbumId + singleAlbumImg +
                         "                                            </a>\n" +
                         "                                        </div>\n" +
-                        "\n" +
-                        "\n" +
                         "                                        <!-- Album Price -->\n" +
                         "                                        <div class=\"album-price\">\n" +
                         "                                            <p>$" + product.price + "</p>\n" +
@@ -236,7 +251,29 @@
                         "                                        <!-- Play Icon -->\n" +
                         "                                        <div class=\"row\">\n" +
                         "                                        </div>\n" +
+                        "\n" + " <!-- Play Icon -->\n" +
+                        "                                        <div class=\"row\">\n" +"{% if is_granted('IS_AUTHENTICATED_FULLY') %}"
+                                                                                        + "{% if app.user.id == x %}" +
+                        "                                                    <div class=\"col-3\">\n" +formForDelete+
+                        "                                                            <input type=\"hidden\" name=\"_method\" value=\"DELETE\">\n" +"<input type=\"hidden\" name=\"_token\" value=\"{{ csrf_token('delete'~x) }}\">" +
+                        "                                                            <button class=\"btn btn-danger\">Suprimer</button>\n" +
+                        "                                                        </form>\n" +
                         "\n" +
+                        "                                                    </div>\n" +
+                        "\n" +
+                        "                                                {% else %}\n" +
+                        "                                                    <div class=\"row\">\n" +
+                        "                                                        <div class=\"col-md-3 offset-4\">\n" +
+                                                                                                                    pathWithUserId +
+                        "                                                                <i class=\"fa fa-cart-plus\"></i>\n" +
+                        "                                                            </a>\n" +
+                        "                                                        </div>\n" +
+                        "                                                    </div>\n" +
+                        "\n" +
+                        "\n" +
+                        "                                                {% endif %}\n" +
+                        "                                            {% endif %}" +
+                        "                                        </div>" +
                         "                                        <div class=\"album-info\">\n" +
                         "                                            <a href=\"#\">\n" +
                         "                                                <h5>" + product.name + "</h5>\n" +
@@ -253,7 +290,7 @@
                 }
 
             });
-            newStart +=12;
+            newStart += 12;
             var newHref = "{{ path('product_loadmore',{'start':'start','limit':12}) }}";
             newHref = newHref.replace("start", newStart);
             console.log('js here');
@@ -261,7 +298,7 @@
 
         }
 
-        var newStart=12;
+        var newStart = 12;
         document.querySelector('a.js-loadMore').addEventListener('click', onClickLoadMore);
     </script>
     <script>

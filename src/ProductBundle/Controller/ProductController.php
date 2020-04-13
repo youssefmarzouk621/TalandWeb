@@ -60,12 +60,9 @@ class ProductController extends Controller
 
     function getEntityUserJson(Produit $entity)
     {
-        $user = array();
         $ppp = $entity->getUserid();
         $ch = $this->getDoctrine()->getRepository('UserBundle:User')->find($ppp);
-        $user['name'] = $ch->getFirstname();
-        $user['id']=$ch->getId();
-       return $user;
+       return $ch->getId();;
     }
 
     public function getProductByIdAction($id)
