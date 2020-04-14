@@ -36,7 +36,8 @@ class ProductController extends Controller
 //        $product = $em->getRepository('ProductBundle:Produit')->findAll();
         $product = $em->getRepository(Produit::class)->loadMoreProducts(18, 0);
 
-        return $this->render('@Product/Product/get_products.html.twig', array('Produit' => $product, 'nbrProduct' => sizeof($cart)));
+      //  return $this->render('@Product/Product/get_products.html.twig', array('Produit' => $product, 'nbrProduct' => sizeof($cart)));
+    return $this->render('@Product/Admin/admin_products.html.twig', array('Produit' => $product));
     }
 
     public function loadMoreProductsAction($start, $limit)
@@ -117,9 +118,17 @@ class ProductController extends Controller
             $em->flush();
             return $this->redirectToRoute('get_products');
         }
+    }
 
-        //  return $this->redirectToRoute('delete_product');
+    public function deleteProductAdminAction($id)
+    {
 
+            $em = $this->getDoctrine()->getManager();
+            $product = $em->getRepository(Produit::class)->find($id);
+            $em->remove($product);
+            $em->flush();
+            return $this->redirectToRoute('get_products');
 
     }
+
 }

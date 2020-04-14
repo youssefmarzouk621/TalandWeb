@@ -1,1 +1,88 @@
-{% extends "baseFront.html.twig" %}
+{% extends "default/LayoutBack.html.twig" %}
+{% block section %}
+    <section id="drag-area">
+        <div class="row" Style="margin-top:100px;">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Owner</th>
+                    <th>Price</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody class="js-loadMoreTabBody">
+                {% for p in Produit %}
+                    <tr>
+                        <td>{{ p.name }}</td>
+                        <td >{{ p.price }}</td>
+                        <td>{{ p.userid.id }}</td>
+                        <td><form method="post"
+                                  action="{{ path('delete_product',{'id':p.id}) }}"
+                                  onsubmit="return confirm('Etes vous sûr?')">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token"
+                                       value="{{ csrf_token('delete'~p.id) }}">
+                                <button class="btn btn-danger">Suprimer</button>
+                            </form></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-12">
+                    <div class="btn btn-secondary js-loadMoreDiv" >
+                        <a href="{{ path('product_loadmore',{'start':12,'limit':12}) }}"
+                           class=" js-loadMore">Load More </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        function onClickLoadMore(event) {
+            event.preventDefault();
+            const url = this.href;
+            axios.get(url).then(function (response) {
+                console.log(response);
+                if (response.data.length < 12) {
+                    //document.querySelector('a.js-loadMore').style.visibility = "hidden";
+                    document.querySelector('div.js-loadMoreDiv').innerHTML = "no more data";
+                }
+                for (p in response.data) {
+
+                    var product = response.data[p];
+
+                        var btnDelete="<form method=\"post\" action=\"{{ path('delete_product_admin',{'id':'pid'}) }}\" onsubmit=\"return confirm('Etes vous sûr?')\">"+
+                       " <input type=\"hidden\" name=\"_method\" value=\"DELETE\">"+
+                        "<button class=\"btn btn-danger\">Suprimer</button></form>";
+                    btnDelete=btnDelete.replace('pid',product.id);
+
+                    var singleAlbum = "<tr>\n" +
+                        "                        <td>"+product.name+"</td>\n" +
+                        "                        <td >"+product.price+"</td>\n" +
+                        "                        <td>"+product.userId+"</td>\n" +
+                        "                        <td>"+btnDelete+"</td>\n" +
+                        "                    </tr>";
+                    document.querySelector('tbody.js-loadMoreTabBody').innerHTML += singleAlbum;
+
+                    //document.querySelector('div.js-addLoadedData').append('<h1>'+product.name+'</h1>');
+                }
+
+            });
+            newStart += 12;
+            var newHref = "{{ path('product_loadmore',{'start':'start','limit':12}) }}";
+            newHref = newHref.replace("start", newStart);
+            console.log('js here');
+            this.href = newHref;
+
+        }
+
+        var newStart = 12;
+        document.querySelector('a.js-loadMore').addEventListener('click', onClickLoadMore);
+    </script>
+
+{% endblock %}

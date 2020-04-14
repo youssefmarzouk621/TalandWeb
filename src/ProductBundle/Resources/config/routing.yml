@@ -19,6 +19,10 @@ delete_product:
     path:     /deletProduct/{id}
     defaults: { _controller: ProductBundle:Product:deleteProduct }
 
+delete_product_admin:
+    path:     /deletProductAdmin/{id}
+    defaults: { _controller: ProductBundle:Product:deleteProductAdmin }
+
 get_carts:
     path:     /getCarts
     defaults: { _controller: ProductBundle:Cart:getCarts }
@@ -34,3 +38,16 @@ cart_add:
 cart_remove:
     path:     /Cart/remove/{id}
     defaults: { _controller: ProductBundle:Cart:remove }
+
+
+category_add:
+    path:     /addCategory
+    defaults: { _controller: ProductBundle:Category:addCategory }
+
+category_get:
+    path:     /getCategories
+    defaults: { _controller: ProductBundle:Category:getCategories }
+
+category_delete:
+    path:     /deleteCategory/{id}
+    defaults: { _controller: ProductBundle:Category:deleteCategory }

@@ -1,0 +1,39 @@
+{% extends "default/LayoutBack.html.twig" %}
+{% block section %}
+
+        <section id="drag-area">
+            <div class="row" Style="margin-top:100px;">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>id category</th>
+                        <th>name</th>
+                        <th>category mother</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for c in categories %}
+                        <tr>
+                            <td>{{ c.id }}</td>
+                            <td >{{ c.name}}</td>
+                            <td>{{ c.idcategorymother }}</td>
+                            <td>
+                                <form method="post"
+                                      action="{{ path('category_delete',{'id':c.id}) }}"
+                                      onsubmit="return confirm('Etes vous sûr?')">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token"
+                                           value="{{ csrf_token('delete'~c.id) }}">
+                                    <button class="btn btn-danger">Suprimer</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </section>
+
+{% endblock %}
