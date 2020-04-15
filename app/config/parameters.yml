@@ -7,6 +7,6 @@ parameters:
     database_password: null
     mailer_transport: gmail
     mailer_host: smtp.gmail.com
-    mailer_user: mohamedamine.mbarki@esprit.tn
-    mailer_password: amine20132013
+    mailer_user: talandpidev@gmail.com
+    mailer_password: Tal123and!
     secret: ThisTokenIsNotSoSecretChangeIt

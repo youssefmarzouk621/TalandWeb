@@ -1,0 +1,26 @@
+{% extends "default/LayoutBack.html.twig" %}
+{% block section %}
+<section id="drag-area">
+    <div class="row" Style="margin-top:100px;">
+
+        <div class="container mt-6">
+            <h1>Add category</h1>
+
+            {{ form_start(categoryForm) }}
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(categoryForm.name)}}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(categoryForm.idcategorymother) }}
+                </div>
+            </div>
+
+
+
+        </div>
+        {{ form_end(categoryForm) }}
+
+    </div>
+</section>
+{% endblock %}

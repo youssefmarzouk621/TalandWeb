@@ -1,0 +1,26 @@
+{% extends "default/Layout.html.twig" %}
+{% block header %}{% endblock %}
+{% block section %}
+    <div class="row">
+        <div class="col-16">
+            <div class="load-more-btn text-center wow fadeInUp" data-wow-delay="300ms" onclick="f">
+                <a href="{{ path('delete_product',{'id':id,'validation':'yes'}) }}" class="btn oneMusic-btn">delete <i
+                            class="fa fa-angle-double-right"></i></a>
+            </div>
+        </div>
+        <div class="col-16">
+            <div class="load-more-btn text-center wow fadeInUp" data-wow-delay="300ms">
+                <a href="#" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <script>
+        function f() {
+
+            window.close();
+
+        }
+
+    </script>
+{% endblock %}
+{% block footer %}{% endblock %}

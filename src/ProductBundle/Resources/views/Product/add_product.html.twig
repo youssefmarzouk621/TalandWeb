@@ -1,0 +1,55 @@
+{% extends "default/Layout.html.twig" %}
+{% block header %}{% endblock %}
+{% block section %}
+    <div class="container mt-6">
+        <h1>Add product to sell</h1>
+        {% for message in app.flashes('success') %}
+
+        <div class="alert alert-success">{{ message }}
+            <button class="btn btn-danger" onclick="f">Quit</button>
+        </div>
+        {% endfor %}
+        {{ form_start(productForm) }}
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(productForm.name)}}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(productForm.category) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(productForm.imgsrc) }}
+            </div>
+
+
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(productForm.price)}}
+            </div>
+
+
+            <div class="col-md-6">
+                {{ form_widget(productForm.captcha) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(productForm.Valider) }}
+            </div>
+        </div>
+    </div>
+    {{ form_end(productForm) }}
+
+    <script>
+        function f() {
+
+            window.close();
+
+        }
+
+    </script>
+{% endblock %}
+{% block footer %}{% endblock %}

@@ -6,6 +6,7 @@ imports:
     - { resource: "@UserBundle/Resources/config/services.yml" }
     - { resource: "@ForumBundle/Resources/config/services.yml" }
     - { resource: "@NewsBundle/Resources/config/services.yml" }
+    - { resource: "@ProductBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -42,7 +43,7 @@ twig:
     strict_variables: '%kernel.debug%'
     form_themes:
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
-
+            - 'bootstrap_3_layout.html.twig'
 # Doctrine Configuration
 doctrine:
     dbal:
@@ -123,3 +124,18 @@ gregwar_captcha:
 
 fos_ck_editor:
     input_sync: true
+
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     "\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\""
+        options:
+            ## Set default settings from config.yml
+            no-outline: true
+            page-size: LETTER
+            #Recommended to set UTF-8 as default encoding :)
+            encoding: UTF-8
+    image:
+        enabled:    true
+        binary:     "\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltoimage.exe\""
+        options:    []

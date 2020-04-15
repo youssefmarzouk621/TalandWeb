@@ -1,0 +1,311 @@
+{% extends "default/Layout.html.twig" %}
+{% block title %}Products{% endblock %}
+{% block section %}
+
+
+    <!-- ##### Buy Now Area Start ##### -->
+    <section class="oneMusic-buy-now-area has-fluid bg-gray section-padding-100">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-heading style-2">
+                        <p>See what’s new
+                        <p>
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                Username: {{ app.user.username }}
+                            {% endif %}
+                        </p>
+                        </p>
+                        <h2>Buy What’s New</h2>
+                    </div>
+                </div>
+            </div>
+            <section class="album-catagory section-padding-100-0">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="browse-by-catagories catagory-menu d-flex flex-wrap align-items-center mb-70">
+
+                                <a href="#" data-filter=".a">A</a>
+                                <a href="#" data-filter=".b">B</a>
+                                <a href="#" data-filter=".c">C</a>
+                                <a href="#" data-filter=".d">D</a>
+                                <a href="#" data-filter=".e">E</a>
+                                <a href="#" data-filter=".f">F</a>
+                                <a href="#" data-filter=".g">G</a>
+                                <a href="#" data-filter=".h">H</a>
+                                <a href="#" data-filter=".i">I</a>
+                                <a href="#" data-filter=".j">J</a>
+                                <a href="#" data-filter=".k">K</a>
+                                <a href="#" data-filter=".l">L</a>
+                                <a href="#" data-filter=".m">M</a>
+                                <a href="#" data-filter=".n">N</a>
+                                <a href="#" data-filter=".o">O</a>
+                                <a href="#" data-filter=".p">P</a>
+                                <a href="#" data-filter=".q">Q</a>
+                                <a href="#" data-filter=".r">R</a>
+                                <a href="#" data-filter=".s">S</a>
+                                <a href="#" data-filter=".t">T</a>
+                                <a href="#" data-filter=".u">U</a>
+                                <a href="#" data-filter=".v">V</a>
+                                <a href="#" data-filter=".w">W</a>
+                                <a href="#" data-filter=".x">X</a>
+                                <a href="#" data-filter=".y">Y</a>
+                                <a href="#" data-filter=".z">Z</a>
+                                <a href="#" data-filter=".number">0-9</a>
+                            </div>
+                        </div>
+                    </div>
+                    {#here ----------------------#}
+                    <div class="row oneMusic-albums" style="position: relative; height: 263px;">
+                        {% for p in Produit %}
+
+
+
+
+
+                            <!-- Single Album -->
+                            <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item {{ p.name|first }}"
+                                 style="position: absolute; left: 16.6667%; top: 0px; display: none;">
+                                <div class="single-album">
+                                    <img src="{{ asset('uploads/Products/'~p.imgsrc) }}" alt="">
+                                    <div class="album-info">
+                                        <a href="#">
+                                            <h5>{{ p.name }}</h5>
+                                        </a>
+                                        <p>Songs</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {#end here---------------------#}
+                    <div class="row js-addLoadedData">
+                        {% for p in Produit %}
+                            <!-- Single Album Area -->
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+
+                                <div class="single-album-area wow fadeInUp" data-wow-delay="100ms">
+                                    <div class="single-album">
+                                        <div class="play-icon">
+                                            <a href="{{ path('get_product_by_id',{'id':p.id}) }}"
+                                               class="video--play--btn">
+                                                <img src="{{ asset('uploads/Products/'~p.imgsrc) }}" alt="">
+                                            </a>
+                                        </div>
+
+
+                                        <!-- Album Price -->
+                                        <div class="album-price">
+                                            <p>${{ p.price }}</p>
+                                        </div>
+                                        <!-- Play Icon -->
+                                        <div class="row">
+                                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                                {% if app.user.id == p.userid.id %}
+                                                    <div class="col-3">
+                                                        <form method="post"
+                                                              action="{{ path('delete_product',{'id':p.id}) }}"
+                                                              onsubmit="return confirm('Etes vous sûr?')">
+                                                            <input type="hidden" name="_method" value="DELETE">
+                                                            <input type="hidden" name="_token"
+                                                                   value="{{ csrf_token('delete'~p.id) }}">
+                                                            <button class="btn btn-danger">Suprimer</button>
+                                                        </form>
+
+                                                    </div>
+
+                                                {% else %}
+                                                    <div class="row">
+                                                        <div class="col-md-3 offset-4">
+                                                            <a href="{{ path('cart_add',{'id':p.id}) }}"
+                                                               class="btn btn-primary js-addToCart">
+                                                                <i class="fa fa-cart-plus"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+
+                                                {% endif %}
+                                            {% endif %}
+
+                                        </div>
+
+                                        <div class="album-info">
+                                            <a href="#">
+                                                <h5>{{ p.name }}</h5>
+                                            </a>
+                                            <p>Radio Station</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                        {% endfor %}
+                    </div>
+
+
+                </div>
+            </section>
+            <!-- ##### Album Catagory Area End ##### -->
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="load-more-btn text-center wow fadeInUp js-loadMoreDiv" data-wow-delay="300ms">
+                        <a href="{{ path('product_loadmore',{'start':12,'limit':12}) }}"
+                           class="btn oneMusic-btn js-loadMore">Load More <i class="fa fa-angle-double-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="play-icon">
+        <a href="{{ path('add_product') }}" class="video--play--btn"><img src="{{ asset('uploads/Products/add.png') }}"
+                                                                          height="50" width="50"/></a>
+    </div>
+    <!-- ##### Buy Now Area End ##### -->
+    <!-- ##### Album Catagory Area Start ##### -->
+
+
+    <script src="{{ asset('FrontOffice/js/jquery/jquery-2.2.4.min.js') }}"></script>
+    <!-- Popper js -->
+    <script src="{{ asset('FrontOffice/js/bootstrap/popper.min.js') }}"></script>
+    <!-- Bootstrap js -->
+    <script src="{{ asset('FrontOffice/js/bootstrap/bootstrap.min.js') }}"></script>
+    <!-- All Plugins js -->
+    <script src="{{ asset('FrontOffice/js/plugins/plugins.js') }}"></script>
+    <!-- Active js -->
+    <script src="{{ asset('FrontOffice/js/active.js') }}"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        function onClickAddToCart(event) {
+            event.preventDefault();
+
+            const url = this.href;
+            const iCount = document.querySelector('span.js-quantityProductInCart');
+
+            axios.get(url).then(function (response) {
+                iCount.textContent = response.data.nbrProduct;
+                console.log(response);
+                if (window.Notification && Notification.permission === "granted") {
+                    var n = new Notification("Added to cart");
+                }
+            });
+        }
+
+        document.querySelectorAll('a.js-addToCart').forEach(function (link) {
+            link.addEventListener('click', onClickAddToCart);
+        })
+    </script>
+    <script>
+        function onClickLoadMore(event) {
+            event.preventDefault();
+            const url = this.href;
+            axios.get(url).then(function (response) {
+                console.log(response);
+                if (response.data.length < 12) {
+                    //document.querySelector('a.js-loadMore').style.visibility = "hidden";
+                    document.querySelector('div.js-loadMoreDiv').innerHTML = "no more data";
+                }
+                for (p in response.data) {
+
+                    var product = response.data[p];
+
+                    //document.querySelector('div.js-addLoadedData').innerHTML += '<h6>' + product.name + '</h6><br/>';
+                    var singleAlbumId = "<a href=\"{{ path('get_product_by_id',{'id':'pid'}) }}\" class=\"video--play--btn\">";
+                    singleAlbumId = singleAlbumId.replace("pid", product.id);
+                    var singleAlbumImg = "<img src=\"{{ asset('uploads/Products/'~'pimgsrc') }}\" alt=\"\">";
+                    singleAlbumImg = singleAlbumImg.replace("pimgsrc", product.imgsrc);
+                    var pathWithUserId = "<a href=\"{{ path('cart_add',{'id':'pid'}) }}\"class=\"btn btn-primary js-addToCart\">";
+
+                    pathWithUserId = pathWithUserId.replace("pid", product.userId);
+
+                    formForDelete="<form method=\"post\"  action=\"{{ path('delete_product',{'id':'pid'}) }}\" onsubmit=\"return confirm('Etes vous sûr?')\">";
+                    formForDelete=formForDelete.replace("pid",product.userId);
+
+                    var a="{% set x="x" %}";
+
+                    a=a.replace("x",product.userId);
+                   var z= "{{ x }}";
+                   console.log(z);
+
+
+                    console.log(55555);
+                    // conditionUser = conditionUser.replace("x", product.userId);
+
+
+                    var singleAlbum = "<!-- Single Album Area -->\n" +
+                        "                            <div class=\"col-12 col-sm-6 col-md-4 col-lg-2\">\n" +
+                        "                                <div class=\"single-album-area wow fadeInUp\" data-wow-delay=\"100ms\">\n" +
+                        "                                    <div class=\"single-album\">\n" +
+                        "                                        <div class=\"play-icon\">\n" + singleAlbumId + singleAlbumImg +
+                        "                                            </a>\n" +
+                        "                                        </div>\n" +
+                        "                                        <!-- Album Price -->\n" +
+                        "                                        <div class=\"album-price\">\n" +
+                        "                                            <p>$" + product.price + "</p>\n" +
+                        "                                        </div>\n" +
+                        "                                        <!-- Play Icon -->\n" +
+                        "                                        <div class=\"row\">\n" +
+                        "                                        </div>\n" +
+                        "\n" + " <!-- Play Icon -->\n" +
+                        "                                        <div class=\"row\">\n" +"{% if is_granted('IS_AUTHENTICATED_FULLY') %}"
+                                                                                        + "{% if app.user.id == x %}" +
+                        "                                                    <div class=\"col-3\">\n" +formForDelete+
+                        "                                                            <input type=\"hidden\" name=\"_method\" value=\"DELETE\">\n" +"<input type=\"hidden\" name=\"_token\" value=\"{{ csrf_token('delete'~x) }}\">" +
+                        "                                                            <button class=\"btn btn-danger\">Suprimer</button>\n" +
+                        "                                                        </form>\n" +
+                        "\n" +
+                        "                                                    </div>\n" +
+                        "\n" +
+                        "                                                {% else %}\n" +
+                        "                                                    <div class=\"row\">\n" +
+                        "                                                        <div class=\"col-md-3 offset-4\">\n" +
+                                                                                                                    pathWithUserId +
+                        "                                                                <i class=\"fa fa-cart-plus\"></i>\n" +
+                        "                                                            </a>\n" +
+                        "                                                        </div>\n" +
+                        "                                                    </div>\n" +
+                        "\n" +
+                        "\n" +
+                        "                                                {% endif %}\n" +
+                        "                                            {% endif %}" +
+                        "                                        </div>" +
+                        "                                        <div class=\"album-info\">\n" +
+                        "                                            <a href=\"#\">\n" +
+                        "                                                <h5>" + product.name + "</h5>\n" +
+                        "                                            </a>\n" +
+                        "                                            <p>Radio Station</p>\n" +
+                        "                                        </div>\n" +
+                        "                                    </div>\n" +
+                        "\n" +
+                        "                                </div>\n" +
+                        "                            </div>";
+                    document.querySelector('div.js-addLoadedData').innerHTML += singleAlbum;
+
+                    //document.querySelector('div.js-addLoadedData').append('<h1>'+product.name+'</h1>');
+                }
+
+            });
+            newStart += 12;
+            var newHref = "{{ path('product_loadmore',{'start':'start','limit':12}) }}";
+            newHref = newHref.replace("start", newStart);
+            console.log('js here');
+            this.href = newHref;
+
+        }
+
+        var newStart = 12;
+        document.querySelector('a.js-loadMore').addEventListener('click', onClickLoadMore);
+    </script>
+    <script>
+        $(window).load(function () {
+            const iCount = document.querySelector('span.js-quantityProductInCart');
+            iCount.textContent ={{ nbrProduct }}
+        });
+    </script>
+
+{% endblock %}

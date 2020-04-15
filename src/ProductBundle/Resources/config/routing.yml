@@ -1,0 +1,56 @@
+
+get_products:
+    path:     /getProducts
+    defaults: { _controller: ProductBundle:Product:getProducts }
+
+product_loadmore:
+    path:     /loadMore/{start}/{limit}
+    defaults: { _controller: ProductBundle:Product:loadMoreProducts }
+
+get_product_by_id:
+    path:     /getProducts/{id}
+    defaults: { _controller: ProductBundle:Product:getProductById }
+
+add_product:
+    path:     /addProduct
+    defaults: { _controller: ProductBundle:Product:addProduct }
+
+delete_product:
+    path:     /deletProduct/{id}
+    defaults: { _controller: ProductBundle:Product:deleteProduct }
+
+delete_product_admin:
+    path:     /deletProductAdmin/{id}
+    defaults: { _controller: ProductBundle:Product:deleteProductAdmin }
+
+get_carts:
+    path:     /getCarts
+    defaults: { _controller: ProductBundle:Cart:getCarts }
+
+cart_index:
+    path:     /Cart/myCart
+    defaults: { _controller: ProductBundle:Cart:index }
+
+cart_add:
+    path:     /Cart/add/{id}
+    defaults: { _controller: ProductBundle:Cart:add }
+
+cart_remove:
+    path:     /Cart/remove/{id}
+    defaults: { _controller: ProductBundle:Cart:remove }
+
+cart_validate:
+    path:     /Cart/validate
+    defaults: { _controller: ProductBundle:Cart:validate }
+
+category_add:
+    path:     /addCategory
+    defaults: { _controller: ProductBundle:Category:addCategory }
+
+category_get:
+    path:     /getCategories
+    defaults: { _controller: ProductBundle:Category:getCategories }
+
+category_delete:
+    path:     /deleteCategory/{id}
+    defaults: { _controller: ProductBundle:Category:deleteCategory }
