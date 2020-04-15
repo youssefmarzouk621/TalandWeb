@@ -1,0 +1,487 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Title -->
+    <title>One Music - Modern Music HTML5 Template</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="{{ asset('FrontOffice/img/core-img/favicon.ico') }}">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{{ asset('FrontOffice/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/adesignscalendar/css/fullcalendar/fullcalendar.css') }}" />
+
+</head>
+
+<body>
+<!-- Preloader -->
+<div class="preloader d-flex align-items-center justify-content-center">
+    <div class="lds-ellipsis">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
+
+<!-- ##### Header Area Start ##### -->
+<header class="header-area">
+    <!-- Navbar Area -->
+    <div class="oneMusic-main-menu">
+        <div class="classy-nav-container breakpoint-off">
+            <div class="container">
+                <!-- Menu -->
+                <nav class="classy-navbar justify-content-between" id="oneMusicNav">
+
+                    <!-- Nav brand -->
+                    <a href="{{ asset('FrontOffice/index.html.twig') }}" class="nav-brand"><img src="{{ asset('FrontOffice/img/core-img/logo.png') }}" alt=""></a>
+
+                    <!-- Navbar Toggler -->
+                    <div class="classy-navbar-toggler">
+                        <span class="navbarToggler"><span></span><span></span><span></span></span>
+                    </div>
+
+                    <!-- Menu -->
+                    <div class="classy-menu">
+
+                        <!-- Close Button -->
+                        <div class="classycloseIcon">
+                            <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                        </div>
+
+                        <!-- Nav Start -->
+                        <div class="classynav">
+                            <ul>
+                                <li><a href="{{ asset('FrontOffice/index.html.twig') }}">Home</a></li>
+                                <li><a href="{{ asset('FrontOffice/albums-store.html.twig') }}">Albums</a></li>
+                                <li><a href="#">Pages</a>
+                                    <ul class="dropdown">
+                                        <li><a href="{{ asset('FrontOffice/index.html.twig') }}">Home</a></li>
+                                        <li><a href="{{ asset('FrontOffice/albums-store.html.twig') }}">Albums</a></li>
+                                        <li><a href="{{ asset('FrontOffice/event.html.twig') }}">Events</a></li>
+                                        <li><a href="{{ asset('FrontOffice/blog.html.twig') }}">News</a></li>
+                                        <li><a href="{{ asset('FrontOffice/contact.html.twig') }}">Contact</a></li>
+                                        <li><a href="{{ asset('FrontOffice/elements.html.twig') }}">Elements</a></li>
+                                        <li><a href="{{ asset('FrontOffice/login.html.twig') }}">Login</a></li>
+                                        <li><a href="#">Dropdown</a>
+                                            <ul class="dropdown">
+                                                <li><a href="#">Even Dropdown</a></li>
+                                                <li><a href="#">Even Dropdown</a></li>
+                                                <li><a href="#">Even Dropdown</a></li>
+                                                <li><a href="#">Even Dropdown</a>
+                                                    <ul class="dropdown">
+                                                        <li><a href="#">Deeply Dropdown</a></li>
+                                                        <li><a href="#">Deeply Dropdown</a></li>
+                                                        <li><a href="#">Deeply Dropdown</a></li>
+                                                        <li><a href="#">Deeply Dropdown</a></li>
+                                                        <li><a href="#">Deeply Dropdown</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="#">Even Dropdown</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a href="{{ asset('FrontOffice/event.html.twig') }}">Events</a></li>
+                                <li><a href="{{ asset('FrontOffice/blog.html.twig') }}">News</a></li>
+                                <li><a href="{{ asset('FrontOffice/contact.html.twig') }}">Contact</a></li>
+                            </ul>
+
+                            <!-- Login/Register & Cart Button -->
+                            <div class="login-register-cart-button d-flex align-items-center">
+                                <!-- Login/Register -->
+                                <div class="login-register-btn mr-50">
+                                    <a href="{{ asset('FrontOffice/login.html.twig') }}" id="loginBtn">Login / Register</a>
+                                </div>
+
+                                <!-- Cart Button -->
+                                <div class="cart-btn">
+                                    <p><span class="icon-shopping-cart"></span> <span class="quantity">1</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Nav End -->
+
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- ##### Header Area End ##### -->
+
+<!-- ##### Breadcumb Area Start ##### -->
+<section class="breadcumb-area bg-img bg-overlay" style="background-image: url({{ asset('FrontOffice/img/bg-img/breadcumb3.jpg') }});">
+    <div class="bradcumbContent">
+        <p>Check out your Calendar </p>
+        <h2>{{ calendar.calendarname }}</h2>
+    </div>
+</section>
+<!-- ##### Breadcumb Area End ##### -->
+
+<!-- ##### Events Area Start ##### ----------------------------- -->
+
+
+
+<!-- Full calendar advance example section start -->
+<section id="advance-examples">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <!--
+                    <h4 class="card-title">External Dragging</h4>
+                    -->
+                    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                    <div class="heading-elements">
+                        <ul class="list-inline mb-0">
+                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                            <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                            <li><a data-action="close"><i class="ft-x"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-content collapse show">
+                    <div class="card-body">
+                        <!--
+                        <p class="card-text">Add extended dragging functionality with droppable option. Data can be attached to the element in order to specify its duration when dropped. A <code>Duration</code>-ish value can be provided. This can either be done via jQuery or via an <code>data-duration</code> attribute. This option operates with jQuery UI draggables. You must <code>download</code> the appropriate jQuery UI files and initialize a <code>draggable</code> element. Additionally, you must set the calendar's <code>droppable</code> option to <code>true</code>.</p>
+                        -->
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div id='external-events'>
+                                    <h4>Deals Options</h4>
+                                    <div class="fc-events-container">
+                                        <a href="{{ path('deals_new') }}" class="btn see-more-btn"><i class="fa fa-angle-double-right"></i> Add deal</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div id='fc-external-drag'></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+{% include 'ADesignsCalendarBundle::calendar.html.twig' %}
+
+
+<!-- // Full calendar advance example section end -->
+</div>
+</div>
+</div>
+<!-- ##### Events Area End ##### ------------------>
+
+<!-- ##### Newsletter & Testimonials Area Start ##### -->
+<section class="newsletter-testimonials-area">
+    <div class="container">
+        <div class="row">
+
+            <!-- Newsletter Area -->
+            <div class="col-12 col-lg-6">
+                <div class="newsletter-area mb-100">
+                    <div class="section-heading text-left mb-50">
+                        <p>See what’s new</p>
+                        <h2>Subscribe to newsletter</h2>
+                    </div>
+                    <div class="newsletter-form">
+                        <form action="#">
+                            <label for="newsletterSearch"></label><input type="search" name="search" id="newsletterSearch" placeholder="E-mail">
+                            <button type="submit" class="btn oneMusic-btn">Subscribe <i class="fa fa-angle-double-right"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonials Area -->
+            <div class="col-12 col-lg-6">
+                <div class="testimonials-area mb-100 bg-img bg-overlay" style="background-image: url({{ asset('FrontOffice/img/bg-img/bg-3.jpg') }});">
+                    <div class="section-heading white text-left mb-50">
+                        <p>See what’s new</p>
+                        <h2>Testimonial</h2>
+                    </div>
+                    <!-- Testimonial Slide -->
+                    <div class="testimonials-slide owl-carousel">
+                        <!-- Single Slide -->
+                        <div class="single-slide">
+                            <p>Nam tristique ex vel magna tincidunt, ut porta nisl finibus. Vivamus eu dolor eu quam varius rutrum. Fusce nec justo id sem aliquam fringilla nec non lacus. Suspendisse eget lobortis nisi, ac cursus odio. Vivamus nibh velit, rutrum.</p>
+                            <div class="testimonial-info d-flex align-items-center">
+                                <div class="testimonial-thumb">
+                                    <img src="{{ asset('FrontOffice/img/bg-img/t1.jpg') }}" alt="">
+                                </div>
+                                <p>William Smith, Customer</p>
+                            </div>
+                        </div>
+                        <!-- Single Slide -->
+                        <div class="single-slide">
+                            <p>Nam tristique ex vel magna tincidunt, ut porta nisl finibus. Vivamus eu dolor eu quam varius rutrum. Fusce nec justo id sem aliquam fringilla nec non lacus. Suspendisse eget lobortis nisi, ac cursus odio. Vivamus nibh velit, rutrum.</p>
+                            <div class="testimonial-info d-flex align-items-center">
+                                <div class="testimonial-thumb">
+                                    <img src="{{ asset('FrontOffice/img/bg-img/t1.jpg') }}" alt="">
+                                </div>
+                                <p>Nazrul Islam, Developer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- ##### Newsletter & Testimonials Area End ##### -->
+
+<!-- ##### Contact Area Start ##### -->
+<section class="contact-area section-padding-100 bg-img bg-overlay bg-fixed has-bg-img" style="background-image: url({{ asset('FrontOffice/img/bg-img/bg-2.jpg') }});">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading white">
+                    <p>See what’s new</p>
+                    <h2>Get In Touch</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <!-- Contact Form Area -->
+                <div class="contact-form-area">
+                    <form action="#" method="post">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-4">
+                                <div class="form-group">
+                                    <label for="name"></label><input type="text" class="form-control" id="name" placeholder="Name">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="form-group">
+                                    <label for="email"></label><input type="email" class="form-control" id="email" placeholder="E-mail">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="subject"></label><input type="text" class="form-control" id="subject" placeholder="Subject">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="message"></label><textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Message"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center">
+                                <button class="btn oneMusic-btn mt-30" type="submit">Send <i class="fa fa-angle-double-right"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ##### Contact Area End ##### -->
+
+<!-- ##### Footer Area Start ##### -->
+<footer class="footer-area">
+    <div class="container">
+        <div class="row d-flex flex-wrap align-items-center">
+            <div class="col-12 col-md-6">
+                <a href="#"><img src="{{ asset('FrontOffice/img/core-img/logo.png') }}" alt=""></a>
+
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="footer-nav">
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Albums</a></li>
+                        <li><a href="#">Events</a></li>
+                        <li><a href="#">News</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- ##### Footer Area Start ##### -->
+
+<!-- ##### All Javascript Script ##### -->
+<!-- jQuery-2.2.4 js -->
+<script src="{{ asset('FrontOffice/js/jquery/jquery-2.2.4.min.js') }}"></script>
+<!-- Popper js -->
+<script src="{{ asset('FrontOffice/js/bootstrap/popper.min.js') }}"></script>
+<!-- Bootstrap js -->
+<script src="{{ asset('FrontOffice/js/bootstrap/bootstrap.min.js') }}"></script>
+<!-- All Plugins js -->
+<script src="{{ asset('FrontOffice/js/plugins/plugins.js') }}"></script>
+<!-- Active js -->
+<script src="{{ asset('FrontOffice/js/active.js') }}"></script>
+<link href="https://fonts.googleapis.com/css?family=Muli:300,300i,400,400i,600,600i,700,700i%7CComfortaa:300,400,700" rel="stylesheet">
+
+
+<link rel="stylesheet" type="text/css" href="{{ asset('BackOffice/app-assets/vendors/css/forms/toggle/switchery.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('BackOffice/app-assets/css/plugins/forms/switch.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('BackOffice/app-assets/css/core/colors/palette-switch.min.css') }}">
+
+
+
+<script src="{{ asset('BackOffice/app-assets/vendors/js/extensions/moment.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('BackOffice/app-assets/vendors/js/extensions/fullcalendar.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('BackOffice/app-assets/js/core/libraries/jquery_ui/jquery-ui.min.js') }}" type="text/javascript"></script>
+
+<link rel="stylesheet" type="text/css" href="{{ asset('BackOffice/app-assets/vendors/css/calendars/fullcalendar.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('BackOffice/app-assets/css/bootstrap.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('BackOffice/app-assets/css/bootstrap-extended.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('BackOffice/app-assets/css/colors.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('BackOffice/app-assets/css/components.min.css') }}">
+
+
+
+<link rel="stylesheet" type="text/css" href="{{ asset('BackOffice/app-assets/css/plugins/calendars/fullcalendar.min.css') }}">
+
+<link rel="stylesheet" type="text/css" href="{{ asset('BackOffice/assets/css/style.css') }}">
+
+<script>$(function () {
+        var date = new Date();
+        var d = date.getDate();
+        var m = date.getMonth();
+        var y = date.getFullYear();
+
+        $('#calendar-holder').fullCalendar({
+            header: {
+                left: 'prev, next',
+                center: 'title',
+                right: 'month, basicWeek, basicDay,'
+            },
+            lazyFetching: true,
+            allDaySlot: false,
+            eventDurationEditable: true,
+            editable:1,
+            droppable:!0,
+            eventLimit:!0,
+            timeFormat: {
+                // for agendaWeek and agendaDay
+                agenda: 'h:mmt',    // 5:00 - 6:30
+
+                // for all other views
+                '': 'h:mmt'         // 7p
+            },
+            eventSources: [
+                {
+                    url: Routing.generate('fullcalendar_loader'),
+                    type: 'POST',
+                    // A way to add custom filters to your event listeners
+                    data: {
+                    },
+                    error: function() {
+                        //alert('There was an error while fetching Google Calendar!');
+                    }
+                }
+            ],
+            eventResize: function(event) {
+                console.log(event);
+                event.start.setMonth(event.start.getMonth()+1);
+                event.end.setMonth(event.end.getMonth()+1);
+
+                var start1 = event.start.getFullYear() +'-'+ event.start.getMonth() +'-'+ event.start.getDate()+' '+event.start.getHours()+':'+event.start.getMinutes()+':'+event.start.getSeconds();
+                var end1 = event.end.getFullYear() +'-'+ event.end.getMonth() +'-'+ event.end.getDate()+' '+event.end.getHours()+':'+event.end.getMinutes()+':'+event.end.getSeconds();
+                var xhr = $.ajax({
+                    type: "POST",
+                    url:'{{ path("calendar_resize") }}',
+                    data: 'action=update&eventdescription=' + event.title + '&start=' + start1 + '&end=' + end1,
+                    success: function(data) {
+                        console.log(data);
+                        window.location.reload(true);
+                    },
+                    error: function() {
+                        alert("erreur lors de l'appel de l'url dans POST event/resize : contactez l'administrateur du site");
+                    },
+                });
+            },
+
+            eventDrop: function(event){
+                console.log("Entrée dans : eventDrop");
+                console.log(event);
+                event.start.setMonth(event.start.getMonth()+1);
+                event.end.setMonth(event.end.getMonth()+1);
+                var start1 = event.start.getFullYear() +'-'+ event.start.getMonth() +'-'+ event.start.getDate()+' '+event.start.getHours()+':'+event.start.getMinutes()+':'+event.start.getSeconds();
+                var end1 = event.end.getFullYear() +'-'+ event.end.getMonth() +'-'+ event.end.getDate()+' '+event.end.getHours()+':'+event.end.getMinutes()+':'+event.end.getSeconds();
+
+                var xhr = $.ajax({
+
+                    url:'{{ path("calendar_drop") }}',
+                    data: 'action=update&eventdescription=' + event.title+'&start=' + start1 +'&end=' + end1,
+                    type: "POST",
+                    success: function(data) {
+                        console.log(data);
+                        window.location.reload(true);
+                        //alert(json);
+                    },
+                    error: function() {
+                        alert("erreur lors de l'appel de l'url dans POST event/drop : contactez l'administrateur du site");
+                    },
+                });
+            },
+            drop:function(){$("#drop-remove").is(":checked")&&$(this).remove()},
+        });
+
+        $('#deleteButton').on('click', function(event){
+            // We don't want this to act as a link so cancel the link action
+            confirm('Souhaitez-vous réellement supprimer cet événement?');
+            event.preventDefault();
+            doDelete();
+        });
+
+        function doDelete(){
+            $("#calendarModal").modal('hide');
+            var eventID = $('#eventID').val();
+            $.ajax({
+                url:'{{ path("calendar_delete") }}',
+                data: 'action=delete&id='+eventID,
+                type: "POST",
+                success: function(json) {
+                    if(json == 1){
+                        $("#calendar").fullCalendar('removeEvents',eventID);
+                    } else{
+                        return false;
+                    }
+                }
+            });
+            $(document).ajaxStop(function(){
+                window.location.reload();
+            });
+        }
+
+        $("#external-events .fc-event").each(
+            function(){$(this).css({backgroundColor:$(this).data("color"),borderColor:$(this).data("color")}),$(this).data("event",{title:$.trim($(this).text()),color:$(this).data("color"),stick:!0}),$(this).draggable({zIndex:999,revert:!0,revertDuration:0})})
+
+
+});
+
+</script>
+
+
+<script type="text/javascript" src="{{ asset('bundles/adesignscalendar/js/fullcalendar/jquery.fullcalendar.min.js') }}"></script>
+
+<script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+
+<script src="{{ asset('https://cdn.jsdelivr.net/npm/typed.js@2.0.11') }}"></script>
+<script src="{{ asset('BackOffice/app-assets/js/scripts/typed.js-master/src/typed.js') }}"></script>
+
+</body>
+
+</html>

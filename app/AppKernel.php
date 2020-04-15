@@ -20,6 +20,10 @@ class AppKernel extends Kernel
             new PostsBundle\PostsBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new UserBundle\UserBundle(),
+            new CalendarZiedBundle\CalendarZiedBundle(),
+            new Vich\UploaderBundle\VichUploaderBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new ADesigns\CalendarBundle\ADesignsCalendarBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

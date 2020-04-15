@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Messages list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Idmessage</th>
+                <th>Idu</th>
+                <th>Idreceiver</th>
+                <th>Contenu</th>
+                <th>Dateenvoi</th>
+                <th>Etatmessage</th>
+                <th>Eventdescription</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for message in messages %}
+            <tr>
+                <td><a href="">{{ message.idmessage }}</a></td>
+                <td>{{ message.idu }}</td>
+                <td>{{ message.idreceiver }}</td>
+                <td>{{ message.contenu }}</td>
+                <td>{% if message.dateenvoi %}{{ message.dateenvoi|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ message.etatmessage }}</td>
+                <td>{{ message.eventdescription }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('message_show', { 'idmessage': message.idmessage }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('message_edit', { 'idmessage': message.idmessage }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('message_new') }}">Create a new message</a>
+        </li>
+    </ul>
+{% endblock %}

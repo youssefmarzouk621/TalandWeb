@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+
+<!-- Mirrored from themeselection.com/demo/chameleon-admin-template/html/ltr/vertical-menu-template/chat-application.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Mar 2020 10:11:53 GMT -->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="Chameleon Admin is a modern Bootstrap 4 webapp &amp; admin dashboard html template with a large number of components, elegant design, clean and organized code.">
+    <meta name="keywords" content="admin template, Chameleon admin template, dashboard template, gradient admin template, responsive admin template, webapp, eCommerce dashboard, analytic dashboard">
+    <meta name="author" content="ThemeSelect">
+    <title>Deal Negotiation - Taland</title>
+
+    <link rel="apple-touch-icon" href="{{ asset('BackOffice/app-assets/images/ico/apple-icon-120.png') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="https://themeselection.com/demo/chameleon-admin-template/app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,300i,400,400i,600,600i,700,700i%7CComfortaa:300,400,700" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('BackOffice/app-assets/vendors/css/vendors.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('BackOffice/app-assets/vendors/css/forms/toggle/switchery.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('BackOffice/app-assets/css/plugins/forms/switch.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('BackOffice/app-assets/css/core/colors/palette-switch.min.css') }}">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('BackOffice/app-assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('BackOffice/app-assets/css/bootstrap-extended.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('BackOffice/app-assets/css/colors.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('BackOffice/app-assets/css/components.min.css') }}">
+    <!-- END: Theme CSS-->
+
+    <!-- BEGIN: Page CSS-->
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('BackOffice/app-assets/css/core/menu/menu-types/vertical-menu.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('BackOffice/app-assets/css/core/colors/palette-gradient.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('BackOffice/app-assets/fonts/simple-line-icons/style.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('BackOffice/app-assets/css/pages/chat-application.css') }}">
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('BackOffice/assets/css/style.css') }}">
+    <!-- END: Custom CSS-->
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+<body class="vertical-layout content-left-sidebar chat-application " data-open="click" data-menu="vertical-menu" data-color="bg-gradient-x-purple-blue" data-col="content-left-sidebar">
+
+
+
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="sidebar-left sidebar-fixed">
+        <div class="sidebar"><div class="sidebar-content card d-none d-lg-block">
+                <div class="card-body chat-fixed-search">
+                    <fieldset class="form-group position-relative has-icon-left m-0  w-75 display-inline">
+                        <div id="typed-strings">
+                        <a class="list-group-item-heading font-medium-5 text-bold-200 " >DEAL: <br />{{ deal.eventdescription }}</a>
+                        <a class="list-group-item-heading font-medium-5 text-bold-200 " >ARTIST: <br />{{ idu.firstname }} {{ idu.lastname }}</a>
+                        <a class="list-group-item-heading font-medium-5 text-bold-200 " >DATE: <br />{% if deal.start %}{{ deal.start|date('Y-m-d') }}{% endif %}--{% if deal.end %}{{ deal.end|date('Y-m-d') }}{% endif %}</a>
+                        </div>
+                        <span id="typed"></span>
+                    </fieldset>
+                    <span class="float-right  primary font-large-1"> <i class="ft-edit"></i> </span>
+                </div>
+
+                <div id="users-list" class="list-group position-relative">
+                    <div class="users-list-padding media-list">
+                        <a href="#" class="media border-bottom-blue-grey border-bottom-lighten-5">
+                            <div class="media-left pr-1">
+                    <span class="avatar avatar-md"><img class="media-object rounded-circle" src="{{ asset('BackOffice/app-assets/images/portrait/small/avatar-s-3.png') }}" alt="Generic placeholder image">
+                    </span>
+                            </div>
+                            <div class="media-body w-100">
+                                {% set foo = 0 %}
+                                {% for m in m %}
+                                    {% set foo = foo+1 %}
+                                {% endfor %}
+
+                                {% set boo = 0 %}
+                                {% set lastmessage = '' %}
+                                {% for m in m %}
+                                    {% set boo = boo+1 %}
+                                    {% if boo == foo %}
+                                        {% set lastmessage = m.contenu  %}
+                                    {% endif %}
+                                {% endfor %}
+
+                                <h6 class="list-group-item-heading font-medium-1 text-bold-700">{{ idu.firstname }}&nbsp; <i class="ft-circle font-small-2 success"></i><span class="float-right primary"><span class="badge badge-pill badge-danger lighten-3">{{ foo }}</span></span></h6>
+                                <p class="font-small-3 text-muted text-bold-500">3:55 PM</p>
+                                <p class="list-group-item-text text-muted mb-0 lighten-1">{{ lastmessage }} </p>
+                            </div>
+                        </a>
+                    </div>
+                    <img src="{{ asset('uploads/deals/' ~ deal.imageName) }}">
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="content-wrapper">
+            <div class="content-wrapper-before"></div>
+            <div class="content-header row">
+            </div>
+            <div class="content-body"><section class="chat-app-window">
+                    <div class="mb-1 secondary text-bold-700">Chat History</div>
+                    <div class="chats">
+                        <div class="chats">
+
+
+                            {% for message in message %}
+                            {% if user == message.idu.id %}
+                                <div class="chat">
+                                <div class="chat-avatar">
+                                    <a class="avatar" data-toggle="tooltip" href="#" data-placement="right" title="" data-original-title="">
+
+                                        <img src="{{ asset('BackOffice/app-assets/images/portrait/small/avatar-s-1.png') }}" class="box-shadow-4" alt="avatar" />
+                                    </a>
+                                </div>
+                                <div class="chat-body">
+                                    <div class="chat-content">
+                                        <p>{{ message.contenu }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                                {% else %}
+
+                            <div class="chat chat-left" >
+                                <div class="chat-avatar">
+                                    <a class="avatar" data-toggle="tooltip" href="#" data-placement="left" title="" data-original-title="">
+                                        <img src="{{ asset('BackOffice/app-assets/images/portrait/small/avatar-s-7.png') }}" class="box-shadow-4" alt="avatar" />
+                                    </a>
+                                </div>
+                                <div class="chat-body">
+                                    <div class="chat-content">
+                                        <p>{{ message.contenu }}</p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </section>
+                <section class="chat-app-form">
+                    {{ form_start(msgform, { 'attr': {'class': 'chat-app-input d-flex'} }) }}
+                        <fieldset class="col-10 m-0">
+                            <div class="input-group position-relative has-icon-left">
+                                <div class="form-control-position">
+                                    <span id="basic-addon3"><i class="ft-image"></i></span>
+                                </div>
+
+                                {#<input type="text" class="form-control" placeholder="Send message" aria-describedby="button-addon2">#}
+                                {{ form_widget(msgform.contenu, { 'attr' : { 'class' : 'form-control','placeholder' : 'Send message' } }) }}
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group position-relative has-icon-left col-2 m-0">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="la la-paper-plane-o d-xl-none"></i>
+                                <span class="d-none d-lg-none d-xl-block">Send Message </span>
+                            </button>
+                        </fieldset>
+                    {{ form_end(msgform)  }}
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: Content-->
+
+
+
+
+
+
+
+
+<!-- BEGIN: Vendor JS-->
+
+<script src="{{ asset('BackOffice/app-assets/vendors/js/vendors.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('BackOffice/app-assets/vendors/js/forms/toggle/switchery.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('BackOffice/app-assets/js/scripts/forms/switch.min.js') }}" type="text/javascript"></script>
+<!-- BEGIN Vendor JS-->
+
+<!-- BEGIN: Page Vendor JS-->
+<!-- END: Page Vendor JS-->
+
+<!-- BEGIN: Theme JS-->
+<script src="{{ asset('BackOffice/app-assets/js/core/app-menu.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('BackOffice/app-assets/js/core/app.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('BackOffice/app-assets/js/scripts/customizer.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('BackOffice/app-assets/vendors/js/jquery.sharrre.js') }}" type="text/javascript"></script>
+<!-- END: Theme JS-->
+
+<!-- BEGIN: Page JS-->
+<script src="{{ asset('BackOffice/app-assets/js/scripts/pages/chat-application.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('https://cdn.jsdelivr.net/npm/typed.js@2.0.11') }}"></script>
+<script src="{{ asset('BackOffice/app-assets/js/scripts/typed.js-master/src/typed.js') }}"></script>
+<script>
+    var typed = new Typed('#typed', {
+        stringsElement: '#typed-strings',
+        cursorChar: '',
+        typeSpeed: 50,
+        backSpeed: 40,
+        loop: true
+    });
+</script>
+<!-- END: Page JS-->
+
+</body>
+<!-- END: Body-->
+
+<!-- Mirrored from themeselection.com/demo/chameleon-admin-template/html/ltr/vertical-menu-template/chat-application.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Mar 2020 10:11:55 GMT -->
+</html>
