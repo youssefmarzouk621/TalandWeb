@@ -2,6 +2,7 @@
 
 namespace ProductBundle\Controller;
 
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use ProductBundle\Entity\Basket;
 use ProductBundle\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -61,5 +62,65 @@ class CartController extends Controller
         }
         $session->set('cart', $cart);
         return $this->redirectToRoute('cart_index');
+    }
+
+
+    public function validateAction(SessionInterface $session){
+        $user = $this->getUser();
+        $cart = $session->get('cart', []);
+        $cartWithData = [];
+        foreach ($cart as $id => $quantity) {
+            $cartWithData[] = [
+                'product' => $this->getDoctrine()->getRepository('ProductBundle:Produit')->find($id),
+                'quantity' => $quantity
+            ];
+        }
+        $total = 0;
+        foreach ($cartWithData as $item) {
+            $total += $item['product']->getPrice();
+
+
+
+            $message=(new \Swift_Message('Hello Email'))
+                ->setFrom('talandpidev@gmail.com')
+                ->setTo('hamza.benguirat@esprit.tn')
+                ->setBody(
+                    $this->renderView('@Product/Cart/cart_mail.html.twig',
+                        ['nameReciever'=>$item['product']->getUserid()->getFirstname(),
+                            'nameSender'=>$user->getFirstname(),
+                            'emailSender'=>$user->getEmail(),
+                            'productName'=>$item['product']->getName()]
+                    ),
+                    'text/html');
+            $this->get('mailer')->send($message);
+            //$mailer->send($message);
+
+        }
+        $snappy=$this->get("knp_snappy.pdf");
+
+
+
+        $fileName="My Cart";
+
+
+
+
+
+
+        $session->remove('cart');
+        return new Response(
+            $snappy->getOutputFromHtml($this->renderView("@Product/Cart/cart_facture.html.twig", array(
+                'items' => $cartWithData, 'total' => $total
+
+            ))),
+            200,
+            array(
+                'Content-Type'=> 'application/pdf',
+                'Content-Disposition' =>'inline; filename="'.$fileName.'.pdf"'
+            )
+        );
+
+
+
     }
 }

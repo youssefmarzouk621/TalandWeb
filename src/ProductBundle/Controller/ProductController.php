@@ -36,8 +36,8 @@ class ProductController extends Controller
 //        $product = $em->getRepository('ProductBundle:Produit')->findAll();
         $product = $em->getRepository(Produit::class)->loadMoreProducts(18, 0);
 
-      //  return $this->render('@Product/Product/get_products.html.twig', array('Produit' => $product, 'nbrProduct' => sizeof($cart)));
-    return $this->render('@Product/Admin/admin_products.html.twig', array('Produit' => $product));
+        return $this->render('@Product/Product/get_products.html.twig', array('Produit' => $product, 'nbrProduct' => sizeof($cart)));
+    //return $this->render('@Product/Admin/admin_products.html.twig', array('Produit' => $product));
     }
 
     public function loadMoreProductsAction($start, $limit)

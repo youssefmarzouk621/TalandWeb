@@ -39,6 +39,9 @@ cart_remove:
     path:     /Cart/remove/{id}
     defaults: { _controller: ProductBundle:Cart:remove }
 
+cart_validate:
+    path:     /Cart/validate
+    defaults: { _controller: ProductBundle:Cart:validate }
 
 category_add:
     path:     /addCategory
