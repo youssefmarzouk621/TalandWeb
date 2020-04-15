@@ -10,4 +10,15 @@ namespace NewsBundle\Repository;
  */
 class NewsRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function sortbynbvue()
+    {
+        return $this->createQueryBuilder('r')
+
+            ->select('r.id')
+            ->addOrderBy('nbrevue',"desc")
+            ->getQuery()
+            ->getSingleScalarResult();
+
+    }
+
 }

@@ -46,5 +46,20 @@ aman:
 chart:
     path:     /chart
     defaults: { _controller: ForumBundle:Forum:chart }
+signaler:
+    path:     /signaler/{id}
+    defaults: { _controller: ForumBundle:Forum:signaler }
+signalerback:
+    path:     /signalerback
+    defaults: { _controller: ForumBundle:Forum:signalerback }
+supprimersujetsignaler:
+    path:     /supprimersujetsignaler/{id}
+    defaults: { _controller: ForumBundle:Forum:supprimersujetsignaler }
+historique:
+    path:     /historique
+    defaults: { _controller: ForumBundle:Forum:afficherhistorique }
+clearhistory:
+    path:     /clear
+    defaults: { _controller: ForumBundle:Forum:deletehistorique }
 
 

@@ -7,13 +7,6 @@
     <link rel="stylesheet" href="{{ asset('js/rating.css') }}">
     <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
 
-
-
-
-
-
-
-
     <!-- ##### Blog Area Start ##### -->
     <div class="blog-area section-padding-100-0">
         <div class="container">
@@ -75,7 +68,7 @@
 
 
                &nbsp;  &nbsp;  &nbsp;    Average Rating:  {{ avg }}
-                    {% for i in 0..avg-0.5 %}
+                    {% for i in 0..avg-1 %}
                         <span class=""><i class="text-warning fa fa-star"></i></span>
                     {% endfor %}
                     <!-- Single Post Start -->

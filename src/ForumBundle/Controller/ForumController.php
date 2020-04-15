@@ -3,8 +3,10 @@
 namespace ForumBundle\Controller;
 
 use ForumBundle\Entity\Commentaire;
+use ForumBundle\Entity\historique;
+use ForumBundle\Entity\signaler;
+use ForumBundle\Form\signalerType;
 use ForumBundle\Form\SujetType;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use ForumBundle\Entity\Sujet;
@@ -49,8 +51,9 @@ class ForumController extends Controller
         $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
         $forums = $em->getRepository('ForumBundle:Sujet')->findBy([
-            "  "=>$user
+            "idUser"=>$user
         ]);
+        dump($forums);
 
 
         return $this->render('@Forum/Forum/mesforums.html.twig',array(
@@ -62,13 +65,16 @@ class ForumController extends Controller
     {
 
         $forum = $this->getDoctrine()->getRepository('ForumBundle:Sujet')->find($id);
-
+        $user=$this->getUser();
         $em =$this->getDoctrine()->getManager();
         $em->remove($forum);
         $em->flush();
-        $request->getSession()
-            ->getFlashBag()
-            ->add('success', 'Le forum a été supprimer avec succées ...!');
+
+        //historique
+        $name = $this->getUser()->getUsername();
+        $historique=new historique ();
+        $historique->setIdu($user);
+        $historique->setDescription("User ".$name."deleted a subject");
 
         return $this->redirectToRoute('afficher_messujets');
     }
@@ -83,10 +89,18 @@ class ForumController extends Controller
         $Form->handleRequest($request);
         if ($Form->isSubmitted())
         {
-            $forum->setIdUser($user->getId());
+            $forum->setIdUser($user);
             $em = $this->getDoctrine()->getManager();
             $em->persist($forum);
             $em->flush();
+
+            //historique
+            $name = $this->getUser()->getUsername();
+            $historique=new historique ();
+            $historique->setIdu($user);
+            $historique->setDescription("User ".$name."modified a subject");
+
+
             return $this->redirectToRoute('afficher_messujets');
         }
         return $this->render('@Forum/Forum/modifiersujet.html.twig', array(
@@ -124,9 +138,12 @@ class ForumController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $sujet = $em->getRepository('ForumBundle:Sujet')->findBy(array('etat' =>0));
+        $nbresujetprop = $em->getRepository('ForumBundle:Sujet')->nbresujetpropse();
+      //   dump($nbresujetprop);
 
         return $this->render('@Forum/Forum/sujetback.html.twig', array(
             'sujet' => $sujet,
+            'nbsrep' => $nbresujetprop,
 
         ));
     }
@@ -151,6 +168,7 @@ class ForumController extends Controller
         if($form->isSubmitted()&&$form->isValid()) {
             $desc=$form['descriptionCom']->getData();
 
+
             $comment->setDescriptionCom($desc);
             $comment->setDateCom(new \DateTime("now"));
             $comment->setIdUser($user);
@@ -174,7 +192,8 @@ class ForumController extends Controller
         $em->flush();
 
         $repository= $em->getRepository(commentaire::class)->nombrecommentaires($forum->getIdF());
-
+    //dump($repository);
+    //die();
 
         return $this->render('@Forum/Forum/detailssujet.html.twig',array(
             'forum' => $forum,
@@ -248,18 +267,15 @@ class ForumController extends Controller
 
         $comment = new Commentaire();
         $form = $this->createFormBuilder($comment)
-
-            ->add('descriptionCom',TextType::class,array('attr'=>array('class'=>'form-control') ))
-
+            ->add('descriptionCom',TextType::class,array('attr'=>array('class'=>'form-control')))
             ->add('save',SubmitType::class,array('label'=>'Ajouter Comment','attr'=>array('class'=>'btn oneMusic-btn mt-30') ))
             ->getForm();
         $form->handleRequest($request);
         if($form->isSubmitted()&&$form->isValid()) {
             $desc=$form['descriptionCom']->getData();
-
             $comment->setDescriptionCom($desc);
             $comment->setDateCom(new \DateTime("now"));
-            $comment->setIdUser($user->getId());
+            $comment->setIdUser($user);
             $comment->setIdF($forum->getIdF());
             // var_dump($comment);
             $em = $this->getDoctrine()->getManager();
@@ -283,6 +299,14 @@ class ForumController extends Controller
         $em->persist($forum);
         $em->flush();
 
+        //historique
+        $name = $this->getUser()->getUsername();
+        $historique=new historique ();
+        $historique->setIdu($user);
+        $historique->setDescription("User ".$name."liked a subject");
+        $em->persist($historique);
+        $em->flush();
+
 
         return $this->render('@Forum/Forum/detailssujet.html.twig',array(
             'forum' => $forum,
@@ -295,12 +319,20 @@ class ForumController extends Controller
     public function supprimerCommentAction($id,Request $request)
     {
 
-
+        $user=$this->getUser();
         $com = $this->getDoctrine()->getRepository('ForumBundle:Commentaire')->find($id);
-        var_dump($com);
+        //var_dump($com);
 
         $em =$this->getDoctrine()->getManager();
         $em->remove($com);
+        $em->flush();
+
+        //historique
+        $name = $this->getUser()->getUsername();
+        $historique=new historique ();
+        $historique->setIdu($user);
+        $historique->setDescription("User ".$name."deleted his comment");
+        $em->persist($historique);
         $em->flush();
 
         return $this->redirectToRoute('detail_sujet',array('id' => $com->getIdF()));
@@ -327,13 +359,20 @@ class ForumController extends Controller
 
             $com->setDescriptionCom($desc);
             $com->setDateCom($com->getDateCom());
-            $com->setIdUser($user->getId());
+            $com->setIdUser($user);
             $com->setIdF($com->getIdF());
             // var_dump($comment);
             $em = $this->getDoctrine()->getManager();
             $em->persist($com);
             $em->flush();
 
+            //historique
+            $name = $this->getUser()->getUsername();
+            $historique=new historique ();
+            $historique->setIdu($user);
+            $historique->setDescription("User ".$name."modified his comment");
+            $em->persist($historique);
+            $em->flush();
             return $this->redirectToRoute('detail_sujet',array('id' => $com->getIdF()));
         }
 
@@ -374,11 +413,17 @@ class ForumController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
         $forums = $em->getRepository('ForumBundle:Sujet')->findAll();
+        $strikesup = $em->getRepository('ForumBundle:Sujet')->countstrikesup();
+        $strikeinf = $em->getRepository('ForumBundle:Sujet')->countstrikeinf();
 
-
+        dump($forums);
+        dump($strikeinf);
         return $this->render('@Forum/Forum/chart.html.twig', array(
             'forums' => $forums,
             'user' => $user,
+            'strikesup' => $strikesup,
+            'strikeinf' => $strikeinf,
+
         ));
     }
 
@@ -399,15 +444,23 @@ class ForumController extends Controller
             $notif = $manager->createNotification("Forum ajoutée le ".$b." par l'utulisateur ".$username);
             $notif->setMessage('');
             foreach ($tt as $value) {
-
                 $manager->addNotification(array($value), $notif, true); }
             $sujet->setDate(new \DateTime("now"));
             $sujet->setNbreJaime(0);
             $user = $this->getUser();
-            $sujet->setIdUser($user->getId());
+            $sujet->setIdUser($user);
+            $sujet->setStrike(0);
             $sujet->setEtat(0);
             /*on fait ça pour qu'on peut utiliser les fonction du entity manager l persist w flush*/
             $em->persist($sujet);
+            $em->flush();
+
+            //historique
+            $name = $this->getUser()->getUsername();
+            $historique=new historique ();
+            $historique->setIdu($user);
+            $historique->setDescription("User ".$name."added a new subject");
+            $em->persist($historique);
             $em->flush();
             return $this->redirectToRoute('afficher_messujets');
         }
@@ -418,9 +471,98 @@ class ForumController extends Controller
         ));
     }
 
+    public function signalerAction($id,Request $request)
+    {
+
+        $user = $this->getUser();
+        $signaler=new signaler();
+        $em = $this->getDoctrine()->getManager();
+        $sujet = $this->getDoctrine()->getRepository('ForumBundle:Sujet')->find($id);
+        $Form = $this->createForm(signalerType::class, $signaler);
+        $Form->handleRequest($request);
+        if ($Form->isSubmitted() && $Form->isValid()){
+            $signaler->setIdu($user);
+            $signaler->setIdsujet($sujet);
+            $ancien=$sujet->getStrike();
+            $sujet->setStrike($ancien+1);
+            $em->persist($signaler);
+            $em->flush();
+          //  dump($signaler);
+            //historique
+            $name = $this->getUser()->getUsername();
+            $historique=new historique ();
+            $historique->setIdu($user);
+            $historique->setDescription("User".$name."signaled a subject");
+            $em->persist($historique);
+            $em->flush();
+            return $this->redirectToRoute('detail_sujet',array('id' => $sujet->getIdF()));
+        }
+        return $this->render('@Forum/Forum/signalersujet.html.twig', array(
+            'signalerform' => $Form->createView(),
+        ));
+
+    }
+
+    public function signalerbackaction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository= $em->getRepository(sujet::class)->signaler();
+        $nbsignale= $em->getRepository(sujet::class)->nbresujetsignale();
+        $user = $this->getUser()->getUsername();
 
 
+        return $this->render('@Forum/Forum/signalerback.html.twig', array(
+            'sujetsignale' => $repository,
+            'nbsignale' => $nbsignale
 
+        ));
+
+
+    }
+
+    public function supprimersujetsignalerAction($id,Request $request)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $sujet = $this->getDoctrine()->getRepository('ForumBundle:Sujet')->find($id);
+        $emailuser=$sujet->getIdUser()->getEmail();
+        $message = \Swift_Message::newInstance()
+        ->setSubject('Forum')
+        ->setFrom('mohamedamine.mbarki@esprit.tn')
+        ->setTo($emailuser)
+        ->setBody('Sujet supprimé car le nombre de strike a dépasser 99');
+        $this->get('mailer')->send($message);
+        $this->addFlash('info','Mail sent successfully');
+
+        $em->remove($sujet);
+
+        $em->flush();
+        return $this->redirectToRoute('signalerback');
+
+
+    }
+
+    public function afficherhistoriqueAction(Request $request)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $historique = $em->getRepository("ForumBundle:historique")->findAll();
+        return $this->render('@Forum/Forum/historiqueback.html.twig', array(
+            'historique' => $historique,
+
+
+        ));
+
+
+    }
+
+    public function deletehistoriqueAction (Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository= $em->getRepository(historique::class)->deletehistorique();
+        return $this->redirectToRoute('historique');
+
+    }
 
 
 

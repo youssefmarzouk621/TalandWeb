@@ -58,7 +58,7 @@ class NewsController extends Controller
         $articles= $paginator->paginate(
             $article,
             $request->query->get('page', 1)/*le numéro de la page à afficher*/,
-            2/*nbre d'éléments par page*/
+            9/*nbre d'éléments par page*/
         );
 
 
@@ -203,8 +203,6 @@ class NewsController extends Controller
         $user=$this->container->get('security.token_storage')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
         $news = $em->getRepository(News::class)->find($id);
-
-
         return $this->render('@News/News/print.html.twig',array('news'=>$news,'nom'=>$user));
     }
 
@@ -246,6 +244,144 @@ class NewsController extends Controller
     ));
 
 
+    }
+
+
+    public function trinbvueAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $queryBuilder = $em->getRepository('NewsBundle:News')->createQueryBuilder('bp');
+
+
+        $queryBuilder->orderBy("bp.nbrevue", 'DESC');
+        if ($request->query->getAlnum('filter')){
+            $queryBuilder
+                ->where('bp.nomArticle LIKE :nomArticle')
+                ->setParameter('nomArticle','%' . $request->query->getAlnum('filter') . '%');
+
+        }
+        $article=$queryBuilder->getQuery();
+
+        /**
+         * @var $paginator\Knp\Component\Pager\Paginator
+         */
+        $paginator  = $this->get('knp_paginator');
+
+        $articles= $paginator->paginate(
+            $article,
+            $request->query->get('page', 1)/*le numéro de la page à afficher*/,
+            9/*nbre d'éléments par page*/
+        );
+
+
+
+
+
+
+        return $this->render('@News/News/trinbvue.html.twig', array(
+
+            'arttri'=>$articles
+        ));
+
+
+
+    }
+
+    public function triplusrecentAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $queryBuilder = $em->getRepository('NewsBundle:News')->createQueryBuilder('bp');
+
+
+        $queryBuilder->orderBy("bp.dateArticle", 'DESC');
+        if ($request->query->getAlnum('filter')){
+            $queryBuilder
+                ->where('bp.nomArticle LIKE :nomArticle')
+                ->setParameter('nomArticle','%' . $request->query->getAlnum('filter') . '%');
+
+        }
+        $article=$queryBuilder->getQuery();
+
+        /**
+         * @var $paginator\Knp\Component\Pager\Paginator
+         */
+        $paginator  = $this->get('knp_paginator');
+
+        $articles= $paginator->paginate(
+            $article,
+            $request->query->get('page', 1)/*le numéro de la page à afficher*/,
+            9/*nbre d'éléments par page*/
+        );
+
+
+
+
+
+
+        return $this->render('@News/News/trinbvue.html.twig', array(
+
+            'arttri'=>$articles
+        ));
+
+
+
+    }
+
+    public function trimoinsrecentAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $queryBuilder = $em->getRepository('NewsBundle:News')->createQueryBuilder('bp');
+
+
+        $queryBuilder->orderBy("bp.dateArticle", 'ASC');
+        if ($request->query->getAlnum('filter')){
+            $queryBuilder
+                ->where('bp.nomArticle LIKE :nomArticle')
+                ->setParameter('nomArticle','%' . $request->query->getAlnum('filter') . '%');
+
+        }
+        $article=$queryBuilder->getQuery();
+
+        /**
+         * @var $paginator\Knp\Component\Pager\Paginator
+         */
+        $paginator  = $this->get('knp_paginator');
+
+        $articles= $paginator->paginate(
+            $article,
+            $request->query->get('page', 1)/*le numéro de la page à afficher*/,
+            9/*nbre d'éléments par page*/
+        );
+
+
+
+
+
+
+        return $this->render('@News/News/trinbvue.html.twig', array(
+
+            'arttri'=>$articles
+        ));
+
+
+    }
+
+
+    public function chartratingAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $rate = $em->getRepository('NewsBundle:review')->avgstatrating();
+    dump($rate);
+
+
+        return $this->render('@News/News/chartrate.html.twig', array(
+            'rate' => $rate,
+
+        ));
     }
 
 

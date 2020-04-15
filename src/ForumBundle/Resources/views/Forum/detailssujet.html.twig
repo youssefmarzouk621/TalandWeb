@@ -10,7 +10,7 @@
     <div class="blog-area section-padding-20">
 
         <div class="container">
-            <div class="single-blog-post mb-100 wow fadeInUp" data-wow-delay="100ms">
+            <div class="single-blog-post " data-wow-delay="100ms">
                 <div class="blog-content">
                     <div class="post-meta d-flex mb-30">
 
@@ -24,6 +24,7 @@
                     <a href="#">Added :{{ forum.date | date("m/d/Y") }}  </a>
 
                     <p>Description :{{ forum.descriptionF |raw  }}</p>
+                    <a href="{{ path('signaler',{'id':forum.idF})}}"> signaler</a>
 
 
                 </div>
@@ -36,8 +37,7 @@
     <div class="blog-area section-padding-20">
         <div class="container">
             <div class="comment-top">
-
-
+                <a onclick="myFunction()"  id="tet" style="padding-left: 900px;">Show/Hide comments</a>
                 {% if comments|length == 0 %}
                 <h4> No Comments</h4>
 
@@ -45,20 +45,20 @@
                 <div class="container">
                     <div class="row">
                         <!-- Contenedor Principal -->
-                        <div class="comments-container">
+                        <div class="comments-container" id="hayaaad">
                             <h1>Number of Comments({{ nbcom }})</h1>
 
                             <ul id="comments-list" class="comments-list">
 
                                 {% for comment in comments %}
                                     <li>
-                                        <div class="comment-main-level">
+                                        <div class="comment-main-level" id="">
                                             <!-- Avatar -->
-                                            <div class="comment-avatar"><img src="{{ asset('uploads/forum/' ~ comment.idUser.picture) }}" alt=""></div>
+                                            <div class="comment-avatar" id="bz"><img id="imgg" src="{{ asset('uploads/forum/' ~ comment.idUser.picture) }}" alt=""></div>
                                             <!-- Contenedor del Comentario -->
                                             <div class="comment-box">
                                                 <div class="comment-head">
-                                                    <h6 class="comment-name"><a href="http://creaticode.com/blog">{{ comment.idUser.username }}</a></h6>
+                                                    <h6 class="comment-name"><a href="">{{ comment.idUser.username }}</a></h6>
                                                     <span>{{ comment.dateCom | date("m/d/Y")}}</span>
 
                                                 </div>
@@ -81,12 +81,12 @@
                             </ul>
                             <div class="comment-top">
                                 </br></br>
-                                <h4>Leave a Comment</h4>
+                                <h4>Leave a Comment</h4><br>
                                 {{ form_start(form) }}
-                                <div class="comment-bottom" id="emoji">
+                                <div class="comment-bottom" >
 
 
-                    <textarea id="emoji"></textarea>
+
                                     {{form_widget(form.descriptionCom)}}
 
 
@@ -390,6 +390,15 @@
             }
         }
     </style>
+
+
+    <script>
+        function myFunction() {
+            $("#hayaaad").slideToggle(1500);
+
+        }
+    </script>
+
 
 
 {% endblock  %}

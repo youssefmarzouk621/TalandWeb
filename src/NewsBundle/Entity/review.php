@@ -63,11 +63,6 @@ class review
         $this->etat = $etat;
     }
 
-
-
-
-
-
     /**
      * Get id
      *

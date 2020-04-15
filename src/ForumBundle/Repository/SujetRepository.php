@@ -10,4 +10,89 @@ namespace ForumBundle\Repository;
  */
 class SujetRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function signaler()
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT c FROM ForumBundle:sujet c WHERE c.strike >=100 ");
+        return $query->getResult();
+
+    }
+
+    public function nbresujetsignale()
+    {
+
+
+        return $this->createQueryBuilder('r')
+
+            ->select('COUNT(r)')
+            ->where('r.strike >=100' )
+            ->getQuery()
+
+            ->getSingleScalarResult();
+
+    }
+
+    public function nbresujetpropse()
+    {
+
+
+        return $this->createQueryBuilder('r')
+
+            ->select('COUNT(r)')
+            ->where('r.etat =0' )
+            ->getQuery()
+
+            ->getSingleScalarResult();
+
+    }
+
+    public function usernameid($id)
+    {
+        return $this->createQueryBuilder('r')
+
+            ->select('r.email')
+            ->from('User')
+            ->where('r.id=:id' )
+            ->setParameter('id', $id)
+            ->getQuery()
+
+            ->getSingleScalarResult();
+    }
+
+    public function getusername($id){
+        return $query = $this->getEntityManager()
+            ->createQuery("select u.email from UserBundle:User u join ForumBundle:Sujet s where u.id=$id  ")
+            ->setMaxResults(1)
+          ->getSingleScalarResult();
+
+
+
+
+
+    }
+
+    public function countstrikesup()
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT count(c.strike) FROM ForumBundle:Sujet c where c.strike >=100 ");
+        return $query->getResult();
+
+
+    }
+
+    public function countstrikeinf()
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT count(c.strike) FROM ForumBundle:Sujet c where c.strike <=100 ");
+        return $query->getResult();
+
+
+    }
+
+
+
+
+
+
+
 }

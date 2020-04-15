@@ -26,3 +26,16 @@ imprimer:
 showreview:
     path:     /showreview/{id}
     defaults: { _controller: NewsBundle:News:showreview }
+trinbvue:
+    path:     /trinbvue
+    defaults: { _controller: NewsBundle:News:trinbvue }
+    methods : [GET]
+plusrecent:
+    path:     /plusrecent
+    defaults: { _controller: NewsBundle:News:triplusrecent }
+moinsrecent:
+    path:     /moinsrecent
+    defaults: { _controller: NewsBundle:News:trimoinsrecent }
+statrating:
+    path:     /chartrating
+    defaults: { _controller: NewsBundle:News:chartrating }

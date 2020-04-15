@@ -20,4 +20,19 @@ class reviewRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    public function avgstatrating()
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT avg(c.rate),count(c.rate) FROM NewsBundle:review c group by c.idarticle ");
+        return $query->getResult();
+
+     /*   $dql = 'SELECT avg(c.rate),count(c.rate) NewsBundle\Entity\review  c group by c.idarticle';
+        $query = $this->getEntityManager()->createQuery($dql);
+        return $query->execute();
+    */
+
+
+    }
+
 }

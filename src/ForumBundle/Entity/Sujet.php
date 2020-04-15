@@ -37,6 +37,13 @@ class Sujet
     private $etat;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="strike", type="integer", options={"default": "0"}, nullable=false)
+     */
+    private $strike;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="description_f", type="string", length=255, nullable=false)
@@ -154,6 +161,24 @@ class Sujet
     {
         $this->nbreJaime = $nbreJaime;
     }
+
+    /**
+     * @return int
+     */
+    public function getStrike()
+    {
+        return $this->strike;
+    }
+
+    /**
+     * @param int $strike
+     */
+    public function setStrike($strike)
+    {
+        $this->strike = $strike;
+    }
+
+
 
 
 
