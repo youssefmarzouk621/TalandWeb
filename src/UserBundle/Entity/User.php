@@ -5,10 +5,14 @@ namespace UserBundle\Entity;
 use Doctrine\ORM\Query\Expr\Base;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="fos_user")
+ * @ORM\Entity(repositoryClass="UserBundle\Repository\UserRepository")
+ * @Vich\Uploadable
  */
 class User extends BaseUser
 {
@@ -78,12 +82,25 @@ class User extends BaseUser
      */
     protected $status='not connected';
 
+
+
+
     /**
-     * @var string
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
-     * @ORM\Column(name="picture", type="string", length=255, nullable=true)
+     * @Vich\UploadableField(mapping="commentaire_file", fileNameProperty="imageName", size="imageSize")
+     *
+     * @var File|null
      */
-    protected $picture;
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @var string|null
+     */
+    private $imageName;
+
 
 
     /**
@@ -210,21 +227,6 @@ class User extends BaseUser
         $this->strike = $strike;
     }
 
-    /**
-     * @return string
-     */
-    public function getPicture()
-    {
-        return $this->picture;
-    }
-
-    /**
-     * @param string $picture
-     */
-    public function setPicture($picture)
-    {
-        $this->picture = $picture;
-    }
 
     /**
      * @return string
@@ -243,6 +245,41 @@ class User extends BaseUser
     }
 
 
+
+    /**
+     * @param File $imageFile
+     */
+    public function setImageFile(File $imageFile = null)
+    {
+        $this->imageFile = $imageFile;
+
+    }
+
+
+    /**
+     * @return File
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+
+    /**
+     * @param string $imageName
+     */
+    public function setImageName($imageName)
+    {
+        $this->imageName = $imageName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImageName()
+    {
+        return $this->imageName;
+    }
 
 }
 

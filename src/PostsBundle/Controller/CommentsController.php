@@ -6,34 +6,28 @@ use PostsBundle\Entity\Comments;
 use PostsBundle\Entity\Posts;
 use PostsBundle\Form\CommentsType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class CommentsController extends Controller
 {
-    public function AddCommentAction($id,Request $request)
-    {
+    public function AddCommentAction($id,$contenu)
+    {/*
         $comment=new Comments();
         $comment->setDatecreation(new \DateTime());
         $comment->setEtat(0);
-
+        $comment->setContenu($contenu);
         $emanager=$this->getDoctrine()->getManager();
         $post=$emanager->getRepository(Posts::class)->find($id);
 
         $comment->setIdpost($post);
-        $Form=$this->createForm(CommentsType::class,$comment);
-        $Form->handleRequest($request);
+        $comment->setIdu($this->getUser());
 
-        if ($Form->isSubmitted()&&$Form->isValid())
-        {
-            $em=$this->getDoctrine()->getManager();
-            $em->persist($comment);
-            $em->flush();
-            return $this->redirectToRoute('get_comments', array('id' => $id));
-        }
-        return $this->render('@Posts/Comments/add_comment.html.twig', array(
-            'commentform'=>$Form->createView()
-        ));
+        $em=$this->getDoctrine()->getManager();
+        $em->persist($comment);
+        $em->flush();*/
+        return new JsonResponse("comment added");
     }
 
     public function GetCommentsAction($id)
@@ -51,7 +45,7 @@ class CommentsController extends Controller
         $comment=$em->getRepository(Comments::class)->find($idc);
         $em->remove($comment);
         $em->flush();
-        return $this->redirectToRoute('get_comments', array('id' => $id));
+        return $this->redirectToRoute('single_post', array('id' => $id));
     }
 
     public function UpdateCommentAction($id,$idc,Request $request)

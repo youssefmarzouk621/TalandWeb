@@ -6,6 +6,10 @@ add_post:
     path:     /AddPost
     defaults: { _controller: PostsBundle:Posts:AddPost }
 
+add_p:
+    path:     /AddP/{img}/{des}
+    defaults: { _controller: PostsBundle:Posts:AddP }
+
 get_posts:
     path:     /GetPosts
     defaults: { _controller: PostsBundle:Posts:GetPosts }
@@ -15,12 +19,24 @@ update_post:
     defaults: { _controller: PostsBundle:Posts:UpdatePost }
 
 delete_post:
-    path:     /DeletePost/{id}
-    defaults: { _controller: PostsBundle:Posts:DeletePost }
+    path:     /RemoveP/{id}
+    defaults: { _controller: PostsBundle:Posts:RemoveP }
+
+remove_post:
+  path:     /DeletePost/{id}
+  defaults: { _controller: PostsBundle:Posts:DeletePost }
+
+react_post:
+    path:     /ReactPost/{idp}/{react}
+    defaults: { _controller: PostsBundle:Posts:React }
+
+remove_like:
+    path:     /RemoveLike/{id}
+    defaults: { _controller: PostsBundle:Posts:RemoveLike }
 
 add_comment:
-    path:     /AddComment/{id}
-    defaults: { _controller: PostsBundle:Comments:AddComment }
+    path:     /AddComment/{id}/{contenu}
+    defaults: { _controller: PostsBundle:Posts:AddComment }
 
 get_comments:
     path:     /GetComments/{id}
@@ -33,3 +49,20 @@ delete_comment:
 update_comment:
     path:     /UpdateComment/Post={id}/Comment={idc}
     defaults: { _controller: PostsBundle:Comments:UpdateComment }
+
+single_post:
+    path:     /SinglePost/{id}
+    defaults: { _controller: PostsBundle:Posts:SinglePost }
+
+display_stories:
+  path:     /DisplayStories
+  defaults: { _controller: PostsBundle:Posts:DisplayStories }
+
+
+get_search:
+  path:     /GetSearch
+  defaults: { _controller: PostsBundle:Posts:GetSearch }
+
+get_search_img:
+  path:     /GetSearchImg
+  defaults: { _controller: PostsBundle:Posts:GetSearchImg }

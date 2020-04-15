@@ -1,5 +1,188 @@
 {% extends "default/LayoutFront.html.twig" %}
 
+
+
+
+
 {% block section %}
-{{ form(postform) }}
+
+
+    <div class="container">
+        <div style="box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.37);border-radius: 14px;margin-bottom: 14px;" class="row">
+
+            <div style="display: flex;flex-flow: row wrap;justify-content: center;box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.07);" class="col-lg-4">
+                <img id="imgdb" style="border-radius: 10px;height: 600px;margin-top: 35px;margin-bottom: 35px;" src="{{ asset('uploads/posts/default2.jpg') }}" alt="" class="img-fluid">
+            </div>
+
+
+
+
+            <div class="col-lg-8">
+
+                <div style="height:300px;" class="col">
+                    {#{{ form_start(postform) }}
+                    {{ form_widget(postform.idu) }}
+                    {{ form_widget(postform.description) }}
+
+                    {{ form_widget(postform.nbrlikes) }}
+                    {{ form_widget(postform.nbrcomments) }}
+                    <div class="input-group">
+                        <div class="custom-file">
+                            {{ form_widget(postform.imageFile, { 'attr' : { 'class' : 'custom-file-input','id' : 'fichier' } }) }}
+                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                        </div>
+                    </div>
+                    <button type="submit">Valider</button>
+                    {{ form_end(postform) }}#}
+                    <div style="margin-top: 50px;">
+                        <div class="images glide">
+                            <div class="glide__track" data-glide-el="track">
+                                <ul class="glide__slides">
+                                    <li class="glide__slide">
+                                        <button onclick="choose(1)" class="btn" style="color: white;position: absolute;top: 91px;left: 29px;background: none;"><i class="fa fa-check-square"></i></button>
+                                        <img style="height: 130px;width: 100px;" src="{{ asset('uploads/posts/default1.jpg') }}" alt="">
+                                    </li>
+
+                                    <li class="glide__slide">
+                                        <button onclick="choose(2)" class="btn" style="color: white;position: absolute;top: 91px;left: 29px;background: none;"><i class="fa fa-check-square"></i></button>
+                                        <img style="height: 130px;width: 100px;object-fit: cover;border-radius: 10px;" src="{{ asset('uploads/posts/default2.jpg') }}" alt="">
+                                    </li>
+
+                                    <li class="glide__slide">
+                                        <button onclick="choose(3)" class="btn" style="color: white;position: absolute;top: 91px;left: 29px;background: none;"><i class="fa fa-check-square"></i></button>
+                                        <img style="height: 130px;width: 100px;object-fit: cover;border-radius: 10px;" src="{{ asset('uploads/posts/default3.jpg') }}" alt="">
+                                    </li>
+
+                                    <li class="glide__slide">
+                                        <button onclick="choose(4)" class="btn" style="color: white;position: absolute;top: 91px;left: 29px;background: none;"><i class="fa fa-check-square"></i></button>
+                                        <img style="height: 130px;width: 100px;object-fit: cover;border-radius: 10px;" src="{{ asset('uploads/posts/default4.jpg') }}" alt="">
+                                    </li>
+
+                                    <li class="glide__slide">
+                                        <button onclick="choose(5)" class="btn" style="color: white;position: absolute;top: 91px;left: 29px;background: none;"><i class="fa fa-check-square"></i></button>
+                                        <img style="height: 130px;width: 100px;object-fit: cover;border-radius: 10px;" src="{{ asset('uploads/posts/default5.jpg') }}" alt="">
+                                    </li>
+
+                                    <li class="glide__slide">
+                                        <button onclick="choose(6)" class="btn" style="color: white;position: absolute;top: 91px;left: 29px;background: none;"><i class="fa fa-check-square"></i></button>
+                                        <img style="height: 130px;width: 100px;object-fit: cover;border-radius: 10px;" src="{{ asset('uploads/posts/default6.jpg') }}" alt="">
+                                    </li>
+
+                                    <li class="glide__slide">
+                                        <button onclick="choose(7)" class="btn" style="color: white;position: absolute;top: 91px;left: 29px;background: none;"><i class="fa fa-check-square"></i></button>
+                                        <img style="height: 130px;width: 100px;object-fit: cover;border-radius: 10px;" src="{{ asset('uploads/posts/default7.jpg') }}" alt="">
+                                    </li>
+                                    <li class="glide__slide">
+                                        <button onclick="choose(8)" class="btn" style="color: white;position: absolute;top: 91px;left: 29px;background: none;"><i class="fa fa-check-square"></i></button>
+                                        <img style="height: 130px;width: 100px;object-fit: cover;border-radius: 10px;" src="{{ asset('uploads/posts/default8.jpg') }}" alt="">
+                                    </li>
+                                    <li class="glide__slide">
+                                        <button onclick="choose(9)" class="btn" style="color: white;position: absolute;top: 91px;left: 29px;background: none;"><i class="fa fa-check-square"></i></button>
+                                        <img style="height: 130px;width: 100px;object-fit: cover;border-radius: 10px;" src="{{ asset('uploads/posts/default9.jpg') }}" alt="">
+                                    </li>
+                                    <li class="glide__slide">
+                                        <button onclick="choose(10)" class="btn" style="color: white;position: absolute;top: 91px;left: 29px;background: none;"><i class="fa fa-check-square"></i></button>
+                                        <img style="height: 130px;width: 100px;object-fit: cover;border-radius: 10px;" src="{{ asset('uploads/posts/default10.jpg') }}" alt="">
+                                    </li>
+                                    <li class="glide__slide">
+                                        <button onclick="choose(11)" class="btn" style="color: white;position: absolute;top: 91px;left: 29px;background: none;"><i class="fa fa-check-square"></i></button>
+                                        <img style="height: 130px;width: 100px;object-fit: cover;border-radius: 10px;" src="{{ asset('uploads/posts/default11.jpg') }}" alt="">
+                                    </li>
+                                    <li class="glide__slide">
+                                        <button onclick="choose(12)" class="btn" style="color: white;position: absolute;top: 91px;left: 29px;background: none;"><i class="fa fa-check-square"></i></button>
+                                        <img style="height: 130px;width: 100px;object-fit: cover;border-radius: 10px;" src="{{ asset('uploads/posts/default12.jpg') }}" alt="">
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="glide__arrows" data-glide-el="controls">
+                                <button class="glide__arrow glide__arrow--left" data-glide-dir="<"><i class="fas fa-arrow-left"></i></button>
+                                <button class="glide__arrow glide__arrow--right" data-glide-dir=">"><i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {#<textarea style="display: none;" id="textarea"></textarea>#}
+                    {{ form_start(postform) }}
+                    {{ form_widget(postform.description) }}
+                    <button type="button" style="margin-top: 10px;" class="btn btn-outline-lighten-4" onclick="afficherform();">Choose file</button>
+                    <div id="fich"  style="margin-top: 9px;margin-bottom: 20px;display: none;" class="input-group">
+                        <div class="custom-file">
+                            {{ form_widget(postform.imageFile, { 'attr' : { 'class' : 'custom-file-input','id' : 'fichier' } }) }}
+                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                        </div>
+                    </div>
+                    <button id="sub" type="submit" style="position: relative;left: 625px;width: 117px;display: none;" class="btn btn-outline-lighten-4">Post !</button>
+                    <button id="addp" type="button" style="position: relative;left: 504px;width: 117px;margin-top: 10px;" onclick="AddPost();" class="btn btn-outline-lighten-4">Post ajax!</button>
+                    {{ form_end(postform) }}
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="{{ asset('FrontOffice/js/emojionearea.min.js')}}"></script>
+<script>
+    document.getElementById("postsbundle_posts_imageFile_file").required = false;
+    $(document).ready(function () {
+        $("#postsbundle_posts_description").emojioneArea({
+            pickerPosition: "bottom",
+            saveEmojisAs: "shortname"
+        });
+    });
+    new Glide(".images",{
+        type: 'carousel',
+        perView: 5,
+        focusAt: 'center',
+        gap: 40,
+        breakpoints: {
+            1200:{
+                perView: 3
+            },
+            800:{
+                perView: 2
+            }
+        }
+    }).mount();
+
+    function afficherform() {
+        document.getElementById("fich").style.display="flex";
+        document.getElementById("sub").style.display="flex";
+        document.getElementById("addp").style.display="none";
+    }
+
+    function choose(choice) {
+        document.getElementById("imgdb").src = ''.concat("/taland/web/uploads/posts/default",choice,'.jpg');
+    }
+    function AddPost() {
+        var des = $("#postsbundle_posts_description").data("emojioneArea").getText();
+        var str = document.getElementById("imgdb").src;
+        var res = str.substring(42);
+        //console.log("image :",res);
+        $.ajax({
+            url: 'AddP/' + res + "/" + des,
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log("Ajax request failed.");
+
+            }
+        });
+
+
+    }
+
+</script>
 {% endblock %}

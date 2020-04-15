@@ -20,7 +20,7 @@
             <td>{{ row.dateCreation|date("m/d/Y") }}</td>
             <td>{{ row.etat }}</td>
 
-            <td><a href="{{path('update_comment',{ 'id':row.idPost.idPost,'idc':row.idComment })}}">Modifier </a></td>
+            <td><a href="{{path('update_comment',{ 'id':row.idPost.idPost}) }}">Modifier </a></td>
             <td><a href="{{path('delete_comment',{ 'id':row.idPost.idPost,'idc':row.idComment })}}">Supprimer </a></td>
         </tr>
     {% endfor %}

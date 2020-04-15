@@ -4,8 +4,10 @@ namespace PostsBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class PostsType extends AbstractType
 {
@@ -14,12 +16,9 @@ class PostsType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('idu')
-                ->add('description')
-                ->add('source')
-                ->add('nbrlikes')
-                ->add('nbrcomments')
-                ->add('Valider',SubmitType::class);
+        $builder->add('description', TextareaType::class)
+                ->add('imageFile', VichImageType::class)
+                ->add('ajouter',SubmitType::class);
     }/**
      * {@inheritdoc}
      */
