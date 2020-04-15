@@ -17,13 +17,11 @@ class DefaultController extends Controller
 
         if ($user == null){
             return $this->render('baseFront.html.twig', [
-
                 'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
                 'connected' => $this->getUser()
             ]);
         } elseif ($user->hasRole('ROLE_ADMIN')){
             return $this->render('baseBack.html.twig', [
-
                 'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
                 'connected' => $this->getUser()
             ]);
