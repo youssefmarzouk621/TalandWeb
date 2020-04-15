@@ -1696,7 +1696,7 @@ var card =
 	};
 
 	/**
-	 * @public
+	 * @uploads
 	 */
 	extend.version = '1.1.3';
 
@@ -1757,7 +1757,7 @@ var card =
 	 * @param {Mixed} value value to test
 	 * @param {String} type type
 	 * @return {Boolean} true if `value` is a type of `type`, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.a = is.type = function (value, type) {
@@ -1770,7 +1770,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if 'value' is defined, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.defined = function (value) {
@@ -1783,7 +1783,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is empty, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.empty = function (value) {
@@ -1870,7 +1870,7 @@ var card =
 	 * @param {Mixed} value to test
 	 * @param {Mixed} host host to test with
 	 * @return {Boolean} true if `value` is hosted by `host`, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.hosted = function (value, host) {
@@ -1884,7 +1884,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is an instance of `constructor`
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.instance = is['instanceof'] = function (value, constructor) {
@@ -1897,7 +1897,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is null, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.nil = is['null'] = function (value) {
@@ -1910,7 +1910,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is undefined, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.undef = is.undefined = function (value) {
@@ -1927,7 +1927,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is an arguments object, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.args = is.arguments = function (value) {
@@ -1946,7 +1946,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is an array, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.array = Array.isArray || function (value) {
@@ -1959,7 +1959,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is an empty arguments object, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 	is.args.empty = function (value) {
 	  return is.args(value) && value.length === 0;
@@ -1971,7 +1971,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is an empty array, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 	is.array.empty = function (value) {
 	  return is.array(value) && value.length === 0;
@@ -1983,7 +1983,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is an arguments object, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.arraylike = function (value) {
@@ -2004,7 +2004,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is a boolean, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.bool = is['boolean'] = function (value) {
@@ -2017,7 +2017,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is false, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is['false'] = function (value) {
@@ -2030,7 +2030,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is true, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is['true'] = function (value) {
@@ -2047,7 +2047,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is a date, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.date = function (value) {
@@ -2064,7 +2064,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is an HTML Element, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.element = function (value) {
@@ -2084,7 +2084,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is an error object, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.error = function (value) {
@@ -2101,7 +2101,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is a function, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.fn = is['function'] = function (value) {
@@ -2119,7 +2119,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is a number, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.number = function (value) {
@@ -2132,7 +2132,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is positive or negative Infinity, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 	is.infinite = function (value) {
 	  return value === Infinity || value === -Infinity;
@@ -2144,7 +2144,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is a decimal number, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.decimal = function (value) {
@@ -2158,7 +2158,7 @@ var card =
 	 * @param {Number} value value to test
 	 * @param {Number} n dividend
 	 * @return {Boolean} true if `value` is divisible by `n`, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.divisibleBy = function (value, n) {
@@ -2174,7 +2174,7 @@ var card =
 	 *
 	 * @param value to test
 	 * @return {Boolean} true if `value` is an integer, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.integer = is['int'] = function (value) {
@@ -2188,7 +2188,7 @@ var card =
 	 * @param {Number} value value to test
 	 * @param {Array} others values to compare with
 	 * @return {Boolean} true if `value` is greater than `others` values
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.maximum = function (value, others) {
@@ -2215,7 +2215,7 @@ var card =
 	 * @param {Number} value value to test
 	 * @param {Array} others values to compare with
 	 * @return {Boolean} true if `value` is less than `others` values
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.minimum = function (value, others) {
@@ -2241,7 +2241,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is not a number, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.nan = function (value) {
@@ -2254,7 +2254,7 @@ var card =
 	 *
 	 * @param {Number} value value to test
 	 * @return {Boolean} true if `value` is an even number, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.even = function (value) {
@@ -2267,7 +2267,7 @@ var card =
 	 *
 	 * @param {Number} value value to test
 	 * @return {Boolean} true if `value` is an odd number, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.odd = function (value) {
@@ -2281,7 +2281,7 @@ var card =
 	 * @param {Number} value value to test
 	 * @param {Number} other value to compare with
 	 * @return {Boolean}
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.ge = function (value, other) {
@@ -2298,7 +2298,7 @@ var card =
 	 * @param {Number} value value to test
 	 * @param {Number} other value to compare with
 	 * @return {Boolean}
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.gt = function (value, other) {
@@ -2315,7 +2315,7 @@ var card =
 	 * @param {Number} value value to test
 	 * @param {Number} other value to compare with
 	 * @return {Boolean} if 'value' is less than or equal to 'other'
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.le = function (value, other) {
@@ -2332,7 +2332,7 @@ var card =
 	 * @param {Number} value value to test
 	 * @param {Number} other value to compare with
 	 * @return {Boolean} if `value` is less than `other`
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.lt = function (value, other) {
@@ -2350,7 +2350,7 @@ var card =
 	 * @param {Number} start lower bound
 	 * @param {Number} finish upper bound
 	 * @return {Boolean} true if 'value' is is within 'start' and 'finish'
-	 * @api public
+	 * @api uploads
 	 */
 	is.within = function (value, start, finish) {
 	  if (isActualNaN(value) || isActualNaN(start) || isActualNaN(finish)) {
@@ -2372,7 +2372,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is an object, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.object = function (value) {
@@ -2385,7 +2385,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is a hash, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.hash = function (value) {
@@ -2402,7 +2402,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is a regexp, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.regexp = function (value) {
@@ -2419,7 +2419,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if 'value' is a string, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.string = function (value) {
@@ -2436,7 +2436,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if 'value' is a base64 encoded string, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.base64 = function (value) {
@@ -2453,7 +2453,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if 'value' is a hex encoded string, false otherwise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.hex = function (value) {
@@ -2466,7 +2466,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is a Symbol, false otherise
-	 * @api public
+	 * @api uploads
 	 */
 
 	is.symbol = function (value) {

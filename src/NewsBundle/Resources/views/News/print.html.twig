@@ -1,0 +1,26 @@
+
+<div class="container">
+    <a href="{{ path('article', {'id':news.getIdArticle() }) }}"><img src="{{  asset('../public/uploads/'~news.getImageArticle() )}}"alt="image" width="350" height="350" ></a>
+    <div class="event_info">
+        <div class="event_title">
+            <h4> {{ news.getNomArticle()}}  </h4>
+        </div>
+        <div class="event_desc">
+            <p>Imprimé par : {{ nom }}</p>
+        </div>
+        <div class="event_footer">
+            <div class="event_date">
+                <p>{{news.getContenuArticle()}}</p>
+
+            </div>
+
+            <div class="no-print">
+                <div class="event_more ">
+                    <a href="javascript:window.print()" class="btn_more">
+                        Imprimer
+                    </a>
+                </div></div>
+        </div>
+    </div>
+</div>
+
