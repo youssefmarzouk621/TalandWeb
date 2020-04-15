@@ -9,6 +9,26 @@ forum:
 product:
     resource: "@ProductBundle/Resources/config/routing.yml"
     prefix:   /Products
+tvshow_reclamationtvshow:
+    resource: "@tvshowBundle/Controller/reclamationtvshowController.php"
+    type:     annotation
+
+tvshow_ratingtvshow:
+    resource: "@tvshowBundle/Controller/ratingtvshowController.php"
+    type:     annotation
+
+tvshow_commentairetvshow:
+    resource: "@tvshowBundle/Controller/commentairetvshowController.php"
+    type:     annotation
+
+tvshow_tvshow:
+    resource: "@tvshowBundle/Controller/TvshowController.php"
+    type:     annotation
+
+tvshow:
+    resource: "@tvshowBundle/Resources/config/routing.yml"
+    prefix:   /Tvshow
+
 user:
     resource: "@UserBundle/Resources/config/routing.yml"
     prefix:   /User

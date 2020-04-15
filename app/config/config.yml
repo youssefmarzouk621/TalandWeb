@@ -7,6 +7,7 @@ imports:
     - { resource: "@ForumBundle/Resources/config/services.yml" }
     - { resource: "@NewsBundle/Resources/config/services.yml" }
     - { resource: "@ProductBundle/Resources/config/services.yml" }
+    - { resource: "@tvshowBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -15,6 +16,9 @@ parameters:
 
 
 framework:
+    templating:
+        engines: ['twig']
+
     #esi: ~
     #translator: { fallbacks: ['%locale%'] }
     secret: '%secret%'
@@ -90,6 +94,15 @@ fos_user:
 sensio_framework_extra:
    router:
         annotations: false
+#knp paginator
+knp_paginator:
+    page_range: 5
+    default_options:
+        page_name: page
+        sort_field_name: sort
+        sort_direction_name: direction
+        distinct: true
+    template:
 
 
 
@@ -139,3 +152,47 @@ knp_snappy:
         enabled:    true
         binary:     "\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltoimage.exe\""
         options:    []
+        sortable: 'KnpPaginatorBundle:Pagination:sortable_link.html.twig'
+vresh_twilio:
+    #(Required) Your Account SID from www.twilio.com/user/account
+    sid: 'ACfa3364c76141d679da25985db80ab965'
+    #(Required) Your Auth Token from www.twilio.com/user/account
+    authToken: '07207b1f5d563f70ab2e48dabed79dd8'
+    #(Optional, default: '2010-04-01') Twilio API version
+    version: '2010-04-01'
+    #(Optional, default: 1) Number of times to retry failed requests
+    retryAttempts: 3
+
+
+nomaya_social:
+    buttons:
+        facebook:
+            url:            null
+            locale:         "fr_FR"
+            send:           false
+            width:          300
+            showFaces:      false
+            layout:         "button_count"
+        twitter:
+            url:            null
+            locale:         "fr"
+            message:        "Je veux partager ça avec vous"
+            text:           "Tweet"
+            via:            "L'Equipe cartedevisitevirtuelle.fr"
+            tag:            "ttot"
+        googleplus:
+            url:            null
+            locale :        "fr"
+            size :          "medium"
+            annotation :    "bubble"
+            width :         300
+        linkedin:
+            url:            null
+            locale:         "fr_FR"
+            counter:        "right"
+        pinterest:
+            url:            null
+    links:
+        facebook:           "http://www.facebook.com/yann.chauvel"
+        googleplus:         "https://plus.google.com/105931415830389032796"
+    theme:                  'default' # optional

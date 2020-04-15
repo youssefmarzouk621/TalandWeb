@@ -1672,6 +1672,143 @@ img {
     font-size: 16px; }
   .single-web-icon:hover {
     box-shadow: 0 2px 50px 0 rgba(0, 0, 0, 0.15); }
+.container { 
+  width: 1000px;
+  position: relative;
+  margin: 0 auto;
+  -webkit-perspective: 900px;
+  perspective: 900px;
+}
+
+.pane {
+  width: 150px;
+  height: 150px;
+  margin: 5px;
+  float: left;
+  position: relative; 
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transform-origin: center center;
+  transform-origin: center center;
+}
+.pane img {
+  width: 150px;
+}
+.pane .card {
+  z-index: -1;
+  visibility: hidden;
+  background-color: #CCC;
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  -webkit-transform:rotate(180deg);
+  -moz-transform:rotate(180deg);
+  -o-transform:rotate(180deg);
+  transform:rotate(180deg);
+  -webkit-transition-duration: 0.2s;
+  -moz-transition-duration: 0.2s;
+  -o-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  -backface-visibility: hidden;
+  -webkit-transform: rotateX( 180deg );
+  transform: rotateX( 180deg );
+}
+.pane .active {
+  z-index: 1;
+  visibility: visible;
+  background-color: #999;
+  -webkit-transform: rotateX( 0deg );
+  transform: rotateX( 0deg );
+}
+
+
+  .pane.one .card {
+    -webkit-transition-delay: 0.1s;
+    -moz-transition-delay: 0.1s;
+    -o-transition-delay: 0.1s;
+    transition-delay: 0.1s;
+  }
+  .pane.two .card {
+      -webkit-transition-delay: 0.2s;
+      -moz-transition-delay: 0.2s;
+      -o-transition-delay: 0.2s;
+      transition-delay: 0.2s;
+  }
+  .pane.three .card {
+      -webkit-transition-delay: 0.3s;
+      -moz-transition-delay: 0.3s;
+      -o-transition-delay: 0.3s;
+      transition-delay: 0.3s;
+  }
+  .pane.four .card {
+      -webkit-transition-delay: 0.4s;
+      -moz-transition-delay: 0.4s;
+      -o-transition-delay: 0.4s;
+      transition-delay: 0.4s;
+  }
+  .pane.five .card {
+      -webkit-transition-delay: 0.5s;
+      -moz-transition-delay: 0.5s;
+      -o-transition-delay: 0.5s;
+      transition-delay: 0.5s;
+  }
+  .pane.six .card {
+      -webkit-transition-delay: 0.6s;
+      -moz-transition-delay: 0.6s;
+      -o-transition-delay: 0.6s;
+      transition-delay: 0.6s;
+  }
+
+div svg {
+  width: 100px;
+  height: auto;
+  margin: 0 2rem;
+  cursor: pointer;
+  overflow: visible;
+}
+div svg polygon, div svg path {
+  transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+}
+div svg:hover polygon, div svg:hover path {
+  transition: all 1s cubic-bezier(0.2, 1, 0.3, 1);
+  fill: #FF4136;
+}
+div svg:hover .arrow {
+  animation: arrow-anim 2.5s cubic-bezier(0.2, 1, 0.3, 1) infinite;
+}
+div svg:hover .arrow-fixed {
+  animation: arrow-fixed-anim 2.5s cubic-bezier(0.2, 1, 0.3, 1) infinite;
+}
+
+@keyframes arrow-anim {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  5% {
+    transform: translateX(-0.1rem);
+  }
+  100% {
+    transform: translateX(1rem);
+    opacity: 0;
+  }
+}
+@keyframes arrow-fixed-anim {
+  5% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
 /* ====== The End ====== */
 

@@ -1,0 +1,310 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block body %}
+
+
+    <div class="form form-horizontal">
+        {{ form_start(form) }}
+
+        <div class="form-body">
+
+            <h4 class="form-section"><i class="ft-clipboard"></i> Project Details</h4>
+            <div class="form-group row">
+                <label class="col-md-3 label-control" for="projectinput5">Episode</label>
+                <div class="col-md-9">
+                    <a> Tv Show Name : </a>
+
+                    <input type="text"  id="nametvshow" onkeyup="changeColorblack();" class="form-control round is-invalid"  placeholder="Tv Show Name ..." {{ form_widget(form.name) }}
+                    </br>
+                </div>
+                <label class="col-md-3 label-control" for="projectinput5">Episode</label>
+                <div class="col-md-9">
+                    <a> Episode N° : </a>
+                    <input type="number"  id="episdenum" onkeyup="changeColorblack();" class="form-control round is-invalid" min="1" placeholder="Episode N° ..."   {{ form_widget(form.episodenum) }}
+                    </br>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 label-control" for="projectinput9">Description</label>
+                <div class="col-md-9">
+                    <a> Description : </a>
+                    <textarea id="description" onkeyup="changeColorblack();" rows="5" class="form-control round is-invalid"   placeholder="Description" {{ form_widget(form.description) }}
+
+                    </textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 label-control" for="projectinput5">duree</label>
+                <div class="col-md-9">
+                    <a> Durée : </a>
+
+                    <input type="number" id="duree"  onkeyup="changeColorblack();" class="form-control round is-invalid" placeholder="Durée (en minutes)..."    {{ form_widget(form.duree) }}
+                    </br>
+                </div>
+                <label class="col-md-3 label-control" for="projectinput5">Year</label>
+                <div class="col-md-9">
+                    <a> Year : </a>
+                    <input type="number" id="year"  onkeyup="changeColorblack();" class="form-control round is-invalid" min="1995" max="2020" placeholder="Year ..."   {{ form_widget(form.year) }}
+                    </br>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 label-control" for="projectinput6" >Type</label>
+                <div class="col-md-9">
+                    <select id="projectinput6" id="categorie"  onkeyup="changeColorblack();" class="form-control round "  {{ form_widget(form.type) }} />
+                        <option value="none" selected="" disabled="">Categorie</option>
+                        <option value="Singing">Singing</option>
+                        <option value="Painting">Painting</option>
+                        <option value="Theatre">Theatre</option>
+                        <option value="Dance">Dance</option>
+                        <option value="video">video</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+
+                <label class="col-md-3 label-control" for="projectinput5">Link</label>
+                <div class="col-md-9">
+                    <a> Link : </a>
+                    <input type="text" id="lien"  onkeyup="changeColorblack()" class="form-control is-invalid round " placeholder="Link  ..."    {{ form_widget(form.link) }}
+                    </br>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12" style="margin-left: 500px">
+
+
+                <div class="card-block">
+
+
+                    <div class="card-body">
+
+
+                        <fieldset class="form-group">
+                            <a> Cover Image : </a>
+                                <div class="custom-file ">
+
+                                    <label class="custom-file-label " for="inputGroupFile01">Choose file</label>
+                                    <input type="file" class="custom-file-input is-invalid round " id="inputGroupFile01" accept="*/image/png" {{ form_widget(form.file) }}
+
+
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                    <div class="col-lg-6 col-md-12" style="margin-left: 500px">
+
+
+                        <div class="card-block">
+
+
+                            <div class="card-body">
+
+
+                                <fieldset class="form-group">
+                                    <a> Galerie Picture 1 : </a>
+                                    <div class="custom-file">
+
+                                        <input type="file" class="custom-file-input round " id="inputGroupFile01" {{ form_widget(form.file1) }}
+
+                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+
+                <div class="col-lg-6 col-md-12" style="margin-left: 500px">
+
+
+                <div class="card-block">
+
+
+                    <div class="card-body">
+
+
+                        <fieldset class="form-group">
+                            <a> Galerie Picture 2 : </a>
+                            <div class="custom-file">
+
+                                <input type="file" class="custom-file-input round " id="inputGroupFile01" {{ form_widget(form.file2) }}
+
+                                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                </div>
+
+                <div class="col-lg-6 col-md-12" style="margin-left: 500px">
+
+
+                    <div class="card-block">
+
+
+                        <div class="card-body">
+
+
+                            <fieldset class="form-group">
+                                <a> Galerie Picture 3 : </a>
+                                <div class="custom-file">
+
+                                    <input type="file" class="custom-file-input round " id="inputGroupFile01" {{ form_widget(form.file3) }}
+
+                                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+
+                    <div class="col-lg-6 col-md-12" style="margin-left: 500px">
+
+
+                        <div class="card-block">
+
+
+                            <div class="card-body">
+
+
+                                <fieldset class="form-group">
+                                    <a> Galerie Picture 4  : </a>
+                                    <div class="custom-file">
+
+                                        <input type="file" class="custom-file-input round " id="inputGroupFile01" {{ form_widget(form.file4) }}
+
+                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+
+                            <div class="col-lg-6 col-md-12" style="margin-left: 500px">
+
+
+                                <div class="card-block">
+
+
+                                    <div class="card-body">
+
+
+                                        <fieldset class="form-group">
+                                            <a> Galerie Picture 5 : </a>
+                                            <div class="custom-file">
+
+                                                <input type="file" class="custom-file-input round " id="inputGroupFile01" {{ form_widget(form.file5) }}
+
+                                                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+        <div class="form-actions right">
+            <button type="reset" class="btn btn-danger mr-1">
+                <i class="ft-x"></i> Cancel
+            </button>
+            <button type="submit" class="btn  btn-bg-gradient-x-purple-red  white">
+                <i class="la la-check-square-o"></i> Save
+            </button>
+        </div>
+    </div>
+
+
+
+
+        {{ form_end(form) }}
+    </div>
+    <script>
+
+
+        function changeColorblack(){
+
+            if ($.isNumeric($("#duree").val())) {
+
+                $("#duree").removeClass("is-invalid");
+                $("#duree").addClass('is-valid');
+            }
+            else{
+                $("#duree").removeClass("is-valid");
+                $("#duree").addClass('is-invalid');
+            }
+
+            if ($.isNumeric($("#year").val())) {
+
+                $("#year").removeClass("is-invalid");
+                $("#year").addClass('is-valid');
+            }
+            else{
+                $("#year").removeClass("is-valid");
+                $("#year").addClass('is-invalid');
+            }
+
+            if ($.isNumeric($("#episdenum").val())) {
+
+                $("#episdenum").removeClass("is-invalid");
+                $("#episdenum").addClass('is-valid');
+            }
+          else{
+                $("#episdenum").removeClass("is-valid");
+                $("#episdenum").addClass('is-invalid');
+            }
+            var name = $("#nametvshow").val();
+            if(name != '')
+            {
+
+                $("#nametvshow").removeClass("is-invalid");
+                $("#nametvshow").addClass('is-valid');
+
+            }
+            else{
+                $("#nametvshow").removeClass("is-valid");
+                $("#nametvshow").addClass('is-invalid');
+            }
+            var cover = $("#cover").val();
+            if(cover != '')
+            {
+
+                $("#cover").removeClass("is-invalid");
+                $("#cover").addClass('is-valid');
+
+            }
+            if(cover == ''){
+                $("#cover").removeClass("is-valid");
+                $("#cover").addClass('is-invalid');
+            }
+
+            var description = $("#description").val();
+            if(description != '')
+            {
+
+                $("#description").removeClass("is-invalid");
+                $("#description").addClass('is-valid');
+
+            }
+            if(description == ''){
+                $("#description").removeClass("is-valid");
+                $("#description").addClass('is-invalid');
+            }
+
+            if ($("#lien").val().indexOf('https://gounlimited.to/embed-') > -1) {
+                $("#lien").removeClass("is-invalid");
+                $("#lien").addClass('is-valid');
+            }
+            else{
+                $("#lien").removeClass("is-valid");
+                $("#lien").addClass('is-invalid');
+            }
+
+
+
+        }
+
+    </script>
+{% endblock %}
+

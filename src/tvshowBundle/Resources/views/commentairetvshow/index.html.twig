@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Commentairetvshows list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Idu</th>
+                <th>Content</th>
+                <th>Idtvshow</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for commentairetvshow in commentairetvshows %}
+            <tr>
+                <td><a href="{{ path('commentairetvshow_show', { 'id': commentairetvshow.id }) }}">{{ commentairetvshow.id }}</a></td>
+                <td>{{ commentairetvshow.idu }}</td>
+                <td>{{ commentairetvshow.content }}</td>
+                <td>{{ commentairetvshow.idtvshow }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('commentairetvshow_show', { 'id': commentairetvshow.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('commentairetvshow_edit', { 'id': commentairetvshow.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('commentairetvshow_new') }}">Create a new commentairetvshow</a>
+        </li>
+    </ul>
+{% endblock %}

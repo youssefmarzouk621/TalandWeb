@@ -14472,7 +14472,7 @@ define("tinymce/dom/Serializer", [
 			}
 		);
 
-		// Return uploads methods
+		// Return public methods
 		return {
 			/**
 			 * Schema instance that was used to when the Serializer was constructed.
@@ -19964,7 +19964,7 @@ define("tinymce/Formatter", [
 			return Preview.getCssText(ed, format);
 		}
 
-		// Expose to uploads
+		// Expose to public
 		extend(this, {
 			get: get,
 			register: register,
@@ -23625,7 +23625,7 @@ define("tinymce/EditorCommands", [
 			return !!commands.exec[command];
 		}
 
-		// Expose uploads methods
+		// Expose public methods
 		extend(this, {
 			execCommand: execCommand,
 			queryCommandState: queryCommandState,

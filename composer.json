@@ -30,10 +30,13 @@
         "snipe/banbuilder": "dev-master",
         "symfony/monolog-bundle": "^3.1.0",
         "symfony/polyfill-apcu": "^1.0",
+        "nomaya/social-bundle": "dev-master",
         "symfony/swiftmailer-bundle": "^2.6.4",
         "symfony/symfony": "3.4.*",
         "twig/twig": "^1.0||^2.0",
         "vich/uploader-bundle": "^1.4"
+        "symfony/templating": "^3.4",
+        "vresh/twilio-bundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

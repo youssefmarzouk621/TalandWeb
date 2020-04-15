@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Ratingtvshows list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Idtvshow</th>
+                <th>Idu</th>
+                <th>Rate</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ratingtvshow in ratingtvshows %}
+            <tr>
+                <td><a href="{{ path('ratingtvshow_show', { 'id': ratingtvshow.id }) }}">{{ ratingtvshow.id }}</a></td>
+                <td>{{ ratingtvshow.tvshow.id }}</td>
+                <td>{{ ratingtvshow.Userid.username }}</td>
+                <td>{{ ratingtvshow.rate }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('ratingtvshow_show', { 'id': ratingtvshow.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('ratingtvshow_edit', { 'id': ratingtvshow.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('ratingtvshow_new') }}">Create a new ratingtvshow</a>
+        </li>
+    </ul>
+{% endblock %}

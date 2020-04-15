@@ -1,0 +1,419 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+        <!-- Title -->
+        <title>Taland Streaming</title>
+
+        <!-- Favicon -->
+        <link rel="icon" href="{{ asset('FrontOffice/img/core-img/favicon.ico') }}">
+
+        <!-- Stylesheet -->
+        <link rel="stylesheet" href="{{ asset('FrontOffice/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('FrontOffice/search.css') }}">
+
+    </head>
+
+    <br>
+    <!-- Preloader -->
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="lds-ellipsis">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <!-- ##### Header Area Start ##### -->
+    <header class="header-area">
+        <!-- Navbar Area -->
+        <div class="oneMusic-main-menu">
+            <div class="classy-nav-container breakpoint-off">
+                <div class="container">
+                    <!-- Menu -->
+                    <nav class="classy-navbar justify-content-between" id="oneMusicNav">
+
+                        <!-- Nav brand -->
+                        <a href="{{ asset('FrontOffice/index.html.twig') }}" class="nav-brand"><img src="{{ asset('FrontOffice/img/core-img/logo.png') }}" alt=""></a>
+
+                        <!-- Navbar Toggler -->
+                        <div class="classy-navbar-toggler">
+                            <span class="navbarToggler"><span></span><span></span><span></span></span>
+                        </div>
+
+                        <!-- Menu -->
+                        <div class="classy-menu">
+
+                            <!-- Close Button -->
+                            <div class="classycloseIcon">
+                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                            </div>
+
+                            <!-- Nav Start -->
+                            <div class="classynav">
+                                <ul>
+                                    <li><a href="index.html.twig">Home</a></li>
+                                    <li><a href="albums-store.html.twig">Albums</a></li>
+                                    <li><a href="#">Pages</a>
+                                        <ul class="dropdown">
+                                            <li><a href="index.html.twig">Home</a></li>
+                                            <li><a href="albums-store.html.twig">Albums</a></li>
+                                            <li><a href="event.html.twig">Events</a></li>
+                                            <li><a href="blog.html.twig">News</a></li>
+                                            <li><a href="contact.html.twig">Contact</a></li>
+                                            <li><a href="elements.html.twig">Elements</a></li>
+                                            <li><a href="login.html.twig">Login</a></li>
+                                            <li><a href="#">Dropdown</a>
+                                                <ul class="dropdown">
+                                                    <li><a href="#">Even Dropdown</a></li>
+                                                    <li><a href="#">Even Dropdown</a></li>
+                                                    <li><a href="#">Even Dropdown</a></li>
+                                                    <li><a href="#">Even Dropdown</a>
+                                                        <ul class="dropdown">
+                                                            <li><a href="#">Deeply Dropdown</a></li>
+                                                            <li><a href="#">Deeply Dropdown</a></li>
+                                                            <li><a href="#">Deeply Dropdown</a></li>
+                                                            <li><a href="#">Deeply Dropdown</a></li>
+                                                            <li><a href="#">Deeply Dropdown</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li><a href="#">Even Dropdown</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="event.html.twig">Events</a></li>
+                                    <li><a href="blog.html.twig">News</a></li>
+                                    <li><a href="contact.html.twig">Contact</a></li>
+                                </ul>
+
+                                <!-- Login/Register & Cart Button -->
+                                <div class="login-register-cart-button d-flex align-items-center">
+                                    <!-- Login/Register -->
+                                    {% if app.user %}
+                                    <div class="login-register-btn mr-50">
+                                        <a href="" id="loginBtn">{{ app.user }}</a>
+
+                                    </div>
+                                    {% else %}
+                                        <div class="login-register-btn mr-50">
+                                            <a href="{{ asset('FrontOffice/login.html.twig') }}" id="loginBtn">Login/register</a>
+
+                                        </div>
+                                    {% endif %}
+
+                                    <!-- Cart Button -->
+                                    <div class="cart-btn">
+                                        <p><span class="icon-shopping-cart"></span> <span class="quantity">1</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Nav End -->
+
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ##### Header Area End ##### -->
+
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({{ asset('FrontOffice/img/bg-img/breadcumb3.jpg') }});">
+        <div class="bradcumbContent">
+
+            <p>See what’s new</p>
+            <h2>Latest Albums</h2>
+        </div>
+    </section>
+    <!-- ##### Breadcumb Area End ##### -->
+
+    <div class="container" style="margin-left: 280px; margin-top: 100px;">
+
+        <input type="text" id="search" placeholder="Search...">
+        <div class="search"></div>
+    </div>
+    <!-- ##### Album Catagory Area Start ##### -->
+
+    <section class="album-catagory section-padding-100-0">
+
+        <div class="container">
+
+
+            <div class="row" >
+                <div class="col-12">
+                    <div class="browse-by-catagories catagory-menu d-flex flex-wrap align-items-center mb-70" id="myBtnContainer" >
+                        <a href="#" data-filter="*" >Browse All</a>
+                        <a href="#" data-filter=".2005">2005</a>
+                        <a href="#" data-filter=".2006">2006</a>
+                        <a href="#" data-filter=".2007">2007</a>
+                        <a href="#" data-filter=".2008">2008</a>
+                        <a href="#" data-filter=".2009">2009</a>
+                        <a href="#" data-filter=".2010">2010</a>
+                        <a href="#" data-filter=".2011">2011</a>
+                        <a href="#" data-filter=".2012">2012</a>
+                        <a href="#" data-filter=".2013">2013</a>
+                        <a href="#" data-filter=".2014">2014</a>
+                        <a href="#" data-filter=".2015">2015</a>
+                        <a href="#" data-filter=".2016">2016</a>
+                        <a href="#" data-filter=".2017">2017</a>
+                        <a href="#" data-filter=".2018">2018</a>
+                        <a href="#" data-filter=".2019">2019</a>
+                        <a href="#" data-filter=".2020"  >2020</a>
+                    </div>
+                </div>
+            </div>
+            <div class="blog-area section-padding-100" style="margin-left: -520px ;margin-top: -210px ;" >
+                <div class="container" >
+                    <div class="row" >
+
+                        <div class="col-12 col-lg-3" >
+                            <div class="blog-sidebar-area" >
+                                <!-- Widget Area -->
+                                <div class="single-widget-area mb-30" >
+                                    <div class="widget-title">
+                                        <h3>🔥 2020 🔥</h3>
+                                    </div>
+                                    <div class="widget-content">
+                                        <ul>
+                                            {% for tvshow in tvshowrecent %}
+                                                <li><a  href="{{ path('tvshow_show', { 'id': tvshow.id }) }}"> <div class="album-info">{{ tvshow.name }}</div></a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="single-widget-area mb-30" >
+                                    <div class="widget-title">
+                                        <h6>😍 Trending 😍</h6>
+                                    </div>
+                                    <div class="widget-content">
+                                        <ul>
+                                            {% for tvshow in topviews %}
+                                                <li><a  href="{{ path('tvshow_show', { 'id': tvshow.id }) }}"> <div class="album-info">{{ tvshow.name }}</div></a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row oneMusic-albums" style="margin-top: -480px;">
+
+                <!-- Single Album -->
+                {% for tvshow in tvshows %}
+                    <div class="col-12 col-sm-6 col-md-3  single-album-item t c  ">
+                        <div class="single-album" id="contenu" href="test.php">
+                            <tvshow id="{{ tvshow.name }}">
+                                <a href="{{ path('tvshow_show', { 'id': tvshow.id }) }}">
+                                    <img href="{{ asset('test.php') }}" src="{{ asset('images/') }}{{  tvshow.coverimage }}" alt="" style="height: 200px; width: 200px;">
+                                    <div class="album-info">
+
+                                        <h5>{{ tvshow.name }}</h5>
+
+                                        <p>{{ tvshow.year}}</p>
+                                    </div>
+                                </a>
+                            </tvshow>
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+            </div>
+        </div>
+
+        <div style="margin-left: 770px ;margin-top: 170px">
+
+            <h1>{{ knp_pagination_render(tvshows) }}</h1>
+
+        </div>
+    </section>
+    <!-- ##### Album Catagory Area End ##### -->
+
+    <!-- ##### Buy Now Area Start ##### -->
+
+
+    <!-- ##### Buy Now Area End ##### -->
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    <!-- ##### Add Area Start ##### -->
+    <!-- ##### Add Area End ##### -->
+
+
+    <!-- ##### Song Area Start ##### -->
+
+    <!-- ##### Song Area End ##### -->
+
+    <!-- ##### Contact Area Start ##### -->
+    <section class="contact-area section-padding-100 bg-img bg-overlay bg-fixed has-bg-img" style="margin-top:-300px; background-image: url({{ asset('FrontOffice/img/bg-img/bg-2.jpg);') }} ">
+        <div class="container">
+            <div class="one-music-songs-area mb-70">
+                <div class="container">
+                    <div class="row">
+
+                        <!-- Single Song Area -->
+                        <div class="col-12" >
+                            <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
+                                <div class="song-thumbnail">
+                                    <img  src="{{ asset('https://static.hotmixradio.fr/wp-content/uploads/HOTMIXRADIO-Hits-1024x1024.png') }}" alt="">
+                                </div>
+                                <div class="song-play-area">
+                                    <div class="song-name">
+                                        <p>HotMix Radio Hits</p>
+                                    </div>
+                                    <audio preload="auto" controls>
+                                        <source src="{{ asset('https://streamingp.shoutcast.com/hotmixradio-hits-128.mp3') }}">
+                                    </audio>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12" >
+                            <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
+                                <div class="song-thumbnail">
+                                    <img  src="{{ asset('https://img.nrj.fr/jBog2chnMoJT9mGb-l4KCIigteI=/250x250/smart/https://players.nrjaudio.fm/live-metadata/player/img/player-files/nrj/logos/640x640/P_NRJ_V3.png') }}" alt="">
+                                </div>
+                                <div class="song-play-area">
+                                    <div class="song-name">
+                                        <p>NRJ</p>
+                                    </div>
+                                    <audio preload="auto" controls>
+                                        <source src="{{ asset('http://185.52.127.168/fr/30001/mp3_128.mp3') }}">
+                                    </audio>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Contact Area End ##### -->
+
+    <!-- ##### Footer Area Start ##### -->
+    <footer class="footer-area">
+        <div class="container">
+            <div class="row d-flex flex-wrap align-items-center">
+                <div class="col-12 col-md-6">
+                    <a href="#"><img src="{{ asset('FrontOffice/img/core-img/logo.png') }}" alt=""></a>
+
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <div class="footer-nav">
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Albums</a></li>
+                            <li><a href="#">Events</a></li>
+                            <li><a href="#">News</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- ##### Footer Area Start ##### -->
+
+    <!-- ##### All Javascript Script ##### -->
+    <!-- jQuery-2.2.4 js -->
+    <script src="{{ asset('FrontOffice/js/jquery/jquery-2.2.4.min.js') }}"></script>
+    <!-- Popper js -->
+    <script src="{{ asset('FrontOffice/js/bootstrap/popper.min.js') }}"></script>
+    <!-- Bootstrap js -->
+    <script src="{{ asset('FrontOffice/js/bootstrap/bootstrap.min.js') }}"></script>
+    <!-- All Plugins js -->
+    <script src="{{ asset('FrontOffice/js/plugins/plugins.js') }}"></script>
+    <!-- Active js -->
+    <script src="{{ asset('FrontOffice/js/active.js') }}"></script>
+
+
+    <script>
+
+        $(function() {
+
+            $("#search").on("keyup", function() {
+                $field = $(this);
+
+                if( $field.val().length >= 1 )
+                {
+                    var soussou = new RegExp($('#search').val());
+                    var chekib = $('div#contenu tvshow');
+
+                    for(i=0;i<chekib.size();i++)
+                    {
+                        if(soussou.test(chekib[i].id))
+                        {
+                            chekib[i].style.display = "block";
+                        }
+                        else
+                        {
+                            chekib[i].style.display = "none";
+                        }
+                    }
+
+                }
+
+                else
+                {
+
+                    $('#contenu').html(defaut);
+                }
+            });
+        });
+
+    </script>
+
+siwar
+
+    <script type="text/javascript">
+        function filter() {
+            var posts = $('.single-album');
+            posts.hide();
+
+            $('#year a').click(function() {
+                var customType = $( this ).data('filter');
+
+                posts
+                    .hide()
+                    .filter(function () {
+                        return $(this).data('year') === customType;
+                    })
+                    .show();
+            });
+        }
+    </script>
+    </body>
+    </html>
+{% endblock %}

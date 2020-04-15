@@ -17,6 +17,8 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
+            new Vresh\TwilioBundle\VreshTwilioBundle(),
+            new Nomaya\SocialBundle\NomayaSocialBundle(),
             new PostsBundle\PostsBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new UserBundle\UserBundle(),
@@ -29,6 +31,8 @@ class AppKernel extends Kernel
             new Vich\UploaderBundle\VichUploaderBundle(),
             new ProductBundle\ProductBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
+            new tvshowBundle\tvshowBundle(),
+
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
