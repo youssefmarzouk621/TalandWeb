@@ -27,7 +27,7 @@ class ProductController extends Controller
 
 
     public function getProductsAction(SessionInterface $session)
-    {
+    {$user=$this->getUser();
         $cart = $session->get('cart', []);
 
         $product = new Produit();
@@ -35,9 +35,10 @@ class ProductController extends Controller
         $em = $this->getDoctrine()->getManager();
 //        $product = $em->getRepository('ProductBundle:Produit')->findAll();
         $product = $em->getRepository(Produit::class)->loadMoreProducts(18, 0);
-
+        if($user->hasRole('ROLE_ADMIN'))
+            return $this->render('@Product/Admin/admin_products.html.twig', array('Produit' => $product));
         return $this->render('@Product/Product/get_products.html.twig', array('Produit' => $product, 'nbrProduct' => sizeof($cart)));
-    //return $this->render('@Product/Admin/admin_products.html.twig', array('Produit' => $product));
+
     }
 
     public function loadMoreProductsAction($start, $limit)
