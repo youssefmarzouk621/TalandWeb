@@ -5,7 +5,7 @@ parameters:
     database_name: taland
     database_user: root
     database_password: null
-    mailer_transport: smtp
+    mailer_transport: gmail
     mailer_host: smtp.gmail.com
     mailer_user: talandpidev@gmail.com
     mailer_password: Tal123and!

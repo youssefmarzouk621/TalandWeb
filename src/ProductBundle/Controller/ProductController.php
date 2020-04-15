@@ -131,4 +131,15 @@ class ProductController extends Controller
 
     }
 
+
+    public function validateSellAction($id){
+        $em = $this->getDoctrine()->getManager();
+        $product = $em->getRepository(Produit::class)->find($id);
+        $product->setValidation(1);
+        $em->persist($product);
+        $em->flush();
+        $this->addFlash('successSold', 'Product sold.');
+        return $this->redirectToRoute('add_product');
+    }
+
 }

@@ -11,6 +11,7 @@ class ProductRepository extends EntityRepository{
         $qb=$this->getEntityManager()->createQueryBuilder()
             ->select('p')
             ->from($this->_entityName,'p')
+            ->where('p.validation=0')
             ->setFirstResult($start)
             ->setMaxResults($limit);
         $query=$qb->getQuery();

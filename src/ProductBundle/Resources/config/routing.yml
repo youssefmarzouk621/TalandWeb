@@ -19,6 +19,10 @@ delete_product:
     path:     /deletProduct/{id}
     defaults: { _controller: ProductBundle:Product:deleteProduct }
 
+sell_product:
+    path:     /sellProduct/{id}
+    defaults: { _controller: ProductBundle:Product:validateSell }
+
 delete_product_admin:
     path:     /deletProductAdmin/{id}
     defaults: { _controller: ProductBundle:Product:deleteProductAdmin }

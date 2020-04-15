@@ -4,6 +4,12 @@
 
     <div class="blog-area section-padding-100">
         <div class="container">
+            {% for message in app.flashes('successSold') %}
+
+                <div class="alert alert-success">{{ message }}
+
+                </div>
+            {% endfor %}
             <div class="row">
                 <div class="col-12 col-lg-9">
 
@@ -29,16 +35,26 @@
 
                             </div>
                             <!-- Post Excerpt -->
-                            <p>{{ product.category.name }}
-                                Pellentesque sit amet velit a libero viverra porta non eu justo. Vivamus mollis metus
-                                sem, ac sodales dui lobortis. Pellentesque sit amet velit a libero viverra porta non eu
-                                justo. Vivamus mollis metus sem, ac sodales dui lobortis.</p>
+                            <p>@Category: {{ product.category.name }}<br>
+                                Let your talent shine.</p>
                         </div>
                     </div>
 
 
                 </div>
             </div>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% if app.user.id == product.userid.id %}
+            <div class="row">
+                <div class="col-12">
+                    <div class="load-more-btn text-center wow fadeInUp js-loadMoreDiv" data-wow-delay="300ms">
+                        <a href="{{ path('sell_product',{'id':product.id}) }}"
+                           class="btn oneMusic-btn js-loadMore">Sell <i class="fa fa-angle-double-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endif %}
         </div>
     </div>
 {% endblock %}
