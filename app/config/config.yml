@@ -47,7 +47,7 @@ twig:
     strict_variables: '%kernel.debug%'
     form_themes:
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
-            - 'bootstrap_3_layout.html.twig'
+        - 'bootstrap_3_layout.html.twig'
 # Doctrine Configuration
 doctrine:
     dbal:
@@ -118,17 +118,6 @@ vich_uploader:
             delete_on_update: true
             delete_on_remove: true
 
-
-knp_paginator:
-    page_range: 5
-    default_options:
-        page_name: page
-        sort_field_name: sort
-        sort_direction_name: direction
-        distinct: true
-    template:
-        pagination: '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig'
-        sortable: 'KnpPaginatorBundle:Pagination:sortable_link.html.twig'
 
 
 gregwar_captcha:
