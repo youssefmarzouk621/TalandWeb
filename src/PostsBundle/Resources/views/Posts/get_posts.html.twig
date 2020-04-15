@@ -266,6 +266,22 @@
 {% block scripts %}
 
 <script>
+        $('.vid').parent().click(function () {
+            if($(this).children(".vid").get(0).paused){
+                $(this).children(".vid").get(0).play();
+                $(this).children(".playpause").fadeOut();
+            }
+            else{
+                $(this).children(".vid").get(0).pause();
+                $(this).children(".playpause").fadeIn();
+            }
+        });
+</script>
+
+
+
+
+<script>
 $(document).ready(function () {
  var $imgs = [];
  var $usernames = [].sort(),
@@ -296,7 +312,7 @@ $(document).ready(function () {
         var $h = strArray[j].replace(str, "<strong>" + str + "</strong>");
         $pc="<img style='height: 50px;margin-left :10px;margin-right :10px;border-radius:50%;' src='/taland/web/uploads/posts/".concat($imgs[j],"'>");
         $return.push(
-          '<li class="prediction-item"><a style="color: gray;" href="{{ path('get_posts') }}">'+$pc+'<span class="prediction-text">' +
+          '<li class="prediction-item"><a style="color: gray;" href="/taland/web/app_dev.php/User/Profile/'+strArray[j]+'">'+$pc+'<span class="prediction-text">' +
             $h+"</span></a></li>"
         );
       }
@@ -444,16 +460,6 @@ $(document).ready(function () {
     
     
 <script>
-    $('.vid').parent().click(function () {
-  if($(this).children(".vid").get(0).paused){
-      $(this).children(".vid").get(0).play();
-      $(this).children(".playpause").fadeOut();
-    }
-  else{
-        $(this).children(".vid").get(0).pause();
-        $(this).children(".playpause").fadeIn();
-    }
-});
     function removepost(idp) {
         Swal.fire({
             title: 'Are you sure?',

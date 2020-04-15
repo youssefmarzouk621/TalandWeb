@@ -94,6 +94,21 @@ class PostsRepository extends \Doctrine\ORM\EntityRepository
 
 
     }
+    public function getprofileuser($us){
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT * FROM fos_user WHERE username = '$us' ";
+
+        try {
+            $stmt = $conn->prepare($sql);
+        } catch (DBALException $e) {
+
+        }
+
+        $stmt->execute();
+        return $stmt->fetchAll();
+
+
+    }
 
 
 }
