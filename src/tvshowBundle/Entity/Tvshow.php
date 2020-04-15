@@ -48,6 +48,12 @@ class Tvshow
      * @ORM\Column(name="duree", type="integer")
      */
     private $duree;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="nbrvues", type="integer")
+     */
+    private $nbrvues;
 
     /**
      * @var string
@@ -153,6 +159,29 @@ class Tvshow
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
+    }
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getNbvues()
+    {
+        return $this->nbrvues;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Post
+     */
+    public function setNbrvues($nbrvues)
+    {
+        $this->nbrvues = $nbrvues;
 
         return $this;
     }

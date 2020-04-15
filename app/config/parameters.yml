@@ -7,6 +7,6 @@ parameters:
     database_password: null
     mailer_transport: smtp
     mailer_host: smtp.gmail.com
-    mailer_user: marktnfrmspc@gmail.com
-    mailer_password: wachakib
+    mailer_user: mohamedchakib.hajji@esprit.tn
+    mailer_password: marktnfrmspc
     secret: ThisTokenIsNotSoSecretChangeIt

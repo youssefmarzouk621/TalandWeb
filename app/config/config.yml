@@ -102,7 +102,7 @@ vresh_twilio:
     #(Required) Your Account SID from www.twilio.com/user/account
     sid: 'ACfa3364c76141d679da25985db80ab965'
     #(Required) Your Auth Token from www.twilio.com/user/account
-    authToken: 'd1514ac2a9a1172693203282fd3f2df1'
+    authToken: '07207b1f5d563f70ab2e48dabed79dd8'
     #(Optional, default: '2010-04-01') Twilio API version
     version: '2010-04-01'
     #(Optional, default: 1) Number of times to retry failed requests

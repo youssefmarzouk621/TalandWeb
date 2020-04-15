@@ -25,17 +25,11 @@ class reclamationtvshow
      * @ORM\JoinColumn(name="idtvshow" ,referencedColumnName="id")
      */
     private $idtvshow;
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="episodenum", type="integer")
-     */
-    private $episodenum;
+
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="idu", type="integer")
+     * @ORM\ManyToOne(targetEntity="\UserBundle\Entity\User",cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="idu", referencedColumnName="id" ,nullable=true)
      */
     private $idu;
 
@@ -56,7 +50,7 @@ class reclamationtvshow
     /**
      * @var int
      *
-     * @ORM\Column(name="etat", type="integer")
+     * @ORM\Column(name="etat", type="integer" , options={"default" : 0})
      */
     private $etat;
 
@@ -96,34 +90,11 @@ class reclamationtvshow
         return $this->idtvshow;
     }
 
-    /**
-     * Set episodenum
-     *
-     * @param integer $episodenum
-     *
-     * @return reclamationtvshow
-     */
-    public function setEpisodenum($episodenum)
-    {
-        $this->episodenum = $episodenum;
-
-        return $this;
-    }
-
-    /**
-     * Get episodenum
-     *
-     * @return int
-     */
-    public function getEpisodenum()
-    {
-        return $this->episodenum;
-    }
 
     /**
      * Set idu
      *
-     * @param integer $idu
+     * @param mixed $idu
      *
      * @return reclamationtvshow
      */
@@ -135,9 +106,7 @@ class reclamationtvshow
     }
 
     /**
-     * Get idu
-     *
-     * @return int
+     * @return mixed
      */
     public function getIdu()
     {

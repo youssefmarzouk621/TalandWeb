@@ -32,7 +32,7 @@
                 </li>
                 <li class=" nav-item"><a href="#"><i class="ft-users"></i><span class="menu-title" data-i18n="">Users</span></a>
                 </li>
-                <li class=" nav-item"><a href="#"><i class="ft-grid active"></i><span class="menu-title active"   style="color: #be8b01" data-i18n="">TV shows</span></a>
+                <li class=" nav-item"><a href="#"><i class="ft-grid"></i><span class="menu-title "  style="color: #be8b01" data-i18n="">TV shows</span></a>
                     <ul>
                         <li><a class="my-1" href="{{ asset('/talandWEB/web/app_dev.php/tvshow/new')}}"> ajouter </a></li>
                         <li><a class="my-1" href="{{ asset('/talandWEB/web/app_dev.php/tvshow/affichetvshowadmin/')}}"> afficher</a></li>
@@ -87,7 +87,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">{{nombre}} tvshows</h4>
+                                <h4 class="card-title">Reports</h4>
                                 <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                 <div class="heading-elements">
                                     <ul class="list-inline mb-0">
@@ -100,33 +100,40 @@
                             </div>
                             <div class="card-content collapse show">
                                 <div class="card-body">
-                           <input type="text" placeholder="recherche" style="margin-left: 1000px" id="myInput" onkeyup="myFunction()">
+                                    <form method="get" action="{{ path('recherche') }}">
+                                        <input placeholder="chercher "  style="margin-left: 200px"   name="motcle" onkeyup="myFunction()" class="form-control round-form" type="text" style="color: #c2c2c2;margin-left: 750px;height:20px;width: 10px "/>
+                                    </form >
+
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table" id="myTable">
                                         <thead class="thead-dark">
                                         <tr>
-                                            <th scope="col">nom</th>
-                                            <th scope="col">numéro de l'espisode</th>
-                                            <th scope="col">type</th>
-                                            <th scope="col">year</th>
-                                            <th scope="col">supprimer</th>
-                                            <th scope="col">modifier</th>
+                                            <th scope="col">Tv Show</th>
+                                            <th scope="col">User</th>
+                                            <th scope="col">Reason</th>
+                                            <th scope="col">Response Type</th>
+                                            <th scope="col">Etat</th>
+                                            <th scope="col">Validate</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {% for tvshow in tvshows %}
+                                        {% for reclamationtvshow in reclamationtvshows %}
                                         <tr>
-                                            <td scope="row" name="nom" >{{tvshow.name}}</td>
-                                            <td>{{tvshow.episodenum}}</td>
-                                            <td>{{tvshow.type}}</td>
-                                            <td>{{tvshow.year}}</td>
-                                            <td> <button type="button" class="btn btn-danger mr-1">
-                                                    <i class="ft-delete" ></i>   <a href="{{ path('supptvshow',{'id' :tvshow.id}) }}">Delete</a>
-                                                </button></td>
+                                            <td>{{ reclamationtvshow.tvshow.name }}</td>
+                                            <td>{{ reclamationtvshow.idu }}</td>
+                                            <td scope="row" name="nom" >{{ reclamationtvshow.reason }}</td>
+                                            <td>{{ reclamationtvshow.responsetype }}</td>
+                                            <td>{% if reclamationtvshow.etat == 0 %}
+                                                    ❌
+                                                 {% else %}
+                                                     ✔️
+                                                     {% endif %}
+                                            </td>
                                             <td> <button type="button" class="btn btn-success mr-1">
-                                                    <i class="ft-edit" ></i>  <a class="my-1" href="{{ path('modifiertvshow',{'id' :tvshow.id}) }}"> modifier</a>
+                                                    <i class="ft-eye" ></i>  <a class="my-1" href="{{ path('reclamationtvshow_edit',{'id' :reclamationtvshow.id}) }}"> Mark As Seen</a>
                                                 </button></td>
+
                                         </tr>
                                         {% endfor %}
 

@@ -10,4 +10,20 @@ namespace tvshowBundle\Repository;
  */
 class reclamationtvshowRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function recherche($nomm)
+    {
+
+$query=$this->createQueryBuilder('v')
+->join('v.idu','c')
+->addSelect('c')
+->join('v.idtvshow','t')
+->addSelect('t')
+->where('c.username like :nomm')
+->orWhere('t.name like :nomm')
+->setParameter('nomm',$nomm.'%')
+->getQuery();
+return $query->getResult();
+    }
+
 }

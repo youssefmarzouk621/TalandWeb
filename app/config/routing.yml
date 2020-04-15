@@ -1,3 +1,7 @@
+tvshow_reclamationtvshow:
+    resource: "@tvshowBundle/Controller/reclamationtvshowController.php"
+    type:     annotation
+
 tvshow_ratingtvshow:
     resource: "@tvshowBundle/Controller/ratingtvshowController.php"
     type:     annotation

@@ -31,6 +31,7 @@ function insertMessage() {
   if ($.trim(msg) == '') {
     return false;
   }
+
   if(msg == 'no'){
     setTimeout(function(){  $('.message.loading').remove();
       $('<div class="message new"><figure class="avatar"><img src="https://thumbs.dreamstime.com/b/le-robot-de-sourire-mignon-bot-causerie-indiquent-salut-illustration-plate-moderne-personnage-dessin-anim%C3%A9-vecteur-130663707.jpg" /></figure>' + 'We Are Verry Happy For That' + '</div>').appendTo($('.mCSB_container')).addClass('new');
@@ -67,17 +68,24 @@ var Fake = [
   'Nice to meet you',
   'Do you have a problem with something in the website ?',
   'All you Have To Do is typing report',
-  'Type The Name Of The Tv Show?',
-  'Now Please Type The Problem Example (Sexual content/Violent or abject content/Child abuse/Failure to respect my rights)',
+  'Please Type The Problem Example (Sexual-content/Violent-content/Child-abuse/Failure to respect my rights)',
   'Now Type The Method that you want to receive your response on (SMS/Mail)? ',
   'Wait For Our Response For Maximum 48 Hours',
-  'thank You  for helping us to improve our website ❤️',
+  'thank You  for helping us to improve our website ❤',
   'Bye',
   ':)'
 ]
 
 function fakeMessage() {
+ if(Fake[i] == 'thank You  for helping us to improve our website ❤'){
+     setTimeout(function(){  $('.message.loading').remove();
+         $('<div class="message new"><figure class="avatar"><img src="https://thumbs.dreamstime.com/b/le-robot-de-sourire-mignon-bot-causerie-indiquent-salut-illustration-plate-moderne-personnage-dessin-anim%C3%A9-vecteur-130663707.jpg" /></figure>' + 'thank You  for helping us to improve our website ❤' + '</div>').appendTo($('.mCSB_container')).addClass('new');
+         setDate();
+         updateScrollbar();
+         document.getElementById('confirm').click();
+     }, 1000 + (Math.random() * 20) * 100);
 
+ }
   if ($('.message-input').val() != '') {
     return false;
   }
@@ -87,7 +95,8 @@ function fakeMessage() {
   $('[data-tag-id]').each(function () {
     tags.push($(this).val())
   })
-  alert(tags[2]);
+  $('#responsetype').val(tags[5]);
+  $('#reason').val(tags[4]);
   setTimeout(function() {
   $
     $('.message.loading').remove();

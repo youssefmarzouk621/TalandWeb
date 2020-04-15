@@ -113,9 +113,18 @@
                                 <!-- Login/Register & Cart Button -->
                                 <div class="login-register-cart-button d-flex align-items-center">
                                     <!-- Login/Register -->
-                                    <div class="login-register-btn mr-50">
-                                        <a href="{{ asset('login.html.twig') }}" id="loginBtn">Login / Register</a>
-                                    </div>
+
+                                    {% if app.user %}
+                                        <div class="login-register-btn mr-50">
+                                            <a href="" id="loginBtn">{{ app.user }}</a>
+
+                                        </div>
+                                    {% else %}
+                                        <div class="login-register-btn mr-50">
+                                            <a href="{{ asset('FrontOffice/login.html.twig') }}" id="loginBtn">Login/register</a>
+
+                                        </div>
+                                    {% endif %}
 
                                     <!-- Cart Button -->
                                     <div class="cart-btn">
@@ -170,7 +179,9 @@
                             <h5>Episode : {{ tvshow.episodenum }}</h5>
 
                         </div>
-
+                        <div class="single-contact-info d-flex align-items-center">
+                            <p> <h1>👁  {{ tvshow.nbvues }}</h1>  </p>
+                        </div>
 
                         <!-- Single Contact Info -->
                         <div class="single-contact-info d-flex align-items-center">
@@ -9759,11 +9770,16 @@
     </div>
 
     <!-- ##### Contact Area End ##### -->
-    <div style="position: fixed;bottom: 110px; right: 25px;">
-        <a href="{{ path('tvshow_report') }}">
-            <img id="msgToggle"    src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Facebook_Messenger_4_Logo.svg/600px-Facebook_Messenger_4_Logo.svg.png" width="60" height="auto" style="cursor: pointer;">
-        </a>
-    </div>
+    {% if app.user %}
+        <div style="position: fixed;bottom: 110px; right: 25px;">
+            <a href="{{ path('tvshow_report',{ 'id': tvshow.id }) }}">
+                <img id="msgToggle"    src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Facebook_Messenger_4_Logo.svg/600px-Facebook_Messenger_4_Logo.svg.png" width="60" height="auto" style="cursor: pointer;">
+            </a>
+        </div>
+    {% else %}
+
+    {% endif %}
+
 
 
     <!-- ##### Footer Area Start ##### -->

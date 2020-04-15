@@ -3,6 +3,7 @@
 namespace tvshowBundle\Controller;
 
 use tvshowBundle\Entity\commentairetvshow;
+use tvshowBundle\Entity\reclamationtvshow;
 use tvshowBundle\Entity\Tvshow;
 use tvshowBundle\Entity\ratingtvshow;
 use Symfony\Component\HttpFoundation\File\File;
@@ -32,28 +33,37 @@ class TvshowController extends Controller
 
         $tvshows = $em->createQueryBuilder();
         $recenttvshows = $em->createQueryBuilder();
+        $topviews = $em->createQueryBuilder();
         $tvshows->select('t')
             ->from(Tvshow::class, 't')
 
             ->groupBy('t.name')
         ;
 
+        $topviews->select('t')
+            ->from(Tvshow::class, 't')
+            ->where('t.nbrvues > 10' )
+            ->groupBy('t.name')
+            ->setMaxResults(5)
+        ;
+
         $recenttvshows->select('t')
             ->from(Tvshow::class, 't')
             ->where('t.year = 2020' )
             ->groupBy('t.name')
-            ->setMaxResults(4)
+            ->setMaxResults(5)
         ;
 
         $dat = $tvshows->getQuery()->getResult();
        $data  = $this->get('knp_paginator')->paginate(
             $dat,
             $request->query->get('page', 1),
-      2
+      7
         );
         $data2 = $recenttvshows->getQuery()->getResult();
+        $data3 = $topviews->getQuery()->getResult();
         return $this->render('@tvshow/tvshow/index.html.twig', array(
-            'tvshows' => $data,'tvshowrecent' => $data2
+            'tvshows' => $data,'tvshowrecent' => $data2,'topviews' => $data3
         ));
     }
 
@@ -68,19 +78,8 @@ class TvshowController extends Controller
         $tvshow = new Tvshow();
         $form = $this->createForm('tvshowBundle\Form\TvshowType', $tvshow);
         $form->handleRequest($request);
-        /*
-        $twilio = $this->get('twilio.api');
 
-        $message = $twilio->account->messages->sendMessage(
-            '+12055284180', // From a Twilio number in your account
-            '+21652847468', // Text any number
-            "Hello monkey!"
-        );
 
-        //get an instance of \Service_Twilio
-        $otherInstance = $twilio->createInstance('BBBB', 'CCCCC');
-        return new Response($message->sid);
-*/
         if ($form->isSubmitted() && $form->isValid()) {
             $tvshow->uploadProfilePicture();
             $tvshow->uploadgaleriepicture1();
@@ -88,7 +87,7 @@ class TvshowController extends Controller
             $tvshow->uploadgaleriepicture3();
             $tvshow->uploadgaleriepicture4();
             $tvshow->uploadgaleriepicture5();
-
+            $tvshow->setNbrvues(0);
             $em = $this->getDoctrine()->getManager();
             $em->persist($tvshow);
             $em->flush();
@@ -102,16 +101,53 @@ class TvshowController extends Controller
 
     }
 
+
     /**
      * Lists all tvshow entities.
      *
-     * @Route("/tvshow_report", name="tvshow_report")
-     * @Method("GET")
+     * @Route("/tvshow_report/{id}", name="tvshow_report")
+     * @Method({"GET"})
      */
 
-   public function reportAction(){
+   public function reportAction(Request $request,$id){
 
-       return $this->render('@tvshow/tvshow/report.html.twig');
+       $em = $this->getDoctrine()->getManager();
+       $tvshows = $em->createQueryBuilder();
+       $tvshows->select('t')
+           ->from(Tvshow::class, 't')
+
+           ->groupBy('t.name')
+       ;
+       $dat = $tvshows->getQuery()->getResult();
+       $tvshow= $em->getRepository('tvshowBundle:Tvshow')->findOneBy(array('id'=>$id));
+       $reclamationtvshow = new Reclamationtvshow();
+       $form = $this->createForm('tvshowBundle\Form\reclamationtvshowType',$reclamationtvshow);
+       $form->handleRequest($request);
+       $reclamationtvshow->setTvshow($tvshow);
+       if ($form->isSubmitted() && $form->isValid()) {
+           $user = $this->container->get('security.token_storage')->getToken()->getUser();
+           if($user != 'anon.')
+           { $reclamationtvshow->setIdu($user);
+
+              }
+           $em = $this->getDoctrine()->getManager();
+           $em->persist($reclamationtvshow);
+           $em->flush();
+
+           return $this->redirectToRoute('reclamationtvshow_new', array('id' => $reclamationtvshow->getId()));
+       }
+       $dat = $tvshows->getQuery()->getResult();
+       $data  = $this->get('knp_paginator')->paginate(
+           $dat,
+           $request->query->get('page', 1),
+           5
+       );
+
+       return $this->render('@tvshow/reclamationtvshow/new.html.twig', array(
+           'reclamationtvshow' => $reclamationtvshow,
+           'form' => $form->createView(),
+
+       ));
     }
     /**
      * Finds and displays a tvshow entity.
@@ -123,7 +159,8 @@ class TvshowController extends Controller
         $commentairetadd = new Commentairetvshow();
         $ratingadd = new ratingtvshow();
             $current = $this->get('security.token_storage')->getToken()->getUser();
-
+      $tvshow->setNbrvues($tvshow->getNbvues()+1);
+        $this->getDoctrine()->getManager()->flush();
         $ratingg=$em->getRepository(ratingtvshow::class)->nombrerating($tvshow->getId());
         $nbrcomm=$em->getRepository(commentairetvshow::class)->nombrecommentaires($tvshow->getId());
         $somme=$em->getRepository(ratingtvshow::class)->sommerating($tvshow->getId());

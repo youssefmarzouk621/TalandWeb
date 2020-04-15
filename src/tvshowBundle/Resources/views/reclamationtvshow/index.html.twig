@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Reclamationtvshows list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Reason</th>
+                <th>Responsetype</th>
+                <th>Etat</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reclamationtvshow in reclamationtvshows %}
+            <tr>
+                <td><a href="{{ path('reclamationtvshow_show', { 'id': reclamationtvshow.id }) }}">{{ reclamationtvshow.id }}</a></td>
+                <td>{{ reclamationtvshow.reason }}</td>
+                <td>{{ reclamationtvshow.responsetype }}</td>
+                <td>{{ reclamationtvshow.etat }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('reclamationtvshow_show', { 'id': reclamationtvshow.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('reclamationtvshow_edit', { 'id': reclamationtvshow.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('reclamationtvshow_new') }}">Create a new reclamationtvshow</a>
+        </li>
+    </ul>
+{% endblock %}

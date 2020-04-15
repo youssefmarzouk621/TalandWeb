@@ -1,6 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
+
+    {{ form_start(form) }}
+
     <!DOCTYPE html>
     <html lang="en" >
     <head>
@@ -14,7 +18,7 @@
     </head>
     <body>
     <a href="{{ path('tvshow_index') }}" id="redirect">
-  <img src="https://cdn.pixabay.com/photo/2016/09/05/10/50/app-1646213_960_720.png" width="80px" style="margin-left: 20px; margin-top: 20px;">
+        <img src="https://cdn.pixabay.com/photo/2016/09/05/10/50/app-1646213_960_720.png" width="80px" style="margin-left: 20px; margin-top: 20px;">
     </a>
     <div class="chat">
         <div class="chat-title">
@@ -23,14 +27,20 @@
             <figure class="avatar">
                 <img src="https://thumbs.dreamstime.com/b/le-robot-de-sourire-mignon-bot-causerie-indiquent-salut-illustration-plate-moderne-personnage-dessin-anim%C3%A9-vecteur-130663707.jpg" /></figure>
         </div>
-
+        <input type="hidden" id="reason" {{ form_widget(form.reason) }}
+        <input type="hidden" id="responsetype" {{ form_widget(form.responsetype) }}
         <div class="messages">
             <div class="messages-content" id="chekib"></div>
         </div>
         <div class="message-box">
+            <input type="number" value="0" style="display: none"  {{ form_widget(form.etat) }}
+            <input type="submit" id="confirm" style="display: none;">
             <textarea type="text" class="message-input" placeholder="Type message..."></textarea>
-            <button type="submit" class="message-submit">Send</button>
+
+            {{ form_end(form) }}
+            <button type="button" class="message-submit">Send</button>
         </div>
+
 
     </div>
     <div class="bg"></div>
@@ -43,3 +53,4 @@
     </html>
 
 {% endblock %}
+
