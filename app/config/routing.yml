@@ -29,6 +29,10 @@ tvshow:
     resource: "@tvshowBundle/Resources/config/routing.yml"
     prefix:   /Tvshow
 
+events:
+    resource: "@EventsBundle/Resources/config/routing.yml"
+    prefix:   /Events
+
 user:
     resource: "@UserBundle/Resources/config/routing.yml"
     prefix:   /User

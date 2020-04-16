@@ -1,0 +1,158 @@
+{% extends "default/LayoutFront.html.twig" %}
+
+{% block breadcumb %}
+
+        <div class="bradcumbContent">
+            <p style="position: relative;top: -15px;">Create your own</p>
+            <a href="{{ path('add_competitions') }}" style="background: none;border: none;position: relative;top: -15px;"><h2>Competition</h2></a>
+        </div>
+
+{% endblock %}
+
+{% block section %}
+
+    <div style="margin-top: 24px;" class="container">
+        <div style="position: relative;left: 226px;margin-bottom: 14px;">
+            <form METHOD="POST">
+                <input style="width: 60%;display: initial;border-color: black;position: relative;top: 1px;" class="form-control" placeholder="search" name="search">
+                <button class="btn btn-outline-dark" type="submit" name="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+        <div class="row">
+
+            {% for row in result %}
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="single-event-area mb-30">
+                    <div class="event-thumbnail">
+                        <img style="width: 370px;height: 247px;object-fit: cover;object-position: center;" src="{{ asset('uploads/events/' ~ row.imageName) }}" alt="">
+                    </div>
+                    <div style="padding: 50px 15px;" class="event-text">
+
+                        {% if connected != null %}
+                            {% if connected.id == row.idu.id %}
+                                <a href="{{path('remove_competition',{'id':row.idcomp})}}" class="btn" style="font-size:18px;color: gray;background: none;position: absolute;bottom: 0px;left: 4px;"><i class="fa fa-trash"></i></a>
+                                <a href="{{path('update_competition',{'id':row.idcomp})}}" class="btn" style="font-size:18px;color: gray;background: none;position: absolute;bottom: 0px;left: 325px;"><i class="fa fa-edit"></i></a>
+                            {% endif %}
+                        {% endif %}
+                        <div style="position: relative;top: -30px">
+                        <h4>{{ row.namecomp }}</h4>
+                        <div style="margin-top: 14px;margin-bottom: 22px;" class="event-meta-data">
+                            <a href="#" class="event-place">{{ row.startingdate|date("d/m/Y") }}</a>
+                            <a href="#" class="event-date">{{ row.endingdate|date("d/m/Y") }}</a>
+                        </div>
+                        <h4 style="margin-bottom: -1px;">{{ row.location }}</h4>
+
+                            <div  class="event-text">
+                                {% if row.nbrmaxpar-row.nbrparticipant==0 and row.nbrmaxspec-row.nbrspec==0 %}
+                                    <div class="row">
+                                        <div class="col">
+                                            <h4 style="width: 146px;font-size: 10px;font-style: normal;">No places available</h4>
+                                            <button disabled="disabled" style="opacity: .7;margin-top: 9px;" href="#" class="btn btn-light">Participate</button>
+                                        </div>
+                                        <div class="col">
+                                            <h4 style="font-size: 10px;font-style: normal;">No places available</h4>
+                                            <button disabled="disabled" style="opacity: .7;margin-top: 9px;" href="#" class="btn btn-light">Spectate</button>
+                                        </div>
+                                    </div>
+                                {% elseif row.nbrmaxpar-row.nbrparticipant!=0 and row.nbrmaxspec-row.nbrspec==0 %}
+                                    <div class="row">
+                                        <div class="col">
+                                            <h4 id="valueP{{ row.idcomp }}" style="width: 146px;font-size: 10px;font-style: normal;">{{ row.nbrmaxpar-row.nbrparticipant }} places available</h4>
+                                            <input hidden id="placesP{{ row.idcomp }}" value="{{ row.nbrmaxpar-row.nbrparticipant }}">
+                                            <button id="partP{{ row.idcomp }}" onclick="participe({{ row.idcomp }},1);" style="opacity: .7;margin-top: 9px;" href="#" class="btn btn-light">Participate</button>
+                                        </div>
+                                        <div class="col">
+                                            <h4 style="font-size: 10px;font-style: normal;">No places available</h4>
+                                            <button disabled="disabled" style="opacity: .7;margin-top: 9px;" href="#" class="btn btn-light">Spectate</button>
+                                        </div>
+                                    </div>
+                                {% elseif row.nbrmaxpar-row.nbrparticipant==0 and row.nbrmaxspec-row.nbrspec!=0 %}
+                                    <div class="row">
+                                        <div class="col">
+                                            <h4 style="width: 146px;font-size: 10px;font-style: normal;">No places available</h4>
+                                            <button disabled="disabled" style="opacity: .7;margin-top: 9px;" href="#" class="btn btn-light">Participate</button>
+                                        </div>
+                                        <div class="col">
+                                            <h4 id="value{{ row.idcomp }}" style="font-size: 10px;font-style: normal;">{{ row.nbrmaxspec-row.nbrspec }} places available</h4>
+                                            <input hidden id="places{{ row.idcomp }}" value="{{ row.nbrmaxspec-row.nbrspec }}">
+                                            <button id="part{{ row.idcomp }}" onclick="participe({{ row.idcomp }},2);" style="opacity: .7;margin-top: 9px;" href="#" class="btn btn-light">Spectate</button>
+                                        </div>
+                                    </div>
+                                {% else %}
+
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <h4 id="valueP{{ row.idcomp }}" style="font-size: 10px;font-style: normal;">{{ row.nbrmaxpar-row.nbrparticipant }} places available</h4>
+                                            <input hidden id="placesP{{ row.idcomp }}" value="{{ row.nbrmaxpar-row.nbrparticipant }}">
+                                            <button id="partP{{ row.idcomp }}" onclick="participe({{ row.idcomp }},1);" style="opacity: .7;margin-top: 9px;" href="#" class="btn btn-light">Participate</button>
+                                        </div>
+                                        <div class="col">
+                                            <h4 id="value{{ row.idcomp }}" style="font-size: 10px;font-style: normal;">{{ row.nbrmaxspec-row.nbrspec }} places available</h4>
+                                            <input hidden id="places{{ row.idcomp }}" value="{{ row.nbrmaxspec-row.nbrspec }}">
+                                            <button id="part{{ row.idcomp }}" onclick="participe({{ row.idcomp }},2);" style="opacity: .7;margin-top: 9px;" href="#" class="btn btn-light">Spectate</button>
+                                        </div>
+                                    </div>
+
+
+                                {% endif %}
+                            </div>
+
+                        <a href="#" class="btn see-more-btn">See Event</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+
+
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ asset('FrontOffice/js/notify.min.js') }}"></script>
+    <script>
+        function participe(idcomp,type) {
+            $.ajax({
+                url: 'AddParticipate/' + idcomp + '/' +type ,
+                success: function (data) {
+                    console.log(data);
+                    if (data == "ajout"){
+                        if (type==1){
+                            var nbr = parseInt(document.getElementById('placesP'.concat(idcomp)).value)-1;
+                            document.getElementById('valueP'.concat(idcomp)).innerText = "".concat(nbr,' places available');
+                            document.getElementById('partP'.concat(idcomp)).innerText = "Participated";
+                            var ch='#partP'.concat(idcomp);
+                            $(ch).notify("Participated!", "success");
+                        }else{
+                            var nbr = parseInt(document.getElementById('places'.concat(idcomp)).value)-1;
+                            document.getElementById('value'.concat(idcomp)).innerText = "".concat(nbr,' places available');
+                            document.getElementById('part'.concat(idcomp)).innerText = "Spectated";
+                            var ch='#part'.concat(idcomp);
+                            $(ch).notify("Spectated!", "success");
+                        }
+
+                    }else{
+                        if (type==1){
+                            var ch='#partP'.concat(idcomp);
+                            $(ch).notify("Already participated!", "error");
+                        }else{
+                            var ch='#part'.concat(idcomp);
+                            $(ch).notify("Already spectated!", "error");
+                        }
+
+                    }
+
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log("Ajax request failed.");
+                }
+            });
+        }
+
+
+    </script>
+{% endblock %}

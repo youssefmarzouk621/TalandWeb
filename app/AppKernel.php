@@ -32,7 +32,7 @@ class AppKernel extends Kernel
             new ProductBundle\ProductBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
             new tvshowBundle\tvshowBundle(),
-
+            new EventsBundle\EventsBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
