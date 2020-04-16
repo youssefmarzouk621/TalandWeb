@@ -33,6 +33,9 @@ class AppKernel extends Kernel
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
             new tvshowBundle\tvshowBundle(),
             new EventsBundle\EventsBundle(),
+            new CalendarZiedBundle\CalendarZiedBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new ADesigns\CalendarBundle\ADesignsCalendarBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

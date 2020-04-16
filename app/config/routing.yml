@@ -33,6 +33,22 @@ events:
     resource: "@EventsBundle/Resources/config/routing.yml"
     prefix:   /Events
 
+calendar_message:
+    resource: "@CalendarZiedBundle/Controller/MessageController.php"
+    type:     annotation
+
+calendar_deals:
+    resource: "@CalendarZiedBundle/Controller/dealsController.php"
+    type:     annotation
+
+calendar_calendars:
+    resource: "@CalendarZiedBundle/Controller/CalendarsController.php"
+    type:     annotation
+
+calendarZied:
+    resource: "@CalendarZiedBundle/Resources/config/routing.yml"
+    prefix:   /calendars
+
 user:
     resource: "@UserBundle/Resources/config/routing.yml"
     prefix:   /User
@@ -51,7 +67,13 @@ app:
 mgilet_notification:
     resource: "@MgiletNotificationBundle/Controller/"
     prefix: /notifications
+adesigns_calendar:
+    resource: "@ADesignsCalendarBundle/Resources/config/routing.xml"
 
 
 gregwar_captcha_routing:
     resource: "@GregwarCaptchaBundle/Resources/config/routing/routing.yml"
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+

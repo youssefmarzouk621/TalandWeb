@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Deal</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Eventdescription</th>
+                <td>{{ deal.eventdescription }}</td>
+            </tr>
+            <tr>
+                <th>Eventdate</th>
+                <td>{% if deal.eventdate %}{{ deal.eventdate|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Termid</th>
+                <td>{{ deal.termid }}</td>
+            </tr>
+            <tr>
+                <th>Calendarname</th>
+                <td>{{ deal.calendarname }}</td>
+            </tr>
+            <tr>
+                <th>Idu</th>
+                <td>{{ deal.idu }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('deals_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('deals_edit', { 'eventdescription': deal.eventdescription }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

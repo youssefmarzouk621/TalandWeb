@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: services.xml }
     - { resource: "@PostsBundle/Resources/config/services.yml" }
     - { resource: "@UserBundle/Resources/config/services.yml" }
     - { resource: "@ForumBundle/Resources/config/services.yml" }
@@ -9,6 +10,8 @@ imports:
     - { resource: "@ProductBundle/Resources/config/services.yml" }
     - { resource: "@tvshowBundle/Resources/config/services.yml" }
     - { resource: "@EventsBundle/Resources/config/services.yml" }
+    - { resource: "@CalendarZiedBundle/Resources/config/services.yml" }
+
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -41,6 +44,8 @@ framework:
     assets: ~
     php_errors:
         log: true
+    templating:
+        engines: ['twig']
 
 # Twig Configuration
 twig:

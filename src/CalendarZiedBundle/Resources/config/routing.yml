@@ -1,0 +1,18 @@
+calendar_homepage:
+    path:     /
+    defaults: { _controller: CalendarZiedBundle:Default:index }
+
+calendar_resize:
+    path:     /accueil/calendar/resize
+    defaults: { _controller: CalendarZiedBundle:deals:resizeEvent }
+    methods:  [GET, POST]
+
+calendar_drop:
+    path:     /accueil/calendar/drop
+    defaults: { _controller: CalendarZiedBundle:deals:dropEvent }
+    methods:  [GET, POST]
+
+calendar_delete:
+    path:     /accueil/calendar/delete
+    defaults: { _controller: CalendarZiedBundle:deals:deleteEvent }
+    methods:  [GET, POST]
