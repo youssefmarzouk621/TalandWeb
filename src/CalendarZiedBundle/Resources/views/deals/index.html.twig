@@ -64,30 +64,30 @@
                                 <li><a href="{{ asset('FrontOffice/albums-store.html.twig') }}">Albums</a></li>
                                 <li><a href="#">Pages</a>
                                     <ul class="dropdown">
-                                        <li><a href="{{ asset('FrontOffice/index.html.twig') }}">Home</a></li>
-                                        <li><a href="{{ asset('FrontOffice/albums-store.html.twig') }}">Albums</a></li>
-                                        <li><a href="{{ asset('FrontOffice/event.html.twig') }}">Events</a></li>
-                                        <li><a href="{{ asset('FrontOffice/blog.html.twig') }}">News</a></li>
-                                        <li><a href="{{ asset('FrontOffice/contact.html.twig') }}">Contact</a></li>
-                                        <li><a href="{{ asset('FrontOffice/elements.html.twig') }}">Elements</a></li>
-                                        <li><a href="{{ asset('FrontOffice/login.html.twig') }}">Login</a></li>
-                                        <li><a href="#">Dropdown</a>
-                                            <ul class="dropdown">
-                                                <li><a href="#">Even Dropdown</a></li>
-                                                <li><a href="#">Even Dropdown</a></li>
-                                                <li><a href="#">Even Dropdown</a></li>
-                                                <li><a href="#">Even Dropdown</a>
-                                                    <ul class="dropdown">
-                                                        <li><a href="#">Deeply Dropdown</a></li>
-                                                        <li><a href="#">Deeply Dropdown</a></li>
-                                                        <li><a href="#">Deeply Dropdown</a></li>
-                                                        <li><a href="#">Deeply Dropdown</a></li>
-                                                        <li><a href="#">Deeply Dropdown</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#">Even Dropdown</a></li>
-                                            </ul>
-                                        </li>
+                                            <div class="new-hits-area mb-100">
+                                                <div class="section-heading text-left mb-50 wow fadeInUp" data-wow-delay="50ms">
+                                                    <p>See what’s new</p>
+                                                    <h2>Message notifications</h2>
+                                                </div>
+                                                <!-- Single Top Item -->
+                                                {% for m in m %}
+                                                <div class="single-new-item d-flex align-items-center justify-content-between wow fadeInUp" data-wow-delay="100ms">
+                                                    <div class="first-part d-flex align-items-center">
+                                                        <div class="thumbnail">
+                                                            <img src={{ asset('FrontOffice/img/bg-img/wt7.jpg') }} alt="">
+                                                        </div>
+                                                        <div class="content-">
+                                                            <h6>Sam Smith</h6>
+                                                            <p>{{ m.contenu }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+
+
+
+                                            </div>
+
                                     </ul>
                                 </li>
                                 <li><a href="{{ asset('FrontOffice/event.html.twig') }}">Events</a></li>
@@ -96,28 +96,7 @@
                             </ul>
 
                             <!-- Login/Register & Cart Button -->
-                            <div class="login-register-cart-button d-flex align-items-center">
-                                <!-- Login/Register -->
-                                <div class="login-register-btn mr-50">
-                                    <a href="{{ asset('FrontOffice/login.html.twig') }}" id="loginBtn">Login / Register</a>
-                                </div>
 
-                                <!-- Cart Button -->
-                                <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon ft-mail">             </i></a>
-                                    <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
-                                        <div class="arrow_box_right">
-                                            <li class="dropdown-menu-header">
-                                                <h6 class="dropdown-header m-0"><span class="grey darken-2">Messages</span></h6>
-                                            </li>
-                                          
-
-
-
-                                <div class="cart-btn">
-                                    <p><span class="icon-shopping-cart"></span> <span class="quantity">1</span></p>
-                                </div>
-                            </div>
-                        </div>
                         <!-- Nav End -->
 
                     </div>

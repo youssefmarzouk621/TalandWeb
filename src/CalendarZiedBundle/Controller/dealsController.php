@@ -27,11 +27,13 @@ class dealsController extends Controller
     {
         $user=$this->getUser();
         $em = $this->getDoctrine()->getManager();
-
+        $current = $this->get('security.token_storage')->getToken()->getUser()->getId();
+        $m = $em->getRepository('CalendarZiedBundle:Message')->messagenotseen2($current);
         $deals = $em->getRepository('CalendarZiedBundle:deals')->Finddealsbyuser($user->getId());
 
         return $this->render('@CalendarZied/deals/index.html.twig', array(
             'deals' => $deals,
+            'm' => $m,
         ));
     }
 
@@ -136,7 +138,7 @@ class dealsController extends Controller
 
         $current = $this->get('security.token_storage')->getToken()->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
-        $message = $em->getRepository('CalendarZiedBundle:Message')->findBy((array('eventdescription' =>  $deal->getEventdescription() )));
+        $message = $em->getRepository('CalendarZiedBundle:Message')->findmessage($deal->getEventdescription());
         $m = $em->getRepository('CalendarZiedBundle:Message')->messagenotseen($current);
         $addmsg= new Message();
         $Form=$this->createForm(MessageType::class,$addmsg);
@@ -148,6 +150,7 @@ class dealsController extends Controller
             $addmsg->setIdu($this->getUser());
             $addmsg->setEventdescription($deal->getEventdescription());
             $addmsg->setIdreceiver($deal->getIdu()->getId());
+            $addmsg->setSeen(1);
             $em->persist($addmsg);
             $em->flush();
             return $this->redirectToRoute('deals_negotiate', array('eventdescription' => $deal->getEventdescription()));

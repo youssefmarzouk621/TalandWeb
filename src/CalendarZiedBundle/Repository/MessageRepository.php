@@ -10,17 +10,29 @@ namespace CalendarZiedBundle\Repository;
  */
 class MessageRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findmessage($idu)
+    public function findmessage($eventdescription)
     {
         return $this->createQueryBuilder('c')
         ->select('c')
-        ->where('c.idu=:idu' )
-        ->setParameter('idu', $idu)
+        ->where('c.eventdescription=:eventdescription' )
+        ->setParameter('eventdescription', $eventdescription)
+            ->orderBy('c.idmessage', 'ASC')
      ->getQuery()
      ->getResult();
     }
 
-public function findmessage1($idu)
+    public function findmessage1($eventdescription)
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c')
+            ->where('c.eventdescription=:eventdescription' )
+            ->setParameter('eventdescription', $eventdescription)
+            ->orderBy('c.idmessage', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+public function findmessage2($idu)
 {
     $query=$this->createQueryBuilder('v')
         ->select('v')
@@ -51,6 +63,7 @@ public function messagenotseen($idreceiver)
             ->andWhere('v.idreceiver=:idreceiver')
             ->setParameter('idreceiver', $idreceiver)
             ->setParameter('seen', $number)
+            ->orderBy('v.dateenvoi', 'DESC')
             ->getQuery();
         return $qb->getResult();
     }
