@@ -38,7 +38,7 @@
         "symfony/symfony": "3.4.*",
         "twig/twig": "^1.0||^2.0",
         "symfony/templating": "^3.4",
-        "vresh/twilio-bundle": "dev-master"
+        "vresh/twilio-bundle": "dev-master",
         "toiba/fullcalendar-bundle": "^6.2",
         "vich/uploader-bundle": "^1.4"
     },
