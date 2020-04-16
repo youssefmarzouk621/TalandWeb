@@ -54,3 +54,7 @@ category_get:
 category_delete:
     path:     /deleteCategory/{id}
     defaults: { _controller: ProductBundle:Category:deleteCategory }
+
+sell_product:
+    path:     /sellProduct/{id}
+    defaults: { _controller: ProductBundle:Product:validateSell }

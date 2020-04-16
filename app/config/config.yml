@@ -104,6 +104,7 @@ knp_paginator:
         distinct: true
     template:
 
+        sortable: 'KnpPaginatorBundle:Pagination:sortable_link.html.twig'
 
 
 vich_uploader:
@@ -141,7 +142,8 @@ knp_snappy:
         enabled:    true
         binary:     "\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltoimage.exe\""
         options:    []
-        sortable: 'KnpPaginatorBundle:Pagination:sortable_link.html.twig'
+
+
 vresh_twilio:
     #(Required) Your Account SID from www.twilio.com/user/account
     sid: 'ACfa3364c76141d679da25985db80ab965'
@@ -151,7 +153,6 @@ vresh_twilio:
     version: '2010-04-01'
     #(Optional, default: 1) Number of times to retry failed requests
     retryAttempts: 3
-
 
 nomaya_social:
     buttons:

@@ -29,15 +29,26 @@ class ProductController extends Controller
     public function getProductsAction(SessionInterface $session)
     {
         $cart = $session->get('cart', []);
-
+        $user=$this->getUser();
         $product = new Produit();
 
         $em = $this->getDoctrine()->getManager();
 //        $product = $em->getRepository('ProductBundle:Produit')->findAll();
-        $product = $em->getRepository(Produit::class)->loadMoreProducts(18, 0);
+        $product = $em->getRepository(Produit::class)->loadMoreProducts(12, 0);
 
-        return $this->render('@Product/Product/get_products.html.twig', array('Produit' => $product, 'nbrProduct' => sizeof($cart)));
+        //return $this->render('@Product/Product/get_products.html.twig', array('Produit' => $product, 'nbrProduct' => sizeof($cart)));
     //return $this->render('@Product/Admin/admin_products.html.twig', array('Produit' => $product));
+        if ($user!=null){
+            if($user->hasRole('ROLE_ADMIN')){
+                return $this->render('@Product/Admin/admin_products.html.twig', array('Produit' => $product));
+            }else{
+                return $this->render('@Product/Product/get_products.html.twig', array('Produit' => $product, 'nbrProduct' => sizeof($cart)));
+            }
+        }else{
+            return $this->render('@Product/Product/get_products.html.twig', array('Produit' => $product, 'nbrProduct' => sizeof($cart)));
+        }
+
+
     }
 
     public function loadMoreProductsAction($start, $limit)
@@ -129,6 +140,16 @@ class ProductController extends Controller
             $em->flush();
             return $this->redirectToRoute('get_products');
 
+    }
+
+    public function validateSellAction($id){
+        $em = $this->getDoctrine()->getManager();
+        $product = $em->getRepository(Produit::class)->find($id);
+        $product->setValidation(1);
+        $em->persist($product);
+        $em->flush();
+        $this->addFlash('successSold', 'Product sold.');
+        return $this->redirectToRoute('add_product');
     }
 
 }
