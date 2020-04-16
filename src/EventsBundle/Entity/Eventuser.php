@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Eventuser
  *
- * @ORM\Table(name="eventuser")
+ * @ORM\Table(name="eventuser", indexes={@ORM\Index(name="IDX_D1370A60A2D72265", columns={"idU"})})
  * @ORM\Entity
  */
 class Eventuser
@@ -22,8 +22,9 @@ class Eventuser
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
-     * @ORM\JoinColumn(name="idU", referencedColumnName="id")
+     * @var integer
+     *
+     * @ORM\Column(name="idU", type="integer", nullable=true)
      */
     private $idu;
 

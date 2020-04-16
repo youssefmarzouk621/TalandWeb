@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Events
  *
- * @ORM\Table(name="events")
+ * @ORM\Table(name="events", indexes={@ORM\Index(name="IDX_5387574AA2D72265", columns={"idU"})})
  * @ORM\Entity
  */
 class Events
@@ -71,8 +71,9 @@ class Events
     private $specMax;
 
     /**
-     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
-     * @ORM\JoinColumn(name="idU", referencedColumnName="id")
+     * @var integer
+     *
+     * @ORM\Column(name="idU", type="integer", nullable=true)
      */
     private $idu;
 
@@ -81,7 +82,7 @@ class Events
      *
      * @ORM\Column(name="nbrspectateurevent", type="integer", nullable=false)
      */
-    private $nbrspectateurevent = '0';
+    private $nbrspectateurevent;
 
     /**
      * @var string

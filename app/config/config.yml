@@ -84,3 +84,16 @@ fos_user:
 sensio_framework_extra:
    router:
         annotations: false
+
+vich_uploader:
+    db_driver: orm # or mongodb or phpcr
+
+    mappings:
+        commentaire_file:
+            uri_prefix: '/web/uploads/events'
+            upload_destination: '%kernel.project_dir%/web/uploads/events'
+            namer: vich_uploader.namer_origname
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+

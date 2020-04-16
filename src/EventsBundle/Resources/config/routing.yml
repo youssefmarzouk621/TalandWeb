@@ -1,3 +1,23 @@
 events_homepage:
     path:     /
     defaults: { _controller: EventsBundle:Default:index }
+
+get_competitions:
+    path:     /GetCompetitions
+    defaults: { _controller: EventsBundle:Competition:GetCompetitions }
+
+add_competitions:
+    path:     /AddCompetitions
+    defaults: { _controller: EventsBundle:Competition:AddCompetitions }
+
+remove_competition:
+    path:     /RemoveCompetition/{id}
+    defaults: { _controller: EventsBundle:Competition:DeleteCompetition }
+
+update_competition:
+    path:     /UpdateCompetition/{id}
+    defaults: { _controller: EventsBundle:Competition:UpdateCompetition }
+
+AddParticipate:
+    path:     /AddParticipate/{idcomp}/{type}
+    defaults: { _controller: EventsBundle:Competition:AddParticipate }

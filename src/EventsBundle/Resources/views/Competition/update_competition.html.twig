@@ -1,0 +1,67 @@
+{% extends "default/LayoutFront.html.twig" %}
+
+{% block section %}
+    <div style="margin-left: 330px;margin-right: 330px;" class="login-form">
+        {{ form_start(competitionform) }}
+        <div class="form-row">
+            <div class="form-group col-md-9">
+                <label for="inputEmail4">name</label>
+                {{ form_widget(competitionform.namecomp , { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="form-group col-md-3">
+                <label for="inputPassword4">price</label>
+                {{ form_widget(competitionform.pricecomp, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputAddress">description</label>
+            {{ form_widget(competitionform.desccomp, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputEmail4">nbrmaxspec</label>
+                {{ form_widget(competitionform.nbrmaxspec, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputPassword4">nbrmaxpar</label>
+                {{ form_widget(competitionform.nbrmaxpar, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputAddress">location</label>
+            {{ form_widget(competitionform.location, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                <label for="inputState">startingdate</label>
+                {{ form_widget(competitionform.startingdate, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+
+            <div class="form-group col-md-5">
+                <label for="inputState">date debut</label>
+                {{ form_widget(competitionform.endingdate, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputZip">category</label>
+                {{ form_widget(competitionform.idcat, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="custom-file">
+                {{ form_widget(competitionform.imageFile, { 'attr' : { 'class' : 'custom-file-input','id' : 'fichier' } }) }}
+                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+            </div>
+        </div>
+        <div class="form-row" style="margin-top: 24px;">
+            {{ form_widget(competitionform.Valider, { 'attr': {'class': 'btn btn-dark'} }) }}
+
+        </div>
+
+
+        {{ form_end(competitionform) }}
+    </div>
+{% endblock %}
