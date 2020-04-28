@@ -63,3 +63,8 @@ clearhistory:
     defaults: { _controller: ForumBundle:Forum:deletehistorique }
 
 
+toussujetsM:
+    path:     /toussujetsM
+    defaults: { _controller: ForumBundle:Forum:toussujetsM }
+
+

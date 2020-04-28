@@ -6,7 +6,6 @@
 .glide__slide{
   height: 150px;
   margin-top: 20px;
-  filter: blur(1px);
   opacity: .9;
   transition: .3s linear;
   border-radius: 10px;

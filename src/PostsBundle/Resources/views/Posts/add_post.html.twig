@@ -8,118 +8,82 @@
 
 
     <div class="container">
-        <div style="box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.37);border-radius: 14px;margin-bottom: 14px;" class="row">
+        <div style="box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.37);border-radius: 14px;margin-bottom: 14px;height: 694px;" class="row">
 
-            <div style="display: flex;flex-flow: row wrap;justify-content: center;box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.07);" class="col-lg-4">
-                <img id="imgdb" style="border-radius: 10px;height: 600px;margin-top: 35px;margin-bottom: 35px;" src="{{ asset('uploads/posts/default2.jpg') }}" alt="" class="img-fluid">
-            </div>
-
-
-
-
-            <div class="col-lg-8">
-
-                <div style="height:300px;" class="col">
-                    {#{{ form_start(postform) }}
-                    {{ form_widget(postform.idu) }}
-                    {{ form_widget(postform.description) }}
-
-                    {{ form_widget(postform.nbrlikes) }}
-                    {{ form_widget(postform.nbrcomments) }}
-                    <div class="input-group">
-                        <div class="custom-file">
-                            {{ form_widget(postform.imageFile, { 'attr' : { 'class' : 'custom-file-input','id' : 'fichier' } }) }}
-                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                        </div>
-                    </div>
-                    <button type="submit">Valider</button>
-                    {{ form_end(postform) }}#}
-                    <div style="margin-top: 50px;">
-                        <div class="images glide">
-                            <div class="glide__track" data-glide-el="track">
-                                <ul class="glide__slides">
-                                    <li class="glide__slide">
-                                        <button onclick="choose(1)" class="btn" style="color: white;position: absolute;top: 91px;left: 29px;background: none;"><i class="fa fa-check-square"></i></button>
-                                        <img style="height: 130px;width: 100px;" src="{{ asset('uploads/posts/default1.jpg') }}" alt="">
-                                    </li>
-
-                                    <li class="glide__slide">
-                                        <button onclick="choose(2)" class="btn" style="color: white;position: absolute;top: 91px;left: 29px;background: none;"><i class="fa fa-check-square"></i></button>
-                                        <img style="height: 130px;width: 100px;object-fit: cover;border-radius: 10px;" src="{{ asset('uploads/posts/default2.jpg') }}" alt="">
-                                    </li>
-
-                                    <li class="glide__slide">
-                                        <button onclick="choose(3)" class="btn" style="color: white;position: absolute;top: 91px;left: 29px;background: none;"><i class="fa fa-check-square"></i></button>
-                                        <img style="height: 130px;width: 100px;object-fit: cover;border-radius: 10px;" src="{{ asset('uploads/posts/default3.jpg') }}" alt="">
-                                    </li>
-
-                                    <li class="glide__slide">
-                                        <button onclick="choose(4)" class="btn" style="color: white;position: absolute;top: 91px;left: 29px;background: none;"><i class="fa fa-check-square"></i></button>
-                                        <img style="height: 130px;width: 100px;object-fit: cover;border-radius: 10px;" src="{{ asset('uploads/posts/default4.jpg') }}" alt="">
-                                    </li>
-
-                                    <li class="glide__slide">
-                                        <button onclick="choose(5)" class="btn" style="color: white;position: absolute;top: 91px;left: 29px;background: none;"><i class="fa fa-check-square"></i></button>
-                                        <img style="height: 130px;width: 100px;object-fit: cover;border-radius: 10px;" src="{{ asset('uploads/posts/default5.jpg') }}" alt="">
-                                    </li>
-
-                                    <li class="glide__slide">
-                                        <button onclick="choose(6)" class="btn" style="color: white;position: absolute;top: 91px;left: 29px;background: none;"><i class="fa fa-check-square"></i></button>
-                                        <img style="height: 130px;width: 100px;object-fit: cover;border-radius: 10px;" src="{{ asset('uploads/posts/default6.jpg') }}" alt="">
-                                    </li>
-
-                                    <li class="glide__slide">
-                                        <button onclick="choose(7)" class="btn" style="color: white;position: absolute;top: 91px;left: 29px;background: none;"><i class="fa fa-check-square"></i></button>
-                                        <img style="height: 130px;width: 100px;object-fit: cover;border-radius: 10px;" src="{{ asset('uploads/posts/default7.jpg') }}" alt="">
-                                    </li>
-                                    <li class="glide__slide">
-                                        <button onclick="choose(8)" class="btn" style="color: white;position: absolute;top: 91px;left: 29px;background: none;"><i class="fa fa-check-square"></i></button>
-                                        <img style="height: 130px;width: 100px;object-fit: cover;border-radius: 10px;" src="{{ asset('uploads/posts/default8.jpg') }}" alt="">
-                                    </li>
-                                    <li class="glide__slide">
-                                        <button onclick="choose(9)" class="btn" style="color: white;position: absolute;top: 91px;left: 29px;background: none;"><i class="fa fa-check-square"></i></button>
-                                        <img style="height: 130px;width: 100px;object-fit: cover;border-radius: 10px;" src="{{ asset('uploads/posts/default9.jpg') }}" alt="">
-                                    </li>
-                                    <li class="glide__slide">
-                                        <button onclick="choose(10)" class="btn" style="color: white;position: absolute;top: 91px;left: 29px;background: none;"><i class="fa fa-check-square"></i></button>
-                                        <img style="height: 130px;width: 100px;object-fit: cover;border-radius: 10px;" src="{{ asset('uploads/posts/default10.jpg') }}" alt="">
-                                    </li>
-                                    <li class="glide__slide">
-                                        <button onclick="choose(11)" class="btn" style="color: white;position: absolute;top: 91px;left: 29px;background: none;"><i class="fa fa-check-square"></i></button>
-                                        <img style="height: 130px;width: 100px;object-fit: cover;border-radius: 10px;" src="{{ asset('uploads/posts/default11.jpg') }}" alt="">
-                                    </li>
-                                    <li class="glide__slide">
-                                        <button onclick="choose(12)" class="btn" style="color: white;position: absolute;top: 91px;left: 29px;background: none;"><i class="fa fa-check-square"></i></button>
-                                        <img style="height: 130px;width: 100px;object-fit: cover;border-radius: 10px;" src="{{ asset('uploads/posts/default12.jpg') }}" alt="">
-                                    </li>
-                                </ul>
+            <div class="col-md-12 col-md-offset-3">
+                <div id="msform">
+                    <!-- progressbar -->
+                    <ul id="progressbar">
+                        <li class="active">Story/Post</li>
+                        <li>TRIP Information</li>
+                        <li>Physical and Financial Status</li>
+                        <li>Submit</li>
+                    </ul>
+                    <!-- fieldsets -->
+                    <fieldset>
+                        <input style="display: none;" type="number" style="display: block;" id="type" value="">
+                        <h2 class="fs-title">Add a new post</h2>
+                        <h3 class="fs-subtitle">What would you post</h3>
+                        <div class="row">
+                            <div class="col">
+                                {#<button><img style="border: 3px solid white;" src="{{ asset('uploads/posts/post.png') }}" alt=""></button>#}
+                                <div class="content-item">
+                                    <div class="icon">
+                                        <img src="{{ asset('uploads/posts/brush.png') }}">
+                                        <h5>Post</h5>
+                                    </div>
+                                    <button onclick="choosepost();" style="width: 420px;padding: inherit;border: none;" class="pic btn btn-outline-danger" >
+                                        <img src="{{ asset('uploads/posts/post.png') }}">
+                                    </button>
+                                </div>
                             </div>
+                            <div class="col">
 
-                            <div class="glide__arrows" data-glide-el="controls">
-                                <button class="glide__arrow glide__arrow--left" data-glide-dir="<"><i class="fas fa-arrow-left"></i></button>
-                                <button class="glide__arrow glide__arrow--right" data-glide-dir=">"><i class="fas fa-arrow-right"></i></button>
+                                <div class="content-item">
+                                    <div class="icon">
+                                        <img src="{{ asset('uploads/posts/hot-dog.png') }}">
+                                        <h5>Story</h5>
+                                    </div>
+                                    <button onclick="choosestory();" style="width: 390px;padding: inherit;border: none;" class="pic btn btn-outline-info">
+                                        <img  src="{{ asset('uploads/posts/story.png') }}">
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <input disabled id="firstnext" type="button" name="next" class="next action-button" value="Next" />
+                    </fieldset>
 
-                    {#<textarea style="display: none;" id="textarea"></textarea>#}
-                    {{ form_start(postform) }}
-                    {{ form_widget(postform.description) }}
-                    <button type="button" style="margin-top: 10px;" class="btn btn-outline-lighten-4" onclick="afficherform();">Choose file</button>
-                    <div id="fich"  style="margin-top: 9px;margin-bottom: 20px;display: none;" class="input-group">
-                        <div class="custom-file">
-                            {{ form_widget(postform.imageFile, { 'attr' : { 'class' : 'custom-file-input','id' : 'fichier' } }) }}
-                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                        </div>
-                    </div>
-                    <button id="sub" type="submit" style="position: relative;left: 625px;width: 117px;display: none;" class="btn btn-outline-lighten-4">Post !</button>
-                    <button id="addp" type="button" style="position: relative;left: 504px;width: 117px;margin-top: 10px;" onclick="AddPost();" class="btn btn-outline-lighten-4">Post ajax!</button>
-                    {{ form_end(postform) }}
+                    <fieldset>
+                        <h2 class="fs-title">TRIP Information</h2>
+                        <h3 class="fs-subtitle">Your presence on the social network</h3>
+                        <input type="text" name="twitter" placeholder="Twitter"/>
+                        <input type="text" name="facebook" placeholder="Facebook"/>
+                        <input type="text" name="gplus" placeholder="Google Plus"/>
+                        <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                        <input type="button" name="next" class="next action-button" value="Next"/>
+                    </fieldset>
 
+                    <fieldset>
+                        <h2 class="fs-title">Physical and Financial Status</h2>
+                        <h3 class="fs-subtitle">Your presence on the social network</h3>
+                        <input type="text" name="twitter" placeholder="Twitter"/>
+                        <input type="text" name="facebook" placeholder="Facebook"/>
+                        <input type="text" name="gplus" placeholder="Google Plus"/>
+                        <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                        <input type="button" name="next" class="next action-button" value="Next"/>
+                    </fieldset>
 
-
+                    <fieldset>
+                        <h2 class="fs-title">Submit project</h2>
+                        <h3 class="fs-subtitle">Fill in your credentials to authorize submission</h3>
+                        <input type="text" name="email" placeholder="Username"/>
+                        <input type="password" name="pass" placeholder="Password"/>
+                        <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                        <input type="submit" name="submit" class="submit action-button" value="Submit"/>
+                    </fieldset>
                 </div>
-
+                <!-- link to designify.me code snippets -->
+                <!-- /.link to designify.me code snippets -->
             </div>
         </div>
     </div>
@@ -133,6 +97,108 @@
 
 {% block scripts %}
     <script src="{{ asset('FrontOffice/js/emojionearea.min.js')}}"></script>
+
+    <script>//controle de saisie
+        function choosepost() {
+            document.getElementById("firstnext").disabled = false;
+            document.getElementById("type").value = 0;
+        }
+        function choosestory() {
+            document.getElementById("firstnext").disabled = false;
+            document.getElementById("type").value = 1;
+        }
+    </script>
+
+
+
+
+
+
+
+
+    <script>
+        //jQuery time
+        var current_fs, next_fs, previous_fs; //fieldsets
+        var left, opacity, scale; //fieldset properties which we will animate
+        var animating; //flag to prevent quick multi-click glitches
+
+        $(".next").click(function(){
+            if(animating) return false;
+            animating = true;
+
+            current_fs = $(this).parent();
+            next_fs = $(this).parent().next();
+
+            //activate next step on progressbar using the index of next_fs
+            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+            //show the next fieldset
+            next_fs.show();
+            //hide the current fieldset with style
+            current_fs.animate({opacity: 0}, {
+                step: function(now, mx) {
+                    //as the opacity of current_fs reduces to 0 - stored in "now"
+                    //1. scale current_fs down to 80%
+                    scale = 1 - (1 - now) * 0.2;
+                    //2. bring next_fs from the right(50%)
+                    left = (now * 50)+"%";
+                    //3. increase opacity of next_fs to 1 as it moves in
+                    opacity = 1 - now;
+                    current_fs.css({
+                        'transform': 'scale('+scale+')',
+                        'position': 'absolute'
+                    });
+                    next_fs.css({'left': left, 'opacity': opacity});
+                },
+                duration: 800,
+                complete: function(){
+                    current_fs.hide();
+                    animating = false;
+                },
+                //this comes from the custom easing plugin
+                easing: 'easeInOutBack'
+            });
+        });
+
+        $(".previous").click(function(){
+            if(animating) return false;
+            animating = true;
+
+            current_fs = $(this).parent();
+            previous_fs = $(this).parent().prev();
+
+            //de-activate current step on progressbar
+            $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+            //show the previous fieldset
+            previous_fs.show();
+            //hide the current fieldset with style
+            current_fs.animate({opacity: 0}, {
+                step: function(now, mx) {
+                    //as the opacity of current_fs reduces to 0 - stored in "now"
+                    //1. scale previous_fs from 80% to 100%
+                    scale = 0.8 + (1 - now) * 0.2;
+                    //2. take current_fs to the right(50%) - from 0%
+                    left = ((1-now) * 50)+"%";
+                    //3. increase opacity of previous_fs to 1 as it moves in
+                    opacity = 1 - now;
+                    current_fs.css({'left': left});
+                    previous_fs.css({'transform': 'scale('+scale+')', 'opacity': opacity});
+                },
+                duration: 800,
+                complete: function(){
+                    current_fs.hide();
+                    animating = false;
+                },
+                //this comes from the custom easing plugin
+                easing: 'easeInOutBack'
+            });
+        });
+
+        $(".submit").click(function(){
+            return false;
+        })
+    </script>
 <script>
     document.getElementById("postsbundle_posts_imageFile_file").required = false;
     $(document).ready(function () {

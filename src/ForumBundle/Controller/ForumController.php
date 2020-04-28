@@ -8,12 +8,15 @@ use ForumBundle\Entity\signaler;
 use ForumBundle\Form\signalerType;
 use ForumBundle\Form\SujetType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use ForumBundle\Entity\Sujet;
 use Snipe\BanBuilder\CensorWords;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 use UserBundle\Entity\User;
 
 
@@ -562,6 +565,17 @@ class ForumController extends Controller
         $repository= $em->getRepository(historique::class)->deletehistorique();
         return $this->redirectToRoute('historique');
 
+    }
+
+
+    /*Mobile*/
+
+    public function toussujetsMAction()
+    {
+        $tasks=$this->getDoctrine()->getManager()->getRepository('ForumBundle:Sujet')->findAll();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted=$serializer->normalize($tasks);
+        return new JsonResponse($formatted);
     }
 
 
