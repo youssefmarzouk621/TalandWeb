@@ -3,6 +3,7 @@
 namespace ProductBundle\Controller;
 
 
+use ProductBundle\Entity\Category;
 use ProductBundle\Entity\Produit;
 use ProductBundle\Form\ProduitType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -10,6 +11,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 use UserBundle\Entity\User;
 
 class ProductController extends Controller
@@ -27,7 +30,8 @@ class ProductController extends Controller
 
 
     public function getProductsAction(SessionInterface $session)
-    {$user=$this->getUser();
+    {
+        $user = $this->getUser();
         $cart = $session->get('cart', []);
 
         $product = new Produit();
@@ -35,7 +39,7 @@ class ProductController extends Controller
         $em = $this->getDoctrine()->getManager();
 //        $product = $em->getRepository('ProductBundle:Produit')->findAll();
         $product = $em->getRepository(Produit::class)->loadMoreProducts(18, 0);
-        if($user->hasRole('ROLE_ADMIN'))
+        if ($user->hasRole('ROLE_ADMIN'))
             return $this->render('@Product/Admin/admin_products.html.twig', array('Produit' => $product));
         return $this->render('@Product/Product/get_products.html.twig', array('Produit' => $product, 'nbrProduct' => sizeof($cart)));
 
@@ -64,7 +68,7 @@ class ProductController extends Controller
     {
         $ppp = $entity->getUserid();
         $ch = $this->getDoctrine()->getRepository('UserBundle:User')->find($ppp);
-       return $ch->getId();;
+        return $ch->getId();;
     }
 
     public function getProductByIdAction($id)
@@ -124,16 +128,17 @@ class ProductController extends Controller
     public function deleteProductAdminAction($id)
     {
 
-            $em = $this->getDoctrine()->getManager();
-            $product = $em->getRepository(Produit::class)->find($id);
-            $em->remove($product);
-            $em->flush();
-            return $this->redirectToRoute('get_products');
+        $em = $this->getDoctrine()->getManager();
+        $product = $em->getRepository(Produit::class)->find($id);
+        $em->remove($product);
+        $em->flush();
+        return $this->redirectToRoute('get_products');
 
     }
 
 
-    public function validateSellAction($id){
+    public function validateSellAction($id)
+    {
         $em = $this->getDoctrine()->getManager();
         $product = $em->getRepository(Produit::class)->find($id);
         $product->setValidation(1);
@@ -141,6 +146,45 @@ class ProductController extends Controller
         $em->flush();
         $this->addFlash('successSold', 'Product sold.');
         return $this->redirectToRoute('add_product');
+    }
+
+    public function addProductMobileAction(Request $request, $name, $price)
+    {
+        $cat = $this->getDoctrine()->getManager()->getRepository(Category::class)->find(1);
+        $em = $this->getDoctrine()->getManager();
+        $product = new Produit();
+        $product->setName($name);
+        $product->setPrice($price);
+        $product->setImgsrc(null);
+        $product->setValidation(0);
+        $product->setCategory($cat);
+        $product->setDate(new \DateTime());
+        $em->persist($product);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($product);
+        return new JsonResponse($formatted);
+
+    }
+
+    public function allProductsMobileAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $prodcuts = $em->getRepository(Produit::class)->findAll();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($prodcuts);
+        return new JsonResponse($formatted);
+    }
+
+    public function deleteProductMobileAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $product = $em->getRepository(Produit::class)->find($id);
+        $em->remove($product);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($product);
+        return new JsonResponse($formatted);
     }
 
 }

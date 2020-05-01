@@ -58,3 +58,15 @@ category_get:
 category_delete:
     path:     /deleteCategory/{id}
     defaults: { _controller: ProductBundle:Category:deleteCategory }
+
+product_add_mobile:
+    path:     /addProductMobile/{name}/{price}
+    defaults: { _controller: ProductBundle:Product:addProductMobile }
+
+product_get_all_mobile:
+    path:     /allProductsMobile
+    defaults: { _controller: ProductBundle:Product:allProductsMobile }
+
+product_delete_mobile:
+    path:     /deleteProductMobile/{id}
+    defaults: { _controller: ProductBundle:Product:deleteProductMobile }
