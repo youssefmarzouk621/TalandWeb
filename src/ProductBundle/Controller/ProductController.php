@@ -148,17 +148,18 @@ class ProductController extends Controller
         return $this->redirectToRoute('add_product');
     }
 
-    public function addProductMobileAction(Request $request, $name, $price)
-    {
-        $cat = $this->getDoctrine()->getManager()->getRepository(Category::class)->find(1);
+    public function addProductMobileAction(Request $request, $name, $price,$userId,$categoryName)
+    {   $user=$this->getDoctrine()->getManager()->getRepository('UserBundle:User')->find($userId);
+        $cat = $this->getDoctrine()->getManager()->getRepository(Category::class)->findOneBy(["name"=>$categoryName]);
         $em = $this->getDoctrine()->getManager();
         $product = new Produit();
         $product->setName($name);
         $product->setPrice($price);
-        $product->setImgsrc(null);
+        $product->setImgsrc("products.png");
         $product->setValidation(0);
         $product->setCategory($cat);
         $product->setDate(new \DateTime());
+        $product->setUserid($user);
         $em->persist($product);
         $em->flush();
         $serializer = new Serializer([new ObjectNormalizer()]);
