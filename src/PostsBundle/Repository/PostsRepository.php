@@ -68,13 +68,13 @@ class PostsRepository extends \Doctrine\ORM\EntityRepository
 
     public function getStoriesDistinct(){
         $query = $this->getEntityManager()
-            ->createQuery("SELECT s FROM PostsBundle:Posts s WHERE s.type =1 GROUP BY s.idu ");
+            ->createQuery("SELECT s FROM PostsBundle:Posts s WHERE s.type =1 AND s.archive=0 GROUP BY s.idu ");
         return $query->getResult();
     }
 
     public function getStories(){
         $query = $this->getEntityManager()
-            ->createQuery("SELECT s FROM PostsBundle:Posts s WHERE s.type =1 ORDER BY s.idu");
+            ->createQuery("SELECT s FROM PostsBundle:Posts s WHERE s.type =1 AND s.archive=0 ORDER BY s.idu");
         return $query->getResult();
     }
 
@@ -91,9 +91,21 @@ class PostsRepository extends \Doctrine\ORM\EntityRepository
 
         $stmt->execute();
         return $stmt->fetchAll();
-
-
     }
+
+    public function Dstories(){
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT * FROM posts WHERE type=1 AND archive=0 ORDER BY idU';
+
+        try {
+            $stmt = $conn->prepare($sql);
+        } catch (DBALException $e) {
+        }
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+
     public function getprofileuser($us){
         $conn = $this->getEntityManager()->getConnection();
         $sql = "SELECT * FROM fos_user WHERE username = '$us' ";

@@ -141,9 +141,11 @@
 
 
 
-
-
         {% set i = ( i | default(0) ) + 1 %}
+
+
+
+
     {% endfor %}
 
 
@@ -152,6 +154,41 @@
 
 
 </amp-story>
+
+
+<script src="{{ asset('FrontOffice/jstest/vendor/jquery-3.2.1.min.js')}}"></script>
+<script>
+
+
+    $(document).ready(function () {
+        var stories = [];
+        $.ajax({
+            url: 'DStories',
+            success: function (data) {
+                stories=data;
+                var active = stories[0]["idPost"];
+                //console.log($(".i-amphtml-story-button-move")[0].getAttribute("aria-label"));
+                /*$(".i-amphtml-story-button-move")[0].addEventListener("mouseover", function () {
+                    console.log("button was over");
+                });*/
+                /*$(".i-amphtml-story-button-move").addEventListener("mouseover", function () {
+                    console.log("button was over");
+                });*/
+
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log("Ajax request failed.");
+            }
+        });
+
+
+
+
+
+
+    });
+</script>
+
 </body>
 
 

@@ -27,7 +27,7 @@
                 <a id="redirectlogin" href="{{ path('fos_user_security_login') }}"></a>
 
                 <div class="contain">
-                    {% set i = 0 %}
+
                     {% for row in result %}
                         {% if row.type ==1 or row.archive==1 %}
                             <div id="box{{ row.idpost }}" style="display: none;" class="boxes">
@@ -38,11 +38,11 @@
                                 {% set foo = row.imageName|split('.') %}
                                 {% if foo[1]=="mp4" %}
 
-                                        <video id="vids" class="vid" style="border-radius: 13px;max-width: 100%;box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);object-fit: cover;" loop>
+                                        <video id="vids{{ row.idpost }}" class="vid" style="border-radius: 13px;max-width: 100%;box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);object-fit: cover;" loop>
                                             <source id="video{{ row.idpost }}" src="{{ asset('uploads/posts/' ~ row.imageName) }}" type="video/mp4">
                                         </video>
 
-                                        <div style="  background-image: url({{ asset('uploads/posts/play.png') }});background-repeat: no-repeat;width: 24%;height: 50%;position: absolute;left: 0%;right: 0%;top: 0%;bottom: 0%;margin: auto;background-size: contain;background-position: center;opacity: 0.9;" class="playpause"></div>
+                                        <div onclick="watch({{ row.idpost }})" style="  background-image: url({{ asset('uploads/posts/play.png') }});background-repeat: no-repeat;width: 24%;height: 50%;position: absolute;left: 0%;right: 0%;top: 0%;bottom: 0%;margin: auto;background-size: contain;background-position: center;opacity: 0.9;" class="playpause"></div>
 
                                 {% else %}
                                     <img src="{{ asset('uploads/posts/' ~ row.imageName) }}">
@@ -51,7 +51,9 @@
 
                                 <div style="position: absolute;top: -3px;left: 17px;margin-top: 20px;margin-bottom: 20px;" class="media border-0">
                                     <div class="media-left pr-1">
+
                                     <span class="avatar avatar-md avatar-online">
+
                                         <img  data-toggle="tooltip" data-placement="right" title="{{ row.idu.firstname }} {{ row.idu.lastname }}" style="height: 50px;margin-right: 10px;" class="media-object rounded-circle" src="{{ asset('uploads/posts/' ~ row.idu.imageName) }}" alt="Generic placeholder image">
                                         {% if connected!=null %}
                                             {% if connected.id==row.idu.id %}
@@ -88,7 +90,7 @@
 
                                      {% if (connected!=null) %}
 
-                                        <div id="reacts" class="reacts">
+                                        <div id="reacts" name="connectednull" class="reacts">
                                           <div class="circle"><button onclick="react({{ connected.id }},{{ row.idPost }},1);" style="background: none;border: none;cursor: pointer;"><img style="margin-left: -6px;" src="{{ asset('uploads/reacts/heart.png') }}" alt=""/></button>
                                             <p>Love</p>
                                           </div>
@@ -106,31 +108,35 @@
 
 
                                             {% if likes!=null %}
-                                                {% if i!=likes|length %}
-                                                    {% if likes[i].idPost==row.idPost %}
-                                                        {% if likes[i].react==1 %}
-                                                            <button id="likecontainer{{ row.idPost }}" style="background-color: #dc35457d;border-color: #dc35457d;border-radius: 30px" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><img style="margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;" src="{{ asset('uploads/reacts/heart.png')}}" alt=""></button>
-                                                                {% elseif likes[i].react==2 %}
-                                                            <button id="likecontainer{{ row.idPost }}" style="background-color: rgba(255, 193, 7, 0.51); border-color: rgba(255, 193, 7, 0.51); border-radius: 30px;" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><img style="margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;" src="{{ asset('uploads/reacts/haha.png')}}" alt=""></button>
-                                                                    {% elseif likes[i].react==3 %}
-                                                            <button id="likecontainer{{ row.idPost }}" style="background-color: rgba(255, 193, 7, 0.51); border-color: rgba(255, 193, 7, 0.51); border-radius: 30px;" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><img style="margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;" src="{{ asset('uploads/reacts/triste.png')}}" alt=""></button>
-                                                                        {% elseif likes[i].react==4 %}
-                                                            <button id="likecontainer{{ row.idPost }}" style="background-color: rgba(255, 193, 7, 0.51); border-color: rgba(255, 193, 7, 0.51); border-radius: 30px;" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><img style="margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;" src="{{ asset('uploads/reacts/grr.png')}}" alt=""></button>
-                                                        {% endif %}
-                                                            {% set i = i + 1 %}
-                                                        {% else %}
-                                                        <button id="likecontainer{{ row.idPost }}" style="background-color: #dc35457d;border-color: #dc35457d;border-radius: 30px" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><i class="ft-heart"></i></button>
-                                                    {% endif %}
+                                                {% set i = 0 %}
+                                                {% set find = 0 %}
+                                                {% for l in likes %}
+                                                    {% if l.idPost==row.idPost and l.idU.id== connected.id %}
+                                                    {% set find = 1 %}
+                                                            {% if l.react==1 %}
+                                                                <button id="likecontainer{{ row.idPost }}" style="background-color: #dc35457d;border-color: #dc35457d;border-radius: 30px" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><img style="margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;" src="{{ asset('uploads/reacts/heart.png')}}" alt=""></button>
+                                                                    {% elseif l.react==2 %}
+                                                                <button id="likecontainer{{ row.idPost }}" style="background-color: rgba(255, 193, 7, 0.51); border-color: rgba(255, 193, 7, 0.51); border-radius: 30px;" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><img style="margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;" src="{{ asset('uploads/reacts/haha.png')}}" alt=""></button>
+                                                                        {% elseif l.react==3 %}
+                                                                <button id="likecontainer{{ row.idPost }}" style="background-color: rgba(255, 193, 7, 0.51); border-color: rgba(255, 193, 7, 0.51); border-radius: 30px;" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><img style="margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;" src="{{ asset('uploads/reacts/triste.png')}}" alt=""></button>
+                                                                            {% elseif l.react==4 %}
+                                                                <button id="likecontainer{{ row.idPost }}" style="background-color: rgba(255, 193, 7, 0.51); border-color: rgba(255, 193, 7, 0.51); border-radius: 30px;" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><img style="margin-left: -6px;width: 29px;position: relative;top: -1px;left: 3px;" src="{{ asset('uploads/reacts/grr.png')}}" alt=""></button>
+                                                            {% endif %}
                                                     {% else %}
-                                                    <button id="likecontainer{{ row.idPost }}" style="background-color: #dc35457d;border-color: #dc35457d;border-radius: 30px" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><i class="ft-heart"></i></button>
-                                                    {% endif %}
-                                                {% else %}
-                                                 <button id="likecontainer{{ row.idPost }}" style="background-color: #dc35457d;border-color: #dc35457d;border-radius: 30px" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><i class="ft-heart"></i></button>
-                                     {% endif %}
+                                                    {% set i = i+1 %}
+                                                        {% if i==0 %}
+                                                           <button id="likecontainer{{ row.idPost }}" name="duplicatedifnotfound" style="background-color: #dc35457d;border-color: #dc35457d;border-radius: 30px" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><i class="ft-heart"></i></button>
+                                                        {% endif %}
+                                                       {% endif %}
+                                                {% endfor %}
+                                                        {% if find==0 %}
+                                                           <button id="likecontainer{{ row.idPost }}" name="var_still_zero_cuz_didnt_find_like" style="background-color: #dc35457d;border-color: #dc35457d;border-radius: 30px" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><i class="ft-heart"></i></button>
+                                                        {% endif %}
+                                            {% else %}
+                                            <button id="likecontainer{{ row.idPost }}" name="iflikesegalnull" style="background-color: #dc35457d;border-color: #dc35457d;border-radius: 30px" class="btn btn-danger btn-min-width box-shadow-5 mr-1 mb-1 like"><i class="ft-heart"></i></button>
+                                            {% endif %}
 
-                                     {% endif %}
-
-
+                                      {% endif %}
 
 
                                     <a href="{{path('single_post',{'id':row.idPost})}}" style="background-color: #ffffff85;border-color: #ffffff85;margin-left: 10px;color: black;border-radius: 30px" class="btn btn-outline-dark mr-1 comments"><i id="com" class="ft-message-square"></i></a>
@@ -266,7 +272,11 @@
 {% block scripts %}
 
 <script>
+
+
         $('.vid').parent().click(function () {
+            var element=$('.vid').parent();
+
             if($(this).children(".vid").get(0).paused){
                 $(this).children(".vid").get(0).play();
                 $(this).children(".playpause").fadeOut();
@@ -276,6 +286,11 @@
                 $(this).children(".playpause").fadeIn();
             }
         });
+
+
+        function watch(id) {
+          console.log("id :",id);
+        }
 </script>
 
 
@@ -480,6 +495,9 @@ $(document).ready(function () {
                         var boxid="#box".concat(idp);
                         //console.log("box id :",boxid);
                         //document.getElementById(boxid).style.display="none";
+                        $(boxid).hide( "slow", function() {
+                            console.log("removed");
+                        });
 
                     },
                     error: function (xhr, textStatus, errorThrown) {

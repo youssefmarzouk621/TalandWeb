@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 use PostsBundle\Repository\PostsRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 use UserBundle\Entity\User;
 
 class PostsController extends Controller
@@ -24,6 +26,8 @@ class PostsController extends Controller
         $post->setIdu($this->getUser());
         $post->setDatecreation(new \DateTime());
         $post->setNbrlikes(0);
+        $post->setArchive(0);
+
         $post->setNbrcomments(0);
         $Form=$this->createForm(PostsType::class,$post);
         $Form->handleRequest($request);
@@ -40,7 +44,7 @@ class PostsController extends Controller
         ));
     }
 
-    public function AddPAction($img,$des,Request $request)
+    public function AddPAction($img,$des,$type,Request $request)
     {
         $post=new Posts();
         $post->setDatecreation(new \DateTime());
@@ -49,6 +53,8 @@ class PostsController extends Controller
         $post->setNbrcomments(0);
         $post->setImageName($img);
         $post->setDescription($des);
+        $post->setArchive(0);
+        $post->setType($type);
 
 
         $em=$this->getDoctrine()->getManager();
@@ -68,6 +74,9 @@ class PostsController extends Controller
         $likes = $em->getRepository("PostsBundle:Posts")->getLikes();
         $stories = $em->getRepository("PostsBundle:Posts")->getStoriesDistinct();
 
+        //var_dump($likes);
+        //var_dump("*****************");
+        //var_dump($posts);
         return $this->render('@Posts/Posts/get_posts.html.twig', array(
             'result' => $posts,
             'likes' => $likes,
@@ -89,6 +98,19 @@ class PostsController extends Controller
         ));
 
 
+    }
+
+    public function DStoriesAction(){
+        $returns=array();
+        $em=$this->getDoctrine()->getManager();
+        $result=$em->getRepository(Posts::class)->Dstories();
+
+        foreach ($result as $row){
+            array_push($returns,$row['idPost']);
+        }
+
+        //var_dump($result);
+        return new JsonResponse($result);
     }
 
     public function UpdatePostAction($id,Request $request)
@@ -213,5 +235,16 @@ class PostsController extends Controller
 
         //var_dump($idc);
         return new JsonResponse($ids);
+    }
+
+
+
+
+    /*Mobile*/
+    public function getAllPostsAction(){
+        $result=$this->getDoctrine()->getManager()->getRepository("PostsBundle:Posts")->findAll();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $posts=$serializer->normalize($result);
+        return new JsonResponse($posts);
     }
 }

@@ -7,7 +7,7 @@ add_post:
     defaults: { _controller: PostsBundle:Posts:AddPost }
 
 add_p:
-    path:     /AddP/{img}/{des}
+    path:     /AddP/{img}/{des}/{type}
     defaults: { _controller: PostsBundle:Posts:AddP }
 
 get_posts:
@@ -66,3 +66,15 @@ get_search:
 get_search_img:
   path:     /GetSearchImg
   defaults: { _controller: PostsBundle:Posts:GetSearchImg }
+
+d_story:
+  path:     /DStories
+  defaults: { _controller: PostsBundle:Posts:DStories }
+
+
+
+get_posts_mobile:
+  path:     /GetAllPosts
+  defaults: { _controller: PostsBundle:Posts:getAllPosts }
+
+
