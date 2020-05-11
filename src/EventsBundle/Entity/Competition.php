@@ -95,7 +95,7 @@ class Competition
     private $pricecomp;
 
     /**
-     * @ORM\ManyToOne(targetEntity="EventsBundle\Entity\Category")
+     * @ORM\ManyToOne(targetEntity="ProductBundle\Entity\Category")
      * @ORM\JoinColumn(name="idcat", referencedColumnName="id")
      */
     private $idcat;

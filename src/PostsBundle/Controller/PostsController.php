@@ -3,10 +3,12 @@
 namespace PostsBundle\Controller;
 
 use mysql_xdevapi\Result;
+use NewsBundle\Entity\review;
 use PostsBundle\Entity\Comments;
 use PostsBundle\Entity\Likes;
 
 use PostsBundle\Entity\Posts;
+use PostsBundle\Entity\Viewer;
 use PostsBundle\Form\PostsType;
 use PostsBundle\PostsBundle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -17,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use UserBundle\Entity\User;
+use Rypsx\Ipapi\Ipapi;
 
 class PostsController extends Controller
 {
@@ -155,11 +158,13 @@ class PostsController extends Controller
             return new JsonResponse("exists");
         }else{
             $like=new Likes();
+            $post=new Posts();
             $like->setIdpost($idp);
             $like->setIdu($this->getUser());
             $like->setDatecreation(new \DateTime());
             $like->setReact($react);
             $em->persist($like);
+            $post->setNbrlikes($post->getNbrlikes()+1);
             $em->flush();
             return new JsonResponse("added");
         }
@@ -168,6 +173,8 @@ class PostsController extends Controller
         $em=$this->getDoctrine()->getManager();
         $result=$em->getRepository(Posts::class)->GetPostLike($id,$this->getUser()->getId());
         $like=$em->getRepository(Likes::class)->find($result->getIdlike());
+        $post=new Posts();
+        $post->setNbrlikes($post->getNbrlikes()-1);
         $em->remove($like);
         $em->flush();
         return new JsonResponse("removed ?");
@@ -200,6 +207,8 @@ class PostsController extends Controller
         $comment->setIdu($this->getUser());
 
         $em=$this->getDoctrine()->getManager();
+        $post=new Posts();
+        $post->setNbrcomments($post->getNbrcomments()+1);
         $em->persist($comment);
         $em->flush();
         return new JsonResponse("comment added");
@@ -237,6 +246,44 @@ class PostsController extends Controller
         return new JsonResponse($ids);
     }
 
+    public function GetIpAddressDetailsAction($ip){
+
+        if ($this->getUser()==null){
+            return new JsonResponse("not connected");
+        }else{
+            try {
+                $ipapi = new Ipapi($ip);
+            } catch (\Exception $e) {
+                print $e->getMessage();
+            }
+            return new JsonResponse($ipapi);
+        }
+
+    }
+
+    public function AddViewersAction($idpost,$address,$operateur,$pays,$region,$ville){
+
+        if ($this->getUser()==null){
+            return new JsonResponse("not connected");
+        }else{
+            $vu = new Viewer();
+            $vu->setIdu($this->getUser());
+            $vu->setIdpost($idpost);
+            $vu->setAddress($address);
+            $vu->setDate(new \DateTime());
+            $vu->setOperateur($operateur);
+            $vu->setPays($pays);
+            $vu->setRegion($region);
+            $vu->setVille($ville);
+
+            $em=$this->getDoctrine()->getManager();
+            $em->persist($vu);
+            $em->flush();
+
+            return new JsonResponse("vu");
+        }
+
+    }
 
 
 
@@ -246,5 +293,14 @@ class PostsController extends Controller
         $serializer = new Serializer([new ObjectNormalizer()]);
         $posts=$serializer->normalize($result);
         return new JsonResponse($posts);
+    }
+
+    public function getPostLikesAction($idpost){
+        $result=$this->getDoctrine()->getManager()->getRepository("PostsBundle:Likes")->findBy(
+            ['idpost' => $idpost]
+        );
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $likes=$serializer->normalize($result);
+        return new JsonResponse($likes);
     }
 }

@@ -43,6 +43,8 @@ class CommentsController extends Controller
     {
         $em=$this->getDoctrine()->getManager();
         $comment=$em->getRepository(Comments::class)->find($idc);
+        $post=new Posts();
+        $post->setNbrcomments($post->getNbrcomments()-1);
         $em->remove($comment);
         $em->flush();
         return $this->redirectToRoute('single_post', array('id' => $id));

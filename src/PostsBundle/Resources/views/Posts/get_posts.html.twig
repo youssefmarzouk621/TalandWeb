@@ -42,7 +42,7 @@
                                             <source id="video{{ row.idpost }}" src="{{ asset('uploads/posts/' ~ row.imageName) }}" type="video/mp4">
                                         </video>
 
-                                        <div onclick="watch({{ row.idpost }})" style="  background-image: url({{ asset('uploads/posts/play.png') }});background-repeat: no-repeat;width: 24%;height: 50%;position: absolute;left: 0%;right: 0%;top: 0%;bottom: 0%;margin: auto;background-size: contain;background-position: center;opacity: 0.9;" class="playpause"></div>
+                                        <div onclick="watch({{ row.idpost }})" style="  background-image: url({{ asset('uploads/posts/play.png') }});background-repeat: no-repeat;width: 24%;height: 50%;position: absolute;left: 0%;right: 0%;top: 0%;bottom: 0%;margin: auto;background-size: contain;background-position: center;opacity: 0.9;cursor: pointer;" class="playpause"></div>
 
                                 {% else %}
                                     <img src="{{ asset('uploads/posts/' ~ row.imageName) }}">
@@ -272,7 +272,7 @@
 {% block scripts %}
 
 <script>
-
+    var exist=0;
 
         $('.vid').parent().click(function () {
             var element=$('.vid').parent();
@@ -289,7 +289,37 @@
 
 
         function watch(id) {
-          console.log("id :",id);
+        if (exist!=id){
+          $.ajax({
+           url: 'http://api.ipify.org/?format=json',
+              success: function (data) {
+                        exist=id;
+                          $.ajax({
+                           url: 'GetIpAddressDetails/' + data['ip'],
+                              success: function (data) {
+                                console.log(data);
+                                  $.ajax({
+                                   url: 'AddViewers/'+ id + '/'+ data["ipAdr"] + '/'+ data["ipapi"]["isp"] + '/' + data["ipapi"]["pays"] + '/' + data["ipapi"]["region"] + '/' + data["ipapi"]["ville"],
+                                      success: function (data) {
+                                        console.log(data);
+                                         },
+                                       error: function (xhr, textStatus, errorThrown) {
+                                        console.log("ajout vue failed.");
+                                       }
+                                  });
+                                 },
+                               error: function (xhr, textStatus, errorThrown) {
+                                console.log("IpAPI failed.");
+                               }
+                          });
+                 },
+               error: function (xhr, textStatus, errorThrown) {
+                console.log("api.ipify.org failed.");
+               }
+          });
+        }else{
+           console.log("same");
+        }
         }
 </script>
 

@@ -71,10 +71,19 @@ d_story:
   path:     /DStories
   defaults: { _controller: PostsBundle:Posts:DStories }
 
+GetIpAddressDetails:
+  path:     /GetIpAddressDetails/{ip}
+  defaults: { _controller: PostsBundle:Posts:GetIpAddressDetails }
+
+AddViewers:
+  path:     /AddViewers/{idpost}/{address}/{operateur}/{pays}/{region}/{ville}
+  defaults: { _controller: PostsBundle:Posts:AddViewers }
 
 
 get_posts_mobile:
   path:     /GetAllPosts
   defaults: { _controller: PostsBundle:Posts:getAllPosts }
 
-
+get_post_likes_mobile:
+  path:     /GetPostLikesMobile/{idpost}
+  defaults: { _controller: PostsBundle:Posts:getPostLikes }
