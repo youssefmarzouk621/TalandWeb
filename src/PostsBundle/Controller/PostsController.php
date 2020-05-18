@@ -289,7 +289,7 @@ class PostsController extends Controller
 
     /*Mobile*/
     public function getAllPostsAction(){
-        $result=$this->getDoctrine()->getManager()->getRepository("PostsBundle:Posts")->findAll();
+        $result=$this->getDoctrine()->getManager()->getRepository("PostsBundle:Posts")->findMobile();
         $serializer = new Serializer([new ObjectNormalizer()]);
         $posts=$serializer->normalize($result);
         return new JsonResponse($posts);
@@ -302,5 +302,62 @@ class PostsController extends Controller
         $serializer = new Serializer([new ObjectNormalizer()]);
         $likes=$serializer->normalize($result);
         return new JsonResponse($likes);
+    }
+
+
+    public function addPostMobileAction($description,$idu,$image,$type,$archive)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user=$em->getRepository("UserBundle:User")->find($idu);
+        $post = new Posts();
+        $post->setDescription($description);
+        $post->setIdu($user);
+        $post->setImageName($image);
+        $post->setType($type);
+        $post->setArchive($archive);
+        $post->setNbrlikes(0);
+        $post->setNbrcomments(0);
+        $post->setDatecreation(new \DateTime());
+
+
+        $em->persist($post);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($post);
+        return new JsonResponse($formatted);
+
+    }
+
+
+    public function EditPostMobileAction($id,$description,$idu,$image,$type,$archive)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user=$em->getRepository("UserBundle:User")->find($idu);
+        $post =$em->getRepository(Posts::class)->find($id);
+        $post->setDescription($description);
+        $post->setIdu($user);
+        $post->setImageName($image);
+        $post->setType($type);
+        $post->setArchive($archive);
+        $post->setDatecreation(new \DateTime());
+
+        $em->flush();
+
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($post);
+        return new JsonResponse($formatted);
+
+    }
+
+    public function deletePostMobileAction($id)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $post=$em->getRepository(Posts::class)->find($id);
+        $em->remove($post);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($post);
+        return new JsonResponse($formatted);
+
     }
 }

@@ -5,9 +5,12 @@ namespace ProductBundle\Controller;
 use ProductBundle\Entity\Category;
 use ProductBundle\Form\CategoryType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class CategoryController extends Controller
 {
@@ -60,5 +63,17 @@ $category=new Category();
             $em->flush();
             return $this->redirectToRoute('category_get');
         }
+    }
+
+
+
+    /*mobile*/
+    public function getCategoriesMobileAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $category = $em->getRepository(Category::class)->findAll();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($category);
+        return new JsonResponse($formatted);
     }
 }

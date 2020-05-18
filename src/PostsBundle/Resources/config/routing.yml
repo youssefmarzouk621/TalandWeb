@@ -84,6 +84,18 @@ get_posts_mobile:
   path:     /GetAllPosts
   defaults: { _controller: PostsBundle:Posts:getAllPosts }
 
+add_posts_mobile:
+  path:     /AddPostsMobile/{description}/{idu}/{image}/{type}/{archive}
+  defaults: { _controller: PostsBundle:Posts:addPostMobile }
+
+edit_posts_mobile:
+  path:     /EditPostsMobile/{id}/{description}/{idu}/{image}/{type}/{archive}
+  defaults: { _controller: PostsBundle:Posts:EditPostMobile }
+
+delete_posts_mobile:
+  path:     /deletePostsMobile/{id}
+  defaults: { _controller: PostsBundle:Posts:deletePostMobile }
+
 get_post_likes_mobile:
   path:     /GetPostLikesMobile/{idpost}
   defaults: { _controller: PostsBundle:Posts:getPostLikes }

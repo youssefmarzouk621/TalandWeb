@@ -15,6 +15,7 @@ use Snipe\BanBuilder\CensorWords;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use UserBundle\Entity\User;
@@ -564,7 +565,6 @@ class ForumController extends Controller
         $em = $this->getDoctrine()->getManager();
         $repository= $em->getRepository(historique::class)->deletehistorique();
         return $this->redirectToRoute('historique');
-
     }
 
 
@@ -577,6 +577,166 @@ class ForumController extends Controller
         $formatted=$serializer->normalize($tasks);
         return new JsonResponse($formatted);
     }
+
+    public function messujetsMAction($id)  /**Sujet de lutulisateur **/
+    {
+        $tasks=$this->getDoctrine()->getManager()->getRepository('ForumBundle:Sujet')->find($id);
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted=$serializer->normalize($tasks);
+        return new JsonResponse($formatted);
+
+    }
+
+    public function CommentairedusujetMAction($id,$idu)
+    {
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->findUserBy(array('id' => $idu));
+        $tasks=$this->getDoctrine()->getManager()->getRepository('ForumBundle:Commentaire')->findBy(array('idF'=>$id));
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted=$serializer->normalize($tasks);
+        return new JsonResponse($formatted);
+
+    }
+
+
+
+    public function supprimersujetMAction($id)
+    {   $em = $this->getDoctrine()->getManager();
+        $sujet = $em->getRepository("ForumBundle:Sujet")->find($id);
+        $em->remove($sujet);
+        $em->flush();
+        $serializer=new Serializer([new ObjectNormalizer()]);
+        $formatted=$serializer->normalize($sujet);
+        return new JsonResponse($formatted);
+    }
+
+    public function supprimercommentaireMAction($id)
+    {   $em = $this->getDoctrine()->getManager();
+        $commentaire = $em->getRepository("ForumBundle:Commentaire")->find($id);
+        $em->remove($commentaire);
+        $em->flush();
+        $serializer=new Serializer([new ObjectNormalizer()]);
+        $formatted=$serializer->normalize($commentaire);
+        return new JsonResponse($formatted);
+    }
+
+
+
+
+    public function updatecommentaireMAction(Request $request,$id)
+    {
+
+        $em=$this->getDoctrine()->getManager();
+        $commentaire=$em->getRepository("ForumBundle:Commentaire")->find($id);
+        $commentaire->setDescriptionCom($request->get('descriptionCom'));
+
+        $em->persist($commentaire);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted=$serializer->normalize($commentaire);
+        return new JsonResponse("success");
+    }
+
+    public function ajoutersujetMAction(Request $request,$idu,$description)
+    {
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->findUserBy(array('id' => $idu));
+        $em = $this->getDoctrine()->getManager();
+        $sujet = new Sujet();
+        $sujet->setIdUser($user);
+        $sujet->setEtat(1);
+        $sujet->setDate(new \DateTime("now"));
+        $sujet->setNbreJaime(0);
+        $sujet->setStrike(0);
+        $sujet->setDescriptionF($description);
+        $em->persist($sujet);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($sujet);
+        return new JsonResponse($formatted);
+
+
+    }
+
+    public function ajoutercommentaireMAction(Request $request,$id)
+    {
+        $sujet = $this->getDoctrine()->getRepository('ForumBundle:Sujet')->find($id);
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $commentaire = new Commentaire();
+        $commentaire->setIdUser($user);
+        $commentaire->setIdF($sujet->getIdF());
+        $commentaire->setDateCom(new \DateTime("now"));
+        $commentaire->setDescriptionCom($request->get('DescriptionCom'));
+        $em->persist($commentaire);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($commentaire);
+        return new JsonResponse($formatted);
+    }
+
+    public function subjectidMAction($id)
+    {   $em = $this->getDoctrine()->getManager();
+        $sujet = $em->getRepository("ForumBundle:Sujet")->find($id);
+        $serializer=new Serializer([new ObjectNormalizer()]);
+        $formatted=$serializer->normalize($sujet);
+        return new JsonResponse($formatted);
+    }
+
+    public function top5sujetMAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $sql="select * from sujet order by nbre_jaime desc limit 5";
+        $result=$em->getConnection()->prepare($sql);
+        $result->execute();
+        $statement = $result->fetchAll();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted=$serializer->normalize($statement);
+        return new JsonResponse($formatted);
+    }
+
+
+    public function updatesujetMAction(Request $request,$id,$description)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $sujet=$em->getRepository("ForumBundle:Sujet")->find($id);
+        $sujet->setDescriptionF($description);
+        $em->persist($sujet);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted=$serializer->normalize($sujet);
+        return new JsonResponse($formatted);
+    }
+
+
+
+
+    public function affichicommentaireMAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $commentaire = $em->getRepository('ForumBundle:Commentaire')->findBy((array('idF' =>  $id )));
+        $objectNormalizer = new ObjectNormalizer();
+        $objectNormalizer->setCircularReferenceHandler(function ($object) {
+            return $object->getId();
+        });
+        $serializer = new Serializer([new DateTimeNormalizer(), $objectNormalizer]);
+        return new JsonResponse($serializer->normalize($commentaire,'json'));
+        ace(is_array($data) ? $data : array());
+    }
+    public function likemAction($id)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $sujet=$em->getRepository("ForumBundle:Sujet")->find($id);
+        $ancien=$sujet->getNbreJaime();
+        $sujet->setNbreJaime($ancien + 1 );
+        $em->persist($sujet);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted=$serializer->normalize($sujet);
+        return new JsonResponse($formatted);
+
+    }
+
 
 
 

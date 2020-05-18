@@ -1,6 +1,6 @@
 
 <div class="container">
-    <a href="{{ path('article', {'id':news.getIdArticle() }) }}"><img src="{{  asset('../public/uploads/'~news.getImageArticle() )}}"alt="image" width="350" height="350" ></a>
+    <a href="{{ path('article', {'id':news.getIdArticle() }) }}"><img src="{{  asset('../web/uploads/article/'~news.getImageArticle() )}}"alt="image" width="350" height="350" ></a>
     <div class="event_info">
         <div class="event_title">
             <h4> {{ news.getNomArticle()}}  </h4>

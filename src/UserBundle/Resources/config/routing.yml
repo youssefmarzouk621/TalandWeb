@@ -5,3 +5,17 @@ user_homepage:
 display_profile:
     path:     /Profile/{username}
     defaults: { _controller: UserBundle:Default:Profile }
+
+
+finduser:
+    path:     /finduser/{email}
+    defaults: { _controller: UserBundle:User:finduser }
+newuser:
+    path:     /newuser
+    defaults: { _controller: UserBundle:User:new }
+edituser:
+    path:     /edituser/{id}
+    defaults: { _controller: UserBundle:User:edit }
+loginMobile:
+    path:     /loginMobile/{username}/{password}
+    defaults: { _controller: UserBundle:User:loginMobile }

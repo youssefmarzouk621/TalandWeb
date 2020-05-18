@@ -122,6 +122,11 @@ class PostsRepository extends \Doctrine\ORM\EntityRepository
 
     }
 
+    public function findMobile()
+    {
+        return $this->findBy(array(), array('idpost' => 'DESC'));
+    }
+
 
 
 }

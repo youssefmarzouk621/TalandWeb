@@ -21,3 +21,20 @@ update_competition:
 AddParticipate:
     path:     /AddParticipate/{idcomp}/{type}
     defaults: { _controller: EventsBundle:Competition:AddParticipate }
+
+
+get_events_mobile:
+    path:     /GetAllEvents
+    defaults: { _controller: EventsBundle:Competition:getAllEvents }
+
+delete_events_mobile:
+    path:     /DeleteMobileEvents/{id}
+    defaults: { _controller: EventsBundle:Competition:deleteEventsMobile }
+
+add_events_mobile:
+    path:     /addCompetitionMobile/{Namecomp}/{Desccomp}/{Nbrmaxspec}/{Nbrmaxpar}/{Location}/{sday}/{smonth}/{syear}/{eday}/{emonth}/{eyear}/{Pricecomp}/{Idcat}/{Image_name}/{IdU}
+    defaults: { _controller: EventsBundle:Competition:addCompetitionMobile }
+
+edit_events_mobile:
+    path:     /editCompetitionMobile/{id}/{Namecomp}/{Desccomp}/{Nbrmaxspec}/{Nbrmaxpar}/{Location}/{sday}/{smonth}/{syear}/{eday}/{emonth}/{eyear}/{Pricecomp}/{Idcat}/{Image_name}/{IdU}
+    defaults: { _controller: EventsBundle:Competition:editCompetitionMobile }

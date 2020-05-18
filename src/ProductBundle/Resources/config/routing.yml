@@ -58,3 +58,26 @@ category_delete:
 sell_product:
     path:     /sellProduct/{id}
     defaults: { _controller: ProductBundle:Product:validateSell }
+
+
+
+
+product_add_mobile:
+    path:     /addProductMobile/{name}/{price}/{userId}/{categoryName}
+    defaults: { _controller: ProductBundle:Product:addProductMobile }
+
+product_get_all_mobile:
+    path:     /allProductsMobile
+    defaults: { _controller: ProductBundle:Product:allProductsMobile }
+
+product_delete_mobile:
+    path:     /deleteProductMobile/{id}
+    defaults: { _controller: ProductBundle:Product:deleteProductMobile }
+
+category_get_mobile:
+    path:     /getCategoriesMobile
+    defaults: { _controller: ProductBundle:Category:getCategoriesMobile }
+
+user_get_mobile:
+    path:     /getUser/{id}
+    defaults: { _controller: ProductBundle:Product:getUser }

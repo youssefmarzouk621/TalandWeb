@@ -5,11 +5,14 @@ namespace ProductBundle\Controller;
 
 use ProductBundle\Entity\Produit;
 use ProductBundle\Form\ProduitType;
+use Proxies\__CG__\ProductBundle\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 use UserBundle\Entity\User;
 
 class ProductController extends Controller
@@ -150,6 +153,66 @@ class ProductController extends Controller
         $em->flush();
         $this->addFlash('successSold', 'Product sold.');
         return $this->redirectToRoute('add_product');
+    }
+
+
+
+
+
+
+
+
+
+
+
+    /*Mobile*/
+    public function addProductMobileAction(Request $request, $name, $price, $userId, $categoryName)
+    {
+        $user = $this->getDoctrine()->getManager()->getRepository('UserBundle:User')->find($userId);
+        $cat = $this->getDoctrine()->getManager()->getRepository(Category::class)->findOneBy(["name" => $categoryName]);
+        $em = $this->getDoctrine()->getManager();
+        $product = new Produit();
+        $product->setName($name);
+        $product->setPrice($price);
+        $product->setImgsrc("products.png");
+        $product->setValidation(0);
+        $product->setCategory($cat);
+        $product->setDate(new \DateTime());
+        $product->setUserid($user);
+        $em->persist($product);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($product);
+        return new JsonResponse($formatted);
+
+    }
+
+    public function allProductsMobileAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $prodcuts = $em->getRepository(Produit::class)->findAll();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($prodcuts);
+        return new JsonResponse($formatted);
+    }
+
+    public function deleteProductMobileAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $product = $em->getRepository(Produit::class)->find($id);
+        $em->remove($product);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($product);
+        return new JsonResponse($formatted);
+    }
+
+    public function getUserAction(Request $request, $id)
+    {
+        $user = $this->getDoctrine()->getManager()->getRepository('UserBundle:User')->find($id);
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($user);
+        return new JsonResponse($formatted);
     }
 
 }

@@ -6,9 +6,12 @@ use EventsBundle\Entity\Competition;
 use EventsBundle\Entity\Competitionuser;
 use EventsBundle\Entity\Events;
 use EventsBundle\Form\CompetitionType;
+use Proxies\__CG__\ProductBundle\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class CompetitionController extends Controller
 {
@@ -104,4 +107,119 @@ class CompetitionController extends Controller
             'competitionform'=>$Form->createView()
         ));
     }
+
+
+
+
+    /*Mobile*/
+    public function getAllEventsAction(){
+        $result=$this->getDoctrine()->getManager()->getRepository(Competition::class)->findAll();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $events=$serializer->normalize($result);
+        return new JsonResponse($events);
+    }
+
+    public function deleteEventsMobileAction($id)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $comp=$em->getRepository(Competition::class)->find($id);
+        $em->remove($comp);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($comp);
+        return new JsonResponse($formatted);
+    }
+
+    public function addCompetitionMobileAction($Namecomp,$Desccomp,$Nbrmaxspec,$Nbrmaxpar,$Location,$sday,$smonth,$syear,$eday,$emonth,$eyear,$Pricecomp,$Idcat,$Image_name,$IdU)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user=$em->getRepository("UserBundle:User")->find($IdU);
+        $category=$em->getRepository(Category::class)->find($Idcat);
+        $competition = new Competition();
+
+        $Startingdate = new \DateTime();
+        $Startingdate->setDate($syear,$smonth,$sday);
+
+        $Endingdate = new \DateTime();
+        $Endingdate->setDate($eyear,$emonth,$eday);
+
+        $competition->setNamecomp($Namecomp);
+        $competition->setDesccomp($Desccomp);
+        $competition->setNbrmaxspec($Nbrmaxspec);
+        $competition->setNbrmaxpar($Nbrmaxpar);
+        $competition->setLocation($Location);
+
+        $competition->setStartingdate($Startingdate);
+        $competition->setEndingdate($Endingdate);
+
+        $competition->setPricecomp($Pricecomp);
+        $competition->setIdcat($category);
+        $competition->setImageName($Image_name);
+        $competition->setIdu($user);
+
+        $competition->setEtat(0);
+        $competition->setNbrparticipant(0);
+        $competition->setNbrspec(0);
+        $competition->setLat("");
+        $competition->setLng("");
+
+
+        //var_dump($competition);
+
+
+        $em->persist($competition);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($competition);
+        //return new JsonResponse($formatted);
+        return new JsonResponse($formatted);
+
+    }
+
+    public function editCompetitionMobileAction($id,$Namecomp,$Desccomp,$Nbrmaxspec,$Nbrmaxpar,$Location,$sday,$smonth,$syear,$eday,$emonth,$eyear,$Pricecomp,$Idcat,$Image_name,$IdU)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user=$em->getRepository("UserBundle:User")->find($IdU);
+        $category=$em->getRepository(Category::class)->find($Idcat);
+        $competition=$em->getRepository(Competition::class)->find($id);
+
+        $Startingdate = new \DateTime();
+        $Startingdate->setDate($syear,$smonth,$sday);
+
+        $Endingdate = new \DateTime();
+        $Endingdate->setDate($eyear,$emonth,$eday);
+
+        $competition->setNamecomp($Namecomp);
+        $competition->setDesccomp($Desccomp);
+        $competition->setNbrmaxspec($Nbrmaxspec);
+        $competition->setNbrmaxpar($Nbrmaxpar);
+        $competition->setLocation($Location);
+
+        $competition->setStartingdate($Startingdate);
+        $competition->setEndingdate($Endingdate);
+
+        $competition->setPricecomp($Pricecomp);
+        $competition->setIdcat($category);
+        $competition->setImageName($Image_name);
+        $competition->setIdu($user);
+
+        $competition->setEtat(0);
+        $competition->setNbrparticipant(0);
+        $competition->setNbrspec(0);
+        $competition->setLat("");
+        $competition->setLng("");
+
+
+        //var_dump($competition);
+
+
+
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($competition);
+        //return new JsonResponse($formatted);
+        return new JsonResponse($formatted);
+
+    }
+
 }
