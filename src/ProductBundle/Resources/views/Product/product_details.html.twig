@@ -53,6 +53,14 @@
                     </div>
                 </div>
             </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="load-more-btn text-center wow fadeInUp js-loadMoreDiv" data-wow-delay="300ms">
+                            <a href="{{ path('product_update',{'id':product.id}) }}"
+                               class="btn oneMusic-btn js-loadMore">Update <i class="fa fa-refresh"></i></a>
+                        </div>
+                    </div>
+                </div>
             {% endif %}
             {% endif %}
         </div>

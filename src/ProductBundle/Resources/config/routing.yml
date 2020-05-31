@@ -23,6 +23,10 @@ sell_product:
     path:     /sellProduct/{id}
     defaults: { _controller: ProductBundle:Product:validateSell }
 
+product_update:
+    path:     /updateProduct/{id}
+    defaults: { _controller: ProductBundle:Product:updateProduct }
+
 delete_product_admin:
     path:     /deletProductAdmin/{id}
     defaults: { _controller: ProductBundle:Product:deleteProductAdmin }
@@ -74,3 +78,7 @@ product_delete_mobile:
 category_get_mobile:
     path:     /getCategoriesMobile
     defaults: { _controller: ProductBundle:Category:getCategoriesMobile }
+
+user_get_mobile:
+    path:     /getUser/{id}
+    defaults: { _controller: ProductBundle:Product:getUser }

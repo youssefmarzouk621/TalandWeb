@@ -39,10 +39,43 @@ class ProductController extends Controller
         $em = $this->getDoctrine()->getManager();
 //        $product = $em->getRepository('ProductBundle:Produit')->findAll();
         $product = $em->getRepository(Produit::class)->loadMoreProducts(18, 0);
-        if ($user->hasRole('ROLE_ADMIN'))
-            return $this->render('@Product/Admin/admin_products.html.twig', array('Produit' => $product));
+        if ($user) {
+            if ($user->hasRole('ROLE_ADMIN'))
+                return $this->render('@Product/Admin/admin_products.html.twig', array('Produit' => $product));
+        }
+
         return $this->render('@Product/Product/get_products.html.twig', array('Produit' => $product, 'nbrProduct' => sizeof($cart)));
 
+    }
+
+    public function updateProductAction(Request $request,$id){
+        $product=$this->getDoctrine()->getManager()->getRepository('ProductBundle:Produit')->find($id);
+        $form = $this->createForm(ProduitType::class, $product);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $product->setName($form['name']->getData());
+            $Category = $form['category']->getData();
+            $product->setCategory($Category);
+            $product->setPrice($form['price']->getData());
+            $product->setDate(new \DateTime());
+            if ( is_null($form['imgsrc']->getData()) ) {
+            } else {
+                try {$file = $request->files->get('productbundle_produit')['imgsrc'];
+                    $uploads_directory = $this->getParameter('uploads_directory');
+                    $fileName = $file->getClientOriginalName();
+                    $file->move($uploads_directory, $fileName);
+                    $product->setName($form['name']->getData());
+                    $product->setImgsrc($fileName);
+                }catch (\Exception $e){
+                }
+            }
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            $this->addFlash('successUpdate', 'Product updated.');
+            return $this->redirectToRoute('get_product_by_id',['id'=>$id]);
+        }
+        return $this->render('@Product/Product/update_product.html.twig', array(
+            'productFormUpdate' => $form->createView()));
     }
 
     public function loadMoreProductsAction($start, $limit)
@@ -89,19 +122,25 @@ class ProductController extends Controller
         $form = $this->createForm(ProduitType::class, $product);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $file = $request->files->get('productbundle_produit')['imgsrc'];
-            $uploads_directory = $this->getParameter('uploads_directory');
-            $fileName = $file->getClientOriginalName();
-            $file->move($uploads_directory, $fileName);
-            $product->setName($form['name']->getData());
+
+
             $Category = $form['category']->getData();
             $product->setCategory($Category);
             $product->setPrice($form['price']->getData());
             $product->setDate(new \DateTime());
-            if ($form['imgsrc']->getData() == 'NULL') {
+            if ( is_null($form['imgsrc']->getData()) ) {
                 $product->setImgsrc('products.png');
             } else {
-                $product->setImgsrc($fileName);
+                try {$file = $request->files->get('productbundle_produit')['imgsrc'];
+                    $uploads_directory = $this->getParameter('uploads_directory');
+                    $fileName = $file->getClientOriginalName();
+                    $file->move($uploads_directory, $fileName);
+                    $product->setName($form['name']->getData());
+                    $product->setImgsrc($fileName);
+                }catch (\Exception $e){
+
+                }
+
                 //$product->setImgsrc($form['imgsrc']->getData());
             }
             $em = $this->getDoctrine()->getManager();
@@ -148,9 +187,10 @@ class ProductController extends Controller
         return $this->redirectToRoute('add_product');
     }
 
-    public function addProductMobileAction(Request $request, $name, $price,$userId,$categoryName)
-    {   $user=$this->getDoctrine()->getManager()->getRepository('UserBundle:User')->find($userId);
-        $cat = $this->getDoctrine()->getManager()->getRepository(Category::class)->findOneBy(["name"=>$categoryName]);
+    public function addProductMobileAction(Request $request, $name, $price, $userId, $categoryName)
+    {
+        $user = $this->getDoctrine()->getManager()->getRepository('UserBundle:User')->find($userId);
+        $cat = $this->getDoctrine()->getManager()->getRepository(Category::class)->findOneBy(["name" => $categoryName]);
         $em = $this->getDoctrine()->getManager();
         $product = new Produit();
         $product->setName($name);
@@ -185,6 +225,14 @@ class ProductController extends Controller
         $em->flush();
         $serializer = new Serializer([new ObjectNormalizer()]);
         $formatted = $serializer->normalize($product);
+        return new JsonResponse($formatted);
+    }
+
+    public function getUserAction(Request $request, $id)
+    {
+        $user = $this->getDoctrine()->getManager()->getRepository('UserBundle:User')->find($id);
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($user);
         return new JsonResponse($formatted);
     }
 
