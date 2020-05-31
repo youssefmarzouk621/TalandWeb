@@ -1,0 +1,40 @@
+{% extends "default/Layout.html.twig" %}
+{% block header %}{% endblock %}
+{% block section %}
+    <div class="container mt-6">
+        <h1>Update product</h1>
+        {{ form_start(productFormUpdate) }}
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(productFormUpdate.name)}}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(productFormUpdate.category,{'render_rest':false}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(productFormUpdate.imgsrc) }}
+            </div>
+
+
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(productFormUpdate.price)}}
+            </div>
+
+
+            <div class="col-md-6">
+                {{ form_widget(productFormUpdate.captcha) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(productFormUpdate.Valider) }}
+            </div>
+        </div>
+    </div>
+    {{ form_end(productFormUpdate) }}
+
+{% endblock %}

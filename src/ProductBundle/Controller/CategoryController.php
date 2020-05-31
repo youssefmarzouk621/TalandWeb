@@ -66,8 +66,6 @@ $category=new Category();
     }
 
 
-
-    /*mobile*/
     public function getCategoriesMobileAction()
     {
         $em = $this->getDoctrine()->getManager();

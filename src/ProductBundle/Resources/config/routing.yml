@@ -19,6 +19,14 @@ delete_product:
     path:     /deletProduct/{id}
     defaults: { _controller: ProductBundle:Product:deleteProduct }
 
+sell_product:
+    path:     /sellProduct/{id}
+    defaults: { _controller: ProductBundle:Product:validateSell }
+
+product_update:
+    path:     /updateProduct/{id}
+    defaults: { _controller: ProductBundle:Product:updateProduct }
+
 delete_product_admin:
     path:     /deletProductAdmin/{id}
     defaults: { _controller: ProductBundle:Product:deleteProductAdmin }
@@ -54,13 +62,6 @@ category_get:
 category_delete:
     path:     /deleteCategory/{id}
     defaults: { _controller: ProductBundle:Category:deleteCategory }
-
-sell_product:
-    path:     /sellProduct/{id}
-    defaults: { _controller: ProductBundle:Product:validateSell }
-
-
-
 
 product_add_mobile:
     path:     /addProductMobile/{name}/{price}/{userId}/{categoryName}

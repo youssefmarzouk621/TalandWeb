@@ -78,35 +78,23 @@ class CartController extends Controller
         $total = 0;
         foreach ($cartWithData as $item) {
             $total += $item['product']->getPrice();
-
-
-
-            $message=(new \Swift_Message('Hello Email'))
+            $message=(new \Swift_Message('Taland team'))
                 ->setFrom('talandpidev@gmail.com')
-                ->setTo('hamza.benguirat@esprit.tn')
+                ->setTo($item['product']->getUserid()->getEmail())
                 ->setBody(
                     $this->renderView('@Product/Cart/cart_mail.html.twig',
                         ['nameReciever'=>$item['product']->getUserid()->getFirstname(),
                             'nameSender'=>$user->getFirstname(),
                             'emailSender'=>$user->getEmail(),
-                            'productName'=>$item['product']->getName()]
+                            'productName'=>$item['product']->getName(),
+                            'productId'=>$item['product']->getId()]
                     ),
                     'text/html');
             $this->get('mailer')->send($message);
             //$mailer->send($message);
-
         }
         $snappy=$this->get("knp_snappy.pdf");
-
-
-
         $fileName="My Cart";
-
-
-
-
-
-
         $session->remove('cart');
         return new Response(
             $snappy->getOutputFromHtml($this->renderView("@Product/Cart/cart_facture.html.twig", array(

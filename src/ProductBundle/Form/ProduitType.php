@@ -46,7 +46,8 @@ class ProduitType extends AbstractType
             ->add('price')
             ->add('imgsrc', FileType::class,[
                 'mapped'=>false,
-                'label'=>'choose picture'
+                'label'=>'choose picture',
+                'required'=>false
             ])
             ->add('captcha', CaptchaType::class, array(
                 'width' => 200,

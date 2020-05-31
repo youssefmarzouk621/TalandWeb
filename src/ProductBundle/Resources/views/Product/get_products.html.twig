@@ -162,10 +162,12 @@
             </div>
         </div>
     </section>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
     <div class="play-icon">
         <a href="{{ path('add_product') }}" class="video--play--btn"><img src="{{ asset('uploads/Products/add.png') }}"
                                                                           height="50" width="50"/></a>
     </div>
+    {% endif %}
     <!-- ##### Buy Now Area End ##### -->
     <!-- ##### Album Catagory Area Start ##### -->
 

@@ -44,16 +44,24 @@
                 </div>
             </div>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                {% if app.user.id == product.userid.id %}
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="load-more-btn text-center wow fadeInUp js-loadMoreDiv" data-wow-delay="300ms">
-                                <a href="{{ path('sell_product',{'id':product.id}) }}"
-                                   class="btn oneMusic-btn js-loadMore">Sell <i class="fa fa-angle-double-right"></i></a>
-                            </div>
+            {% if app.user.id == product.userid.id %}
+            <div class="row">
+                <div class="col-12">
+                    <div class="load-more-btn text-center wow fadeInUp js-loadMoreDiv" data-wow-delay="300ms">
+                        <a href="{{ path('sell_product',{'id':product.id}) }}"
+                           class="btn oneMusic-btn js-loadMore">Sell <i class="fa fa-angle-double-right"></i></a>
+                    </div>
+                </div>
+            </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="load-more-btn text-center wow fadeInUp js-loadMoreDiv" data-wow-delay="300ms">
+                            <a href="{{ path('product_update',{'id':product.id}) }}"
+                               class="btn oneMusic-btn js-loadMore">Update <i class="fa fa-refresh"></i></a>
                         </div>
                     </div>
-                {% endif %}
+                </div>
+            {% endif %}
             {% endif %}
         </div>
     </div>
