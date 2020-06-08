@@ -18,6 +18,15 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository{
         return $result=$query->getResult();
     }
 
+    public function allProductMobile(){
+        $qb=$this->getEntityManager()->createQueryBuilder()
+            ->select('p')
+            ->from($this->_entityName,'p')
+        ->where('p.validation =0');
+        $query=$qb->getQuery();
+        return $result=$query->getResult();
+    }
+
 
 
 }

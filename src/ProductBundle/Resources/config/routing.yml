@@ -67,6 +67,15 @@ product_add_mobile:
     path:     /addProductMobile/{name}/{price}/{userId}/{categoryName}
     defaults: { _controller: ProductBundle:Product:addProductMobile }
 
+product_update_mobile:
+    path:     /updateProductMobile/{id}/{name}/{price}/{userId}/{categoryName}/{validation}
+    defaults: { _controller: ProductBundle:Product:updateProductMobile }
+
+
+product_facture_mobile:
+    path:     /mobilePDF
+    defaults: { _controller: ProductBundle:Cart:pdfMobile }
+
 product_get_all_mobile:
     path:     /allProductsMobile
     defaults: { _controller: ProductBundle:Product:allProductsMobile }

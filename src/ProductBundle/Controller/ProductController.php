@@ -6,7 +6,6 @@ namespace ProductBundle\Controller;
 use ProductBundle\Entity\Category;
 use ProductBundle\Entity\Produit;
 use ProductBundle\Form\ProduitType;
-use Proxies\__CG__\ProductBundle\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -212,7 +211,7 @@ class ProductController extends Controller
     public function allProductsMobileAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $prodcuts = $em->getRepository(Produit::class)->findAll();
+        $prodcuts = $em->getRepository(Produit::class)->allProductMobile();
         $serializer = new Serializer([new ObjectNormalizer()]);
         $formatted = $serializer->normalize($prodcuts);
         return new JsonResponse($formatted);
@@ -235,6 +234,26 @@ class ProductController extends Controller
         $serializer = new Serializer([new ObjectNormalizer()]);
         $formatted = $serializer->normalize($user);
         return new JsonResponse($formatted);
+    }
+
+    public function updateProductMobileAction(Request $request,$id, $name, $price, $userId, $categoryName,$validation)
+    {
+        $user = $this->getDoctrine()->getManager()->getRepository('UserBundle:User')->find($userId);
+        $cat = $this->getDoctrine()->getManager()->getRepository(Category::class)->findOneBy(["name" => $categoryName]);
+        $em = $this->getDoctrine()->getManager();
+        $product = $em->getRepository(Produit::class)->find($id);
+        $product->setName($name);
+        $product->setPrice($price);
+        $product->setImgsrc("products.png");
+        $product->setValidation($validation);
+        $product->setCategory($cat);
+        $product->setDate(new \DateTime());
+        $product->setUserid($user);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($product);
+        return new JsonResponse($formatted);
+
     }
 
 }

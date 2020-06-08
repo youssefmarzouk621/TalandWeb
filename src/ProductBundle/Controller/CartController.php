@@ -111,4 +111,20 @@ class CartController extends Controller
 
 
     }
+
+
+
+    public function pdfMobileAction(){
+        $snappy=$this->get("knp_snappy.pdf");
+        $fileName="My Cart";
+
+        return new Response(
+            $snappy->getOutputFromHtml($this->renderView("@Product/Cart/cart_facture_mobile.html.twig")),
+            200,
+            array(
+                'Content-Type'=> 'application/pdf',
+                'Content-Disposition' =>'inline; filename="'.$fileName.'.pdf"'
+            )
+        );
+    }
 }
