@@ -1,0 +1,168 @@
+{% extends "default/LayoutFront.html.twig" %}
+{% block links %}
+
+{% endblock %}
+
+
+{% block section %}
+    <div class="row">
+        <div class="col">
+            <div class="login-form">
+                {{ form_start(Eventsform) }}
+                <div class="form-row">
+                    <div class="form-group col-md-9">
+                        <label for="inputEmail4">name</label>
+                        {{ form_widget(Eventsform.name , { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="inputPassword4">price</label>
+                        {{ form_widget(Eventsform.priceEvent, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress">description</label>
+                    {{ form_widget(Eventsform.description, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">specMax</label>
+                        {{ form_widget(Eventsform.specMax, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputState">date</label>
+                        {{ form_widget(Eventsform.date, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputAddress">location</label>
+                    {{ form_widget(Eventsform.location, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+
+
+                <div class="form-group">
+                    <div class="custom-file">
+                        {{ form_widget(Eventsform.imageFile, { 'attr' : { 'class' : 'custom-file-input','id' : 'fichier' } }) }}
+                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                    </div>
+                </div>
+                <div class="form-row" style="margin-top: 16px;margin-bottom: 10px;">
+                    {{ form_widget(Eventsform.Valider, { 'attr': {'class': 'btn btn-dark'} }) }}
+                    <button  onclick="verif()" id="ver" type="button" class="btn btn-dark">Valider</button>
+                </div>
+
+
+                {{ form_end(Eventsform) }}
+            </div>
+        </div>
+        <div class="col">
+            <div id="map"></div>
+
+            <!--<p id="lat" name="lat">lat</p>-->
+            <!--<p id="lng" name="lng">lng</p>-->
+
+            <div class="row">
+                <div class="col">
+                    <input class="form-control" type="text" id="lat" name="lat" placeholder="lat">
+                </div>
+                <div class="col">
+                    <input class="form-control" type="text" id="lng" name="lng" placeholder="lng">
+                </div>
+            </div>
+            {#<input type="text" id="lieu" name="lieu" placeholder="lieu">#}
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="{{ asset('FrontOffice/js/notify.min.js') }}"></script>
+    <script>
+        document.getElementById("eventsbundle_events_lat").style.display ="none";
+        document.getElementById("eventsbundle_events_lng").style.display ="none";
+        document.getElementById("eventsbundle_events_Valider").style.display ="none";
+        function verif() {
+
+            var name=document.getElementById("eventsbundle_events_name").value;
+            var price=document.getElementById("eventsbundle_events_priceEvent").value;
+            var description=document.getElementById("eventsbundle_events_description").value;
+            var nbrmaxspec=document.getElementById("eventsbundle_events_specMax").value;
+
+            var location=document.getElementById("eventsbundle_events_location").value;
+            var lng=document.getElementById("eventsbundle_events_lng").value;
+
+            var date_y=document.getElementById("eventsbundle_events_date_year").value;
+            var date_m=document.getElementById("eventsbundle_events_date_month").value;
+            var date_d=document.getElementById("eventsbundle_events_date_day").value;
+
+            var fichier=document.getElementById("eventsbundle_events_imageFile_file").value;
+
+            if ((name=="") || (price=="") || (description=="") || (nbrmaxspec=="") || (location=="") || (fichier=="")){
+
+                $("#ver").notify(
+                    "please fill all fields ",
+                    { position:"right" }
+                );
+                //console.log(" name :",name," price :",price," description :",description," nbrmaxspecv :",nbrmaxspec," nbrmaxpar :",nbrmaxpar," location :",location," startingdate year :",startingdate_y," endingdate year :",endingdate_y," fichier :",fichier)
+            }else{
+                    if (price<0){
+
+                        $("#ver").notify(
+                            "price can't be negative ",
+                            { position:"right" }
+                        );
+                    }else if (nbrmaxspec==0 || nbrmaxspec<0){
+
+                        $("#verif").notify(
+                            "number can't be negative or null ",
+                            { position:"right" }
+                        );
+                    }else if (lng==""){
+
+                        $("#ver").notify(
+                            "please use the map to fill the location ",
+                            { position:"right" }
+                        );
+                    }else {
+
+                        $("#ver").notify(
+                            "success ",
+                            { position:"right" }
+                        );
+
+                        document.getElementById('eventsbundle_events_Valider').click();
+                    }
+                }
+        }
+    </script>
+
+    <script>
+        var map = L.map('map').setView([36.746226, 10.235290], 12);
+        var tiles = L.esri.basemapLayer("Streets").addTo(map);
+
+        var searchControl = L.esri.Geocoding.geosearch().addTo(map);
+
+        var results = L.layerGroup().addTo(map);
+
+        searchControl.on("results", function(data) {
+            results.clearLayers();
+            for (var i = data.results.length - 1; i >= 0; i--) {
+                results.addLayer(L.marker(data.results[i].latlng));
+                /*var lat = data.results[i].latlng.lat;
+                var lng = data.results[i].latlng.lng;*/
+                /*console.log(lat);
+                console.log(lng);
+                console.log(data.results[i].properties.PlaceName);*/
+                document.getElementById("lat").value = data.results[i].latlng.lat;
+                document.getElementById("lng").value = data.results[i].latlng.lng;
+                //document.getElementById("lieu").value = data.results[i].properties.PlaceName;
+                document.getElementById("eventsbundle_events_location").value = data.results[i].properties.PlaceName;
+                document.getElementById("eventsbundle_events_lat").value = data.results[i].latlng.lat;
+                document.getElementById("eventsbundle_events_lng").value = data.results[i].latlng.lng;
+
+            }
+        });
+    </script>
+{% endblock %}

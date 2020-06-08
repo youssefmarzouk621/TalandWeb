@@ -22,9 +22,8 @@ class Eventuser
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="idU", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="idu", referencedColumnName="id")
      */
     private $idu;
 
@@ -34,6 +33,54 @@ class Eventuser
      * @ORM\Column(name="idevent", type="integer", nullable=false)
      */
     private $idevent;
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdu()
+    {
+        return $this->idu;
+    }
+
+    /**
+     * @param mixed $idu
+     */
+    public function setIdu($idu)
+    {
+        $this->idu = $idu;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdevent()
+    {
+        return $this->idevent;
+    }
+
+    /**
+     * @param int $idevent
+     */
+    public function setIdevent($idevent)
+    {
+        $this->idevent = $idevent;
+    }
 
 
 }

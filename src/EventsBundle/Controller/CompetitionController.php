@@ -108,7 +108,16 @@ class CompetitionController extends Controller
         ));
     }
 
+    public function SingleCompetitionAction($id)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $events=$em->getRepository(Competition::class)->find($id);
 
+        return $this->render('@Events/Competition/single_competition.html.twig', array(
+            'single_event' => $events,
+            'connected' => $this->getUser()
+        ));
+    }
 
 
     /*Mobile*/

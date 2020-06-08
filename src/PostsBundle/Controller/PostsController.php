@@ -47,6 +47,29 @@ class PostsController extends Controller
         ));
     }
 
+    public function CaptureAction(Request $request)
+    {
+        $post=new Posts();
+        $post->setIdu($this->getUser());
+        $post->setDatecreation(new \DateTime());
+        $post->setNbrlikes(0);
+        $post->setArchive(0);
+
+        $post->setNbrcomments(0);
+        $Form=$this->createForm(PostsType::class,$post);
+        $Form->handleRequest($request);
+
+        if ($Form->isSubmitted()&&$Form->isValid())
+        {
+            $em=$this->getDoctrine()->getManager();
+            $em->persist($post);
+            $em->flush();
+            return $this->redirectToRoute('get_posts');
+        }
+        return $this->render('@Posts/Posts/capture.html.twig', array(
+            'postform'=>$Form->createView()
+        ));
+    }
     public function AddPAction($img,$des,$type,Request $request)
     {
         $post=new Posts();

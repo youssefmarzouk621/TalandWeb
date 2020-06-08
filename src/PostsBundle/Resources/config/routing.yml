@@ -5,7 +5,9 @@ posts_homepage:
 add_post:
     path:     /AddPost
     defaults: { _controller: PostsBundle:Posts:AddPost }
-
+capture:
+  path:     /Capture
+  defaults: { _controller: PostsBundle:Posts:Capture }
 add_p:
     path:     /AddP/{img}/{des}/{type}
     defaults: { _controller: PostsBundle:Posts:AddP }

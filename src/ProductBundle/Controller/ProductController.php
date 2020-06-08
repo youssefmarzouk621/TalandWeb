@@ -6,7 +6,6 @@ namespace ProductBundle\Controller;
 use ProductBundle\Entity\Category;
 use ProductBundle\Entity\Produit;
 use ProductBundle\Form\ProduitType;
-use Proxies\__CG__\ProductBundle\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -191,7 +190,7 @@ class ProductController extends Controller
     public function addProductMobileAction(Request $request, $name, $price, $userId, $categoryName)
     {
         $user = $this->getDoctrine()->getManager()->getRepository('UserBundle:User')->find($userId);
-        $cat = $this->getDoctrine()->getManager()->getRepository(Category::class)->findOneBy(["name" => $categoryName]);
+        $cat = $this->getDoctrine()->getManager()->getRepository(CategoryAlias::class)->findOneBy(["name" => $categoryName]);
         $em = $this->getDoctrine()->getManager();
         $product = new Produit();
         $product->setName($name);

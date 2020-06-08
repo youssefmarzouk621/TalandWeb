@@ -22,7 +22,6 @@ AddParticipate:
     path:     /AddParticipate/{idcomp}/{type}
     defaults: { _controller: EventsBundle:Competition:AddParticipate }
 
-
 get_events_mobile:
     path:     /GetAllEvents
     defaults: { _controller: EventsBundle:Competition:getAllEvents }
@@ -38,3 +37,34 @@ add_events_mobile:
 edit_events_mobile:
     path:     /editCompetitionMobile/{id}/{Namecomp}/{Desccomp}/{Nbrmaxspec}/{Nbrmaxpar}/{Location}/{sday}/{smonth}/{syear}/{eday}/{emonth}/{eyear}/{Pricecomp}/{Idcat}/{Image_name}/{IdU}
     defaults: { _controller: EventsBundle:Competition:editCompetitionMobile }
+
+
+
+
+get_events:
+    path:     /GetEvents
+    defaults: { _controller: EventsBundle:Events:GetEvents }
+
+add_events:
+    path:     /AddEvents
+    defaults: { _controller: EventsBundle:Events:AddEvents }
+
+remove_events:
+    path:     /RemoveEvents/{id}
+    defaults: { _controller: EventsBundle:Events:DeleteEvents }
+
+update_events:
+    path:     /UpdateEvents/{id}
+    defaults: { _controller: EventsBundle:Events:UpdateEvents }
+
+AddSpec:
+    path:     /AddSpec/{idevent}
+    defaults: { _controller: EventsBundle:Events:AddSpec }
+
+SingleEvent:
+    path:     /SingleEvent/{id}
+    defaults: { _controller: EventsBundle:Events:SingleEvent }
+
+SingleCompetition:
+    path:     /SingleCompetition/{id}
+    defaults: { _controller: EventsBundle:Competition:SingleCompetition }

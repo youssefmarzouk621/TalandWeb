@@ -19,12 +19,29 @@ class EventsRepository extends \Doctrine\ORM\EntityRepository
                                         ->setParameter('chaine','%'.$chaine.'%')
                                         ->getResult();
     }
+    public function searchE($chaine){
+        return $this->getEntityManager()->createQuery('select c from EventsBundle:Events c WHERE CONCAT(c.name,c.location) LIKE :chaine')
+            ->setParameter('chaine','%'.$chaine.'%')
+            ->getResult();
+    }
 
     public function VerifUserParticipated($idcomp,$idu)
     {
 
         $query = $this->getEntityManager()
             ->createQuery("SELECT COUNT(c) FROM EventsBundle:Competitionuser c WHERE c.idu ='$idu' AND c.idcomp = '$idcomp' ");
+        try {
+            return $query->getSingleScalarResult();
+        } catch (NoResultException $e) {
+        } catch (NonUniqueResultException $e) {
+        }
+    }
+
+    public function VerifUserSpec($idevent,$idu)
+    {
+
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT COUNT(c) FROM EventsBundle:Eventuser c WHERE c.idu ='$idu' AND c.idevent = '$idevent' ");
         try {
             return $query->getSingleScalarResult();
         } catch (NoResultException $e) {

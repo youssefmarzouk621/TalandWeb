@@ -1,0 +1,60 @@
+{% extends "default/LayoutFront.html.twig" %}
+
+{% block section %}
+    <div style="margin-left: 330px;margin-right: 330px;" class="login-form">
+        {{ form_start(Eventsform) }}
+        <div class="form-row">
+            <div class="form-group col-md-9">
+                <label for="inputEmail4">name</label>
+                {{ form_widget(Eventsform.name , { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="form-group col-md-3">
+                <label for="inputPassword4">price</label>
+                {{ form_widget(Eventsform.priceEvent, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputAddress">description</label>
+            {{ form_widget(Eventsform.description, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputEmail4">specMax</label>
+                {{ form_widget(Eventsform.specMax, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputPassword4">date</label>
+                {{ form_widget(Eventsform.date, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputAddress">location</label>
+            {{ form_widget(Eventsform.location, { 'attr': {'class': 'form-control'} }) }}
+
+        </div>
+
+        <div class="form-group">
+            <div class="custom-file">
+                {{ form_widget(Eventsform.imageFile, { 'attr' : { 'class' : 'custom-file-input','id' : 'fichier' } }) }}
+                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+            </div>
+        </div>
+
+        <div class="form-row" style="margin-top: 24px;">
+            {{ form_widget(Eventsform.Valider, { 'attr': {'class': 'btn btn-dark'} }) }}
+
+        </div>
+
+
+        {{ form_end(Eventsform) }}
+    </div>
+
+
+
+    <script>
+        document.getElementById("eventsbundle_events_lat").style.display ="none";
+        document.getElementById("eventsbundle_events_lng").style.display ="none";
+    </script>
+{% endblock %}

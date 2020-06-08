@@ -1,10 +1,15 @@
 {% extends "default/LayoutFront.html.twig" %}
 
-{% block breadcumb %}
+{% block header %}
 
         <div class="bradcumbContent">
+            {% if connected != null %}
             <p style="position: relative;top: -15px;">Create your own</p>
             <a href="{{ path('add_competitions') }}" style="background: none;border: none;position: relative;top: -15px;"><h2>Competition</h2></a>
+            {% else %}
+                <p style="position: relative;top: -15px;">Connect to create your own competition</p>
+                <a href="{{ path('fos_user_security_login') }}" style="background: none;border: none;position: relative;top: -15px;"><h2>Login</h2></a>
+            {% endif %}
         </div>
 
 {% endblock %}
@@ -98,7 +103,7 @@
                                 {% endif %}
                             </div>
 
-                        <a href="#" class="btn see-more-btn">See Event</a>
+                        <a href="{{path('SingleCompetition',{'id':row.idcomp})}}" class="btn see-more-btn">See competition</a>
                         </div>
                     </div>
                 </div>

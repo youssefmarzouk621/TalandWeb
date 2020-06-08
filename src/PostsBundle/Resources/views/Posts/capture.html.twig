@@ -1,0 +1,67 @@
+{% extends "default/LayoutFront.html.twig" %}
+
+
+
+
+
+{% block section %}
+
+
+    <div class="container">
+        <div style="box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.37);border-radius: 14px;margin-bottom: 14px;height: 694px;" class="row">
+
+            <div class="col-md-12 col-md-offset-3">
+                <div id="msform">
+
+
+                    <button style="z-index: 1;" onclick="showbutter();">
+                        <img width="40" src="{{ asset('uploads/posts/butterfly.png') }}">
+
+                    </button>
+                    <button style="z-index: 1;" onclick="showdaft();">
+                        <img width="40" src="{{ asset('uploads/posts/daft.jpg') }}">
+
+                    </button>
+                    <button style="z-index: 1;" onclick="showpunk();">
+                        <img width="40" src="{{ asset('uploads/posts/punk.jpg') }}">
+
+                    </button>
+                    <button style="z-index: 1;" onclick="showcorona();">
+                        <img width="40" src="{{ asset('uploads/posts/air.png') }}">
+
+                    </button>
+
+                    <div id="sketch-holder">
+                        <!-- Our sketch will go here! -->
+                    </div>
+                    <script src="{{ asset('FrontOffice/js/camera/sketch.js') }}"></script>
+
+
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}
+
+
+{% block scripts %}
+
+    <!--choose file-->
+    <script>
+        document.getElementById("postsbundle_posts_type").style.display = "none";
+    </script>
+    <!--end choose file-->
+
+    <script src="{{ asset('FrontOffice/js/emojionearea.min.js')}}"></script>
+
+{% endblock %}
