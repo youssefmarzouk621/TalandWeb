@@ -401,12 +401,14 @@
         }
 
         function choose(choice) {
-            document.getElementById("imgdb").src = ''.concat("/taland/web/uploads/posts/default",choice,'.jpg');
+            document.getElementById("imgdb").src = ''.concat("/talandWEB/web/uploads/posts/default",choice,'.jpg');
         }
         function AddPost() {
             var des = $("#postsbundle_posts_description").data("emojioneArea").getText();
             var str = document.getElementById("imgdb").src;
-            var res = str.substring(42);
+
+            var res = str.substring(45);
+            console.log("res"+res);
             var type = document.getElementById("type").value;
             //console.log("image :",res);
             $.ajax({

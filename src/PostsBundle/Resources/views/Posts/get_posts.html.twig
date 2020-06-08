@@ -355,9 +355,9 @@ $(document).ready(function () {
     for (var j = 0; j < strArray.length; j++) {
       if (strArray[j].match(str) && $return.length < 5) {
         var $h = strArray[j].replace(str, "<strong>" + str + "</strong>");
-        $pc="<img style='height: 50px;margin-left :10px;margin-right :10px;border-radius:50%;' src='/taland/web/uploads/posts/".concat($imgs[j],"'>");
+        $pc="<img style='height: 50px;margin-left :10px;margin-right :10px;border-radius:50%;' src='/talandWEB/web/uploads/posts/".concat($imgs[j],"'>");
         $return.push(
-          '<li class="prediction-item"><a style="color: gray;" href="/taland/web/app_dev.php/User/Profile/'+strArray[j]+'">'+$pc+'<span class="prediction-text">' +
+          '<li class="prediction-item"><a style="color: gray;" href="/talandWEB/web/app_dev.php/User/Profile/'+strArray[j]+'">'+$pc+'<span class="prediction-text">' +
             $h+"</span></a></li>"
         );
       }

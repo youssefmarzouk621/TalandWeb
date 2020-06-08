@@ -17,11 +17,11 @@ var helmet;
   
   //ramadan = createImg("ram.png");
   //slayer = createImg("red.gif");
-  mask = createImg("http://localhost/taland/web/uploads/posts/mask.gif");
-  daft = createImg("http://localhost/taland/web/uploads/posts/daft.gif");
-  punk = createImg("http://localhost/taland/web/uploads/posts/daft_led.gif");
+  mask = createImg("http://localhost/talandWEB/web/uploads/posts/mask.gif");
+  daft = createImg("http://localhost/talandWEB/web/uploads/posts/daft.gif");
+  punk = createImg("http://localhost/talandWEB/web/uploads/posts/daft_led.gif");
   //bmo = createImg("bmo.gif");
-  butter = createImg("http://localhost/taland/web/uploads/posts/butter.gif");
+  butter = createImg("http://localhost/talandWEB/web/uploads/posts/butter.gif");
  }
 
 function setup() {
