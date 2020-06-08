@@ -10,5 +10,3 @@ supptvshow:
 modifiertvshow:
     path:     /modifiertvshow/{id}
     defaults: { _controller: tvshowBundle:Tvshow:modifiertvshow }
-
-

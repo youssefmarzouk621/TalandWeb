@@ -11,7 +11,17 @@ use tvshowBundle\Repository\ratingtvshowRepository;
 use tvshowBundle\Repository\commentairetvshowRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
+
 use tvshowBundle\Repository\TvshowRepository;
 
 /**
@@ -100,6 +110,39 @@ class TvshowController extends Controller
         ));
 
     }
+    /**
+     * Creates a new tvshow entity.
+     *
+     * @Route("/aff", name="t")
+     * @Method({"GET", "POST"})
+     */
+    public function affAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $tvshows = $em->createQueryBuilder();
+
+        $tvshows->select('t')
+            ->from(Tvshow::class, 't')
+
+            ->groupBy('t.name')
+            ->orderBy('t.year', 'ASC')
+        ;
+
+        $tasks = $tvshows->getQuery()->getResult();
+
+        $objectNormalizer = new ObjectNormalizer();
+        $objectNormalizer->setCircularReferenceHandler(function ($object) {
+            return $object->getId();
+        });
+
+
+        $serializer = new Serializer([new DateTimeNormalizer(), $objectNormalizer]);
+        return new JsonResponse($serializer->normalize($tasks,'json', ['categorie' => ['categorie'] ]));
+
+    }
+
+
 
 
     /**
@@ -233,6 +276,25 @@ class TvshowController extends Controller
             'delete_form' => $deleteForm->createView(),
         ));
     }
+    /**
+     * Displays a form to edit an existing tvshow entity.
+     *
+     * @Route("/findi", name="shiwtvshow")
+     * @Method({"GET"})
+     */
+    public function  affichiAction()
+    {   $tasks=$this->getDoctrine()->getManager()->getRepository('tvshowBundle:Tvshow')->findAll();
+
+
+        $objectNormalizer = new ObjectNormalizer();
+        $objectNormalizer->setCircularReferenceHandler(function ($object) {
+            return $object->getId();
+        });
+
+
+        $serializer = new Serializer([new DateTimeNormalizer(), $objectNormalizer]);
+        return new JsonResponse($serializer->normalize($tasks,'json', ['categorie' => ['categorie'] ]));
+    }
 
     /**
      * Displays a form to edit an existing tvshow entity.
@@ -260,10 +322,130 @@ class TvshowController extends Controller
     }
 
     /**
+     * Displays a form to edit an existing tvshow entity.
+     *
+     * @Route("/supprimercommentaireM/{id}", name="supprimercommentaireM")
+     * @Method({"GET", "POST"})
+     */
+    public function supprimercommentaireMAction($id)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $commentaire=$em->getRepository('tvshowBundle:commentairetvshow')->find($id);
+        $em->remove($commentaire);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($commentaire);
+        return new JsonResponse($formatted);
+    }
+
+    /**
+     * Displays a form to edit an existing tvshow entity.
+     *
+     * @Route("/affichiratingM/{id}", name="affichiratingM")
+     * @Method({"GET", "POST"})
+     */
+    public function affichiratingMAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $commentaire = $em->getRepository('tvshowBundle:ratingtvshow')->findBy((array('tvshow' =>  $id )));
+        $objectNormalizer = new ObjectNormalizer();
+        $objectNormalizer->setCircularReferenceHandler(function ($object) {
+            return $object->getId();
+        });
+
+        $serializer = new Serializer([new DateTimeNormalizer(), $objectNormalizer]);
+        return new JsonResponse($serializer->normalize($commentaire,'json', ['categorie' => ['categorie'] ]));ace(is_array($data) ? $data : array());
+
+    }
+
+    /**
+     * Displays a form to edit an existing tvshow entity.
+     *
+     * @Route("/affichicommentaireM/{id}", name="affichicommentaireM")
+     * @Method({"GET", "POST"})
+     */
+    public function affichicommentaireMAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $commentaire = $em->getRepository('tvshowBundle:commentairetvshow')->findBy((array('tvshow' =>  $id )));
+        $objectNormalizer = new ObjectNormalizer();
+        $objectNormalizer->setCircularReferenceHandler(function ($object) {
+            return $object->getId();
+        });
+
+        $serializer = new Serializer([new DateTimeNormalizer(), $objectNormalizer]);
+        return new JsonResponse($serializer->normalize($commentaire,'json', ['categorie' => ['categorie'] ]));ace(is_array($data) ? $data : array());
+
+    }
+    /**
+     * Displays a form to edit an existing tvshow entity.
+     *
+     * @Route("/newratingM/{idu}/{id}/{rate}", name="newratingM")
+     * @Method({"GET", "POST"})
+     */
+    public function ajouterratingtvshowMAction(Request $request,$idu,$id,$rate)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $rating = new ratingtvshow();
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->findUserBy(array('id' => $idu));
+        $tvshow= $em->getRepository('tvshowBundle:Tvshow')->findOneBy(array('id'=>$id));
+        $rating->setUserId($user);
+        $rating->setTvshow($tvshow);
+        $rating->setRate($rate);
+        $em->persist($rating);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($rating);
+        return new JsonResponse($formatted);
+    }
+    /**
+ * Displays a form to edit an existing tvshow entity.
+ *
+ * @Route("/newcommentaireM/{idu}/{id}/{comm}", name="newcommentaireM")
+ * @Method({"GET", "POST"})
+ */
+    public function ajoutertvshowMAction(Request $request,$idu,$id,$comm)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $commentaire = new commentairetvshow();
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->findUserBy(array('id' => $idu));
+        $tvshow= $em->getRepository('tvshowBundle:Tvshow')->findOneBy(array('id'=>$id));
+        $commentaire->setUserId($user);
+        $commentaire->setTvshow($tvshow);
+        $commentaire->setContent($comm);
+        $em->persist($commentaire);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($commentaire);
+        return new JsonResponse($formatted);
+    }
+
+    /**
+     * Displays a form to edit an existing tvshow entity.
+     *
+     * @Route("/modifiertvshowM/{id}", name="modifiertvshowM")
+     * @Method({"GET", "POST"})
+     */
+    public function updatetvshowMAction(Request $request,$id)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $tvshow=$em->getRepository("tvshowBundle:Tvshow")->find($id);
+        $tvshow->setNbrvues($tvshow->getNbvues()+1);
+        $em->persist($tvshow);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted=$serializer->normalize($tvshow);
+        return new JsonResponse();
+    }
+
+    /**
      * Deletes a tvshow entity.
      *
      * @Route("/{id}", name="tvshow_delete")
      * @Method("DELETE")
+     *
      */
     public function deleteAction(Request $request, Tvshow $tvshow)
     {

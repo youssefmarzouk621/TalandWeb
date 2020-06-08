@@ -2,6 +2,8 @@
 
 namespace tvshowBundle\Controller;
 
+use PostsBundle\Entity\Posts;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use tvshowBundle\Entity\commentairetvshow;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -138,11 +140,24 @@ class commentairetvshowController extends Controller
     }
 
     public function supprimercommentTvshowAction($id)
-{$em = $this->getDoctrine()->getManager();
+{
+    $em = $this->getDoctrine()->getManager();
+    $com=$em->getRepository(commentairetvshow::class)->find($id);
+    //var_dump($com);
+    $em->remove($com);
+    $em->flush();
+
+    return new JsonResponse("del");
+    /*$em = $this->getDoctrine()->getManager();
     $commentaire= $em->getRepository('tvshowBundle:commentairetvshow')->findOneBy(array('id'=>$id));
 
     $em->remove($commentaire);
-    $em->flush();
+    $em->flush();*/
     //return $this->redirectToRoute('tvshow_show', array('id' => $tvshow->getId()));
 }
+
+    public function supcomchekibAction($id){
+        var_dump($id);
+        return new JsonResponse("del");
+    }
 }

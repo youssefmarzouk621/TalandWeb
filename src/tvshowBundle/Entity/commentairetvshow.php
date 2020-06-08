@@ -31,12 +31,13 @@ class commentairetvshow
 
     /**
      * @ORM\ManyToOne(targetEntity="\tvshowBundle\Entity\Tvshow")
-     * @ORM\JoinColumn(name="idtvshow" ,referencedColumnName="id")
+     * @ORM\JoinColumn(name="idtvshow" ,referencedColumnName="id",onDelete="CASCADE")
      */
     private $tvshow;
+
     /**
-     * @ORM\ManyToOne(targetEntity="\UserBundle\Entity\User",cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="User_id", referencedColumnName="id" ,nullable=true)
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="User_id", referencedColumnName="id")
      */
     private  $User_id;
     /**

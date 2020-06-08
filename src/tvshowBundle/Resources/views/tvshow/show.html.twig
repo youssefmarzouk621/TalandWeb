@@ -9752,7 +9752,8 @@
 
                         <label for="newsletterSearch">{{ commentairetvsho.content }}
                             {% if  commentairetvsho.Userid.username == user %}
-                                <label for="newsletterSearch" style="margin-left: 500px; margin-top: -20px;  "> <h5> <a href="{{ path('suppcommntaire',{'id' :  commentairetvsho.id}) }}">🗑️</a></h5> </label>
+                                {#<label for="newsletterSearch" style="margin-left: 500px; margin-top: -20px;  "> <h5> <a href="{{ path('suppcommntaire',{'id' :  commentairetvsho.id}) }}">🗑️</a></h5> </label>#}
+                                <button onclick="supcom({{ commentairetvsho.id }})" style="margin-left: 500px; margin-top: -20px; "  >🗑️</button>
                             {% endif %}
                     </div>
 
@@ -9826,6 +9827,20 @@
             var v = document.getElementById("lampe");
             v.style.display = "block";
 
+        }
+
+        function supcom(id) {
+            $.ajax({
+                url: 'http://localhost/taland/web/app_dev.php/Tvshow/suppcommentaire/' + id,
+                success: function (data) {
+                    if (data=="del"){
+                        window.location.replace(window.location.href);
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log("Ajax request failed.");
+                }
+            });
         }
         function changeColorwhite(){
             document.body.style.backgroundColor = 'white';

@@ -485,7 +485,7 @@ class Tvshow
     {
         return $this->galeryimage5;
     }
-
+/*
     public function getWebPath()
     {
         return null===$this->coverimage ? null :$this->getUploadDir().''.$this->coverimage();
@@ -509,7 +509,7 @@ class Tvshow
     public function getWeb5Path()
     {
         return null===$this->galeryimage5 ? null :$this->getUploadDir().''.$this->galeryimage5();
-    }
+    }*/
     protected function getUploadRootDir()
     {
         return _DIR_.'/../../../../web'.$this->getUploadDir();
