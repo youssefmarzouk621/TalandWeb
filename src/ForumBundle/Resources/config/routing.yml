@@ -61,5 +61,91 @@ historique:
 clearhistory:
     path:     /clear
     defaults: { _controller: ForumBundle:Forum:deletehistorique }
+addtofavorite:
+    path:     /favoris/{id}
+    defaults: { _controller: ForumBundle:Forum:addtofavorite }
+chartsignaler:
+    path:     /chartsignaler
+    defaults: { _controller: ForumBundle:Forum:chartsignaler }
+userreacts:
+    path:     /userreacts
+    defaults: { _controller: ForumBundle:Forum:userreacts }
+favorisparuser:
+    path:     /favorisparuser
+    defaults: { _controller: ForumBundle:Forum:favorisparuser }
 
 
+
+
+
+
+
+
+
+toussujetsM:
+    path:     /toussujetsM
+    defaults: { _controller: ForumBundle:Forum:toussujetsM }
+messujetsM:
+    path:     /messujetsM/{id}
+    defaults: { _controller: ForumBundle:Forum:messujetsM }
+CommentairedusujetM:
+    path:     /CommentairedusujetM/{idu}/{id}
+    defaults: { _controller: ForumBundle:Forum:CommentairedusujetM }
+sujetcommentM:
+    path:     /sujetcommentM/{id}
+    defaults: { _controller: ForumBundle:Forum:sujetetcommentaireM }
+supprimersujetM:
+    path:     /supprimersujetM/{id}
+    defaults: { _controller: ForumBundle:Forum:supprimersujetM }
+supprimercommentaireM:
+    path:     /supprimercommentaireM/{id}
+    defaults: { _controller: ForumBundle:Forum:supprimercommentaireM }
+updatesujetM:
+    path:     /updatesujetM/{id}/{description}
+    defaults: { _controller: ForumBundle:Forum:updatesujetM }
+updatecommentaireM:
+    path:     /updatecommentaireM/{id}
+    defaults: { _controller: ForumBundle:Forum:updatecommentaireM }
+ajoutersujetM:
+    path:     /ajoutersujetM/{idu}/{description}
+    defaults: { _controller: ForumBundle:Forum:ajoutersujetM }
+ajoutercommentaireM:
+    path:     /ajoutercommentaireM/{id}
+    defaults: { _controller: ForumBundle:Forum:ajoutercommentaireM }
+subjectidM:
+    path:     /subjectidM/{id}
+    defaults: { _controller: ForumBundle:Forum:subjectidM }
+top5sujetM:
+    path:     /top5sujetM
+    defaults: { _controller: ForumBundle:Forum:top5sujetM }
+tousM:
+    path:     /tousM
+    defaults: { _controller: ForumBundle:Forum:tousM }
+affichicommentaireM:
+    path:     /affichicommentaireM/{id}
+    defaults: { _controller: ForumBundle:Forum:affichicommentaireM }
+likem:
+    path:     /likem/{id}
+    defaults: { _controller: ForumBundle:Forum:likem }
+
+vote:
+    path:     /vote/{idforum}/{choice}
+    defaults: { _controller: ForumBundle:Forum:vote }
+verifvote:
+    path:     /verifvote/{idforum}
+    defaults: { _controller: ForumBundle:Forum:verifvote }
+modifvote:
+    path:     /modifvote/{idforum}/{choice}
+    defaults: { _controller: ForumBundle:Forum:modifvote }
+nbrevote:
+    path:     /nbrevote/{idf}
+    defaults: { _controller: ForumBundle:Forum:nbrevote }
+favoris:
+    path:     /favoris/{idforum}
+    defaults: { _controller: ForumBundle:Forum:favoris }
+veriffavoris:
+    path:     /veriffavoris/{idforum}
+    defaults: { _controller: ForumBundle:Forum:veriffavoris }
+getvotesM:
+    path:     /getvotesM/{id}
+    defaults: { _controller: ForumBundle:Forum:getvotesM }

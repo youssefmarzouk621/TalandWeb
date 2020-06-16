@@ -2,18 +2,38 @@
 
 namespace ForumBundle\Controller;
 
+use ForumBundle\Entity\Vote;
+use Symfony\Component\HttpFoundation\File\File;
+
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
+
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+use Test\Fixture\Entity\Article;
+use tvshowBundle\Repository\TvshowRepository;
+
+
+
+
+
+
 use ForumBundle\Entity\Commentaire;
+use ForumBundle\Entity\Favoris;
 use ForumBundle\Entity\historique;
 use ForumBundle\Entity\signaler;
 use ForumBundle\Form\signalerType;
 use ForumBundle\Form\SujetType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use ForumBundle\Entity\Sujet;
 use Snipe\BanBuilder\CensorWords;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 use UserBundle\Entity\User;
 
 
@@ -32,7 +52,7 @@ class ForumController extends Controller
         $forums  = $this->get('knp_paginator')->paginate(
             $forum,
             $request->query->get('page', 1)/*le numéro de la page à afficher*/,
-            2/*nbre d'éléments par page*/
+            4/*nbre d'éléments par page*/
         );
 
         $censor = new CensorWords;
@@ -48,12 +68,13 @@ class ForumController extends Controller
 
     public function mesForumsAction() //afficher les forums de lutulisateur connecte
     {
-        $user = $this->getUser();
+        $user = $this->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
-        $forums = $em->getRepository('ForumBundle:Sujet')->findBy([
-            "idUser"=>$user
-        ]);
+        $forums = $em->getRepository('ForumBundle:Sujet')->sujet($user);
+
+
         dump($forums);
+
 
 
         return $this->render('@Forum/Forum/mesforums.html.twig',array(
@@ -74,9 +95,9 @@ class ForumController extends Controller
         $name = $this->getUser()->getUsername();
         $historique=new historique ();
         $historique->setIdu($user);
-        $historique->setDescription("User ".$name."deleted a subject");
+        $historique->setDescription("User ".$name." deleted a subject");
 
-        return $this->redirectToRoute('afficher_messujets');
+        return new JsonResponse("deleted");
     }
 
     public function modifierSujetAction($id,Request $request)
@@ -98,7 +119,7 @@ class ForumController extends Controller
             $name = $this->getUser()->getUsername();
             $historique=new historique ();
             $historique->setIdu($user);
-            $historique->setDescription("User ".$name."modified a subject");
+            $historique->setDescription("User ".$name." modified a subject");
 
 
             return $this->redirectToRoute('afficher_messujets');
@@ -136,20 +157,31 @@ class ForumController extends Controller
     public function reloadbackAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $sujet = $em->getRepository('ForumBundle:Sujet')->findBy(array('etat' =>0));
         $nbresujetprop = $em->getRepository('ForumBundle:Sujet')->nbresujetpropse();
       //   dump($nbresujetprop);
-
+        $censor = new CensorWords;
         return $this->render('@Forum/Forum/sujetback.html.twig', array(
             'sujet' => $sujet,
             'nbsrep' => $nbresujetprop,
+            'censorF' => $censor
+
 
         ));
     }
 
     public function detailssujetAction(Request $request,$id)
     {
+
+
+        $iduser = $this->getUser()->getId();
+
+        $em = $this->getDoctrine()->getManager();
+
+
+        $sujet = $this->getDoctrine()->getRepository('ForumBundle:Favoris')->find($id);
+
+
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
         $forum = $this->getDoctrine()->getRepository('ForumBundle:Sujet')->find($id);
@@ -194,6 +226,43 @@ class ForumController extends Controller
         $repository= $em->getRepository(commentaire::class)->nombrecommentaires($forum->getIdF());
     //dump($repository);
     //die();
+        $votes=array();
+        $vote1 = $em->getRepository(Sujet::class)->nbrevote1($id);
+        $vote2 = $em->getRepository(Sujet::class)->nbrevote2($id);
+        $vote3 = $em->getRepository(Sujet::class)->nbrevote3($id);
+        $vote4 = $em->getRepository(Sujet::class)->nbrevote4($id);
+        $vote5 = $em->getRepository(Sujet::class)->nbrevote5($id);
+        $vote6 = $em->getRepository(Sujet::class)->nbrevote6($id);
+        array_push($votes,$vote1);
+        array_push($votes,$vote2);
+        array_push($votes,$vote3);
+        array_push($votes,$vote4);
+        array_push($votes,$vote5);
+        array_push($votes,$vote6);
+       // dump($votes);
+        $userreact=array();
+        $react1 = $em->getRepository(Sujet::class)->userparvote1($id);
+        $react2 = $em->getRepository(Sujet::class)->userparvote2($id);
+        $react3 = $em->getRepository(Sujet::class)->userparvote3($id);
+        $react4= $em->getRepository(Sujet::class)->userparvote4($id);
+        $react5 = $em->getRepository(Sujet::class)->userparvote5($id);
+        $react6= $em->getRepository(Sujet::class)->userparvote6($id);
+        $react7= $em->getRepository(Sujet::class)->allvotes($id);
+        $all= $em->getRepository(Sujet::class)->allvotesparsujet($id);
+        array_push($userreact,$react1);
+        array_push($userreact,$react2);
+        array_push($userreact,$react3);
+        array_push($userreact,$react4);
+        array_push($userreact,$react5);
+        array_push($userreact,$react6);
+        array_push($userreact,$react7);
+        array_push($userreact,$all);
+
+      // dump($userreact);
+       //die();
+
+
+        
 
         return $this->render('@Forum/Forum/detailssujet.html.twig',array(
             'forum' => $forum,
@@ -201,12 +270,21 @@ class ForumController extends Controller
             'user' => $user,
             'nbcom' =>$repository,
             'form'=>$form->createView(),
+            'Favoris'=>$sujet,
+            'votes'=>$votes,
+            'reacts'=>$userreact
 
         ));
     }
 
     public function amanAction(Request $request,$id)
     {
+        $iduser = $this->getUser()->getId();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $sujet = $this->getDoctrine()->getRepository('ForumBundle:Favoris')->find($id);
+
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
         $forum = $this->getDoctrine()->getRepository('ForumBundle:Sujet')->find($id);
@@ -249,7 +327,9 @@ class ForumController extends Controller
             'user' => $user,
             'form'=>$form->createView(),
             'ar'=>$ar,
-            'nbcom' =>$repository
+            'nbcom' =>$repository,
+            'Favoris' =>$sujet,
+
 
         ));
     }
@@ -303,7 +383,7 @@ class ForumController extends Controller
         $name = $this->getUser()->getUsername();
         $historique=new historique ();
         $historique->setIdu($user);
-        $historique->setDescription("User ".$name."liked a subject");
+        $historique->setDescription("User ".$name." liked a subject");
         $em->persist($historique);
         $em->flush();
 
@@ -331,11 +411,11 @@ class ForumController extends Controller
         $name = $this->getUser()->getUsername();
         $historique=new historique ();
         $historique->setIdu($user);
-        $historique->setDescription("User ".$name."deleted his comment");
+        $historique->setDescription("User ".$name." deleted his comment");
         $em->persist($historique);
         $em->flush();
 
-        return $this->redirectToRoute('detail_sujet',array('id' => $com->getIdF()));
+        return new JsonResponse("delete comment");
     }
 
     public function modifierCommentAction(Request $request,$id)
@@ -370,7 +450,7 @@ class ForumController extends Controller
             $name = $this->getUser()->getUsername();
             $historique=new historique ();
             $historique->setIdu($user);
-            $historique->setDescription("User ".$name."modified his comment");
+            $historique->setDescription("User ".$name." modified his comment");
             $em->persist($historique);
             $em->flush();
             return $this->redirectToRoute('detail_sujet',array('id' => $com->getIdF()));
@@ -413,16 +493,29 @@ class ForumController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
         $forums = $em->getRepository('ForumBundle:Sujet')->findAll();
-        $strikesup = $em->getRepository('ForumBundle:Sujet')->countstrikesup();
-        $strikeinf = $em->getRepository('ForumBundle:Sujet')->countstrikeinf();
+        $countupvote=$forums = $em->getRepository('ForumBundle:Sujet')->countupvote();
+        //dump($countupvote);
 
-        dump($forums);
-        dump($strikeinf);
+
         return $this->render('@Forum/Forum/chart.html.twig', array(
-            'forums' => $forums,
+            'forums' => $countupvote,
             'user' => $user,
-            'strikesup' => $strikesup,
-            'strikeinf' => $strikeinf,
+
+
+        ));
+    }
+    public function chartsignalerAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+        $countupvote = $em->getRepository('ForumBundle:Sujet')->signalerchart();
+        //dump($countupvote);
+
+
+        return $this->render('@Forum/Forum/chartsignaler.html.twig', array(
+            'forums' => $countupvote,
+            'user' => $user,
+
 
         ));
     }
@@ -459,7 +552,7 @@ class ForumController extends Controller
             $name = $this->getUser()->getUsername();
             $historique=new historique ();
             $historique->setIdu($user);
-            $historique->setDescription("User ".$name."added a new subject");
+            $historique->setDescription("User ".$name." added a new subject");
             $em->persist($historique);
             $em->flush();
             return $this->redirectToRoute('afficher_messujets');
@@ -492,7 +585,7 @@ class ForumController extends Controller
             $name = $this->getUser()->getUsername();
             $historique=new historique ();
             $historique->setIdu($user);
-            $historique->setDescription("User".$name."signaled a subject");
+            $historique->setDescription("User".$name." signaled a subject");
             $em->persist($historique);
             $em->flush();
             return $this->redirectToRoute('detail_sujet',array('id' => $sujet->getIdF()));
@@ -563,6 +656,323 @@ class ForumController extends Controller
         return $this->redirectToRoute('historique');
 
     }
+
+    public function addtofavoriteAction($id,Request $request)
+    {
+        $user = $this->getUser();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $sujet = $this->getDoctrine()->getRepository('ForumBundle:Sujet')->find($id);
+        $em = $this->getDoctrine()->getManager();
+
+        $oldfav = $this->getDoctrine()->getRepository('ForumBundle:Favoris')->find($id);
+
+        $favoris = new Favoris();
+        $favoris->setIdF($sujet);
+        $favoris->setIdUser($user);
+        $favoris->setDescriptionf($sujet->getDescriptionf());
+        $favoris->setNbrejaime($sujet->getNbrejaime());
+        $favoris->setStrike($sujet->getStrike());
+        $favoris->setDate($sujet->getDate());
+        $em->persist($favoris);
+        $em->flush();
+        dump($favoris);
+
+
+
+        return $this->redirectToRoute('detail_sujet' ,array(
+        'id' => $id,
+            'sujet'=>$sujet,
+            'Favoris'=>$oldfav,
+            'user' => $user,
+
+
+
+    ));
+
+    }
+
+    public function voteAction($idforum,$choice){
+        $em = $this->getDoctrine()->getManager();
+        $sujet = $this->getDoctrine()->getRepository(Sujet::class)->find($idforum);
+        $vote = new Vote();
+        $vote->setIdu($this->getUser());
+        $vote->setIdforum($sujet);
+        $vote->setVote($choice);
+        $em->persist($vote);
+        $em->flush();
+        return new JsonResponse("voted");
+    }
+
+    public function verifvoteAction($idforum){
+        $em = $this->getDoctrine()->getManager();
+        $verif = $em->getRepository(Sujet::class)->verifforumvoted($idforum,$this->getUser()->getId());
+        if ($verif==0){
+            return new JsonResponse("vote");
+        }else{
+            return new JsonResponse("voted");
+        }
+
+    }
+    public function modifvoteAction($idforum,$choice){
+        $em = $this->getDoctrine()->getManager();
+        $vote = $em->getRepository(Sujet::class)->verifmodif($idforum,$this->getUser()->getId());
+
+        $vote[0]->setVote($choice);
+        $em->flush();
+        return new JsonResponse("modifiee");
+
+    }
+
+    public function favorisAction($idforum){
+        $em = $this->getDoctrine()->getManager();
+        $sujet = $this->getDoctrine()->getRepository(Sujet::class)->find($idforum);
+        $fav = new Favoris();
+        $fav->setIdUser($this->getUser());
+        $fav->setDescriptionf($sujet->getDescriptionF());
+        $fav->setNbrejaime(0);
+        $fav->setIdF($sujet->getIdF());
+        $em->persist($fav);
+        $em->flush();
+        return new JsonResponse("favoris");
+    }
+    public function veriffavorisAction($idforum){
+        $em = $this->getDoctrine()->getManager();
+        $verif = $em->getRepository(Sujet::class)->veriffavorisadded($idforum,$this->getUser()->getId());
+        if ($verif==0){
+            return new JsonResponse("addtofav");
+        }else{
+            return new JsonResponse("alreadyadded");
+        }
+
+    }
+
+    public function favorisparuserAction(Request $request) //afficher les sujets
+    {
+        $user = $this->getUser();
+
+        $em = $this->getDoctrine()->getManager();
+        $forum = $em->getRepository("ForumBundle:Sujet")->favorisconnecteduser($user->getId());
+
+        $pagination=$this->get('knp_paginator');
+        //dump(get_class($pagination));
+
+        $forums  = $this->get('knp_paginator')->paginate(
+            $forum,
+            $request->query->get('page', 1)/*le numéro de la page à afficher*/,
+            4/*nbre d'éléments par page*/
+        );
+        //dump($forum);
+
+        $censor = new CensorWords;
+
+        return $this->render('@Forum/Forum/favorisparuser.html.twig',array(
+            'forums' => $forums,
+            'censorF' => $censor,
+        ));
+    }
+
+
+
+
+    /*********************Mobile***************/
+
+    public function toussujetsMAction()
+    {
+        $tasks=$this->getDoctrine()->getManager()->getRepository('ForumBundle:Sujet')->findAll();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted=$serializer->normalize($tasks);
+        return new JsonResponse($formatted);
+    }
+    public function messujetsMAction($id)  /**Sujet de lutulisateur **/
+    {
+        $tasks=$this->getDoctrine()->getManager()->getRepository('ForumBundle:Sujet')->find($id);
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted=$serializer->normalize($tasks);
+        return new JsonResponse($formatted);
+
+    }
+
+    public function CommentairedusujetMAction($id,$idu)
+    {
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->findUserBy(array('id' => $idu));
+        $tasks=$this->getDoctrine()->getManager()->getRepository('ForumBundle:Commentaire')->findBy(array('idF'=>$id));
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted=$serializer->normalize($tasks);
+        return new JsonResponse($formatted);
+
+    }
+
+
+
+    public function supprimersujetMAction($id)
+    {   $em = $this->getDoctrine()->getManager();
+        $sujet = $em->getRepository("ForumBundle:Sujet")->find($id);
+        $em->remove($sujet);
+        $em->flush();
+        $serializer=new Serializer([new ObjectNormalizer()]);
+        $formatted=$serializer->normalize($sujet);
+        return new JsonResponse($formatted);
+    }
+
+    public function supprimercommentaireMAction($id)
+    {   $em = $this->getDoctrine()->getManager();
+        $commentaire = $em->getRepository("ForumBundle:Commentaire")->find($id);
+        $em->remove($commentaire);
+        $em->flush();
+        $serializer=new Serializer([new ObjectNormalizer()]);
+        $formatted=$serializer->normalize($commentaire);
+        return new JsonResponse($formatted);
+    }
+
+
+
+
+    public function updatecommentaireMAction(Request $request,$id)
+    {
+
+        $em=$this->getDoctrine()->getManager();
+        $commentaire=$em->getRepository("ForumBundle:Commentaire")->find($id);
+        $commentaire->setDescriptionCom($request->get('descriptionCom'));
+
+        $em->persist($commentaire);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted=$serializer->normalize($commentaire);
+        return new JsonResponse("success");
+    }
+
+    public function ajoutersujetMAction(Request $request,$idu,$description)
+    {
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->findUserBy(array('id' => $idu));
+        $em = $this->getDoctrine()->getManager();
+        $sujet = new Sujet();
+        $sujet->setIdUser($user);
+        $sujet->setEtat(1);
+        $sujet->setDate(new \DateTime("now"));
+        $sujet->setNbreJaime(0);
+        $sujet->setStrike(0);
+        $sujet->setDescriptionF($description);
+        $em->persist($sujet);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($sujet);
+        return new JsonResponse($formatted);
+
+
+    }
+
+    public function ajoutercommentaireMAction(Request $request,$id)
+    {
+        $sujet = $this->getDoctrine()->getRepository('ForumBundle:Sujet')->find($id);
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $commentaire = new Commentaire();
+        $commentaire->setIdUser($user);
+        $commentaire->setIdF($sujet->getIdF());
+        $commentaire->setDateCom(new \DateTime("now"));
+        $commentaire->setDescriptionCom($request->get('DescriptionCom'));
+        $em->persist($commentaire);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($commentaire);
+        return new JsonResponse($formatted);
+    }
+
+    public function subjectidMAction($id)
+    {   $em = $this->getDoctrine()->getManager();
+        $sujet = $em->getRepository("ForumBundle:Sujet")->find($id);
+        $serializer=new Serializer([new ObjectNormalizer()]);
+        $formatted=$serializer->normalize($sujet);
+        return new JsonResponse($formatted);
+    }
+
+    public function top5sujetMAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $sql="select * from sujet order by nbre_jaime desc limit 5";
+        $result=$em->getConnection()->prepare($sql);
+        $result->execute();
+        $statement = $result->fetchAll();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted=$serializer->normalize($statement);
+        return new JsonResponse($formatted);
+    }
+
+   
+    public function updatesujetMAction(Request $request,$id,$description)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $sujet=$em->getRepository("ForumBundle:Sujet")->find($id);
+        $sujet->setDescriptionF($description);
+        $em->persist($sujet);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted=$serializer->normalize($sujet);
+        return new JsonResponse($formatted);
+    }
+
+
+
+
+    public function affichicommentaireMAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $commentaire = $em->getRepository('ForumBundle:Commentaire')->findBy((array('idF' =>  $id )));
+        $objectNormalizer = new ObjectNormalizer();
+        $objectNormalizer->setCircularReferenceHandler(function ($object) {
+            return $object->getId();
+        });
+        $serializer = new Serializer([new DateTimeNormalizer(), $objectNormalizer]);
+        return new JsonResponse($serializer->normalize($commentaire,'json'));
+        ace(is_array($data) ? $data : array());
+    }
+    public function likemAction($id)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $sujet=$em->getRepository("ForumBundle:Sujet")->find($id);
+        $ancien=$sujet->getNbreJaime();
+        $sujet->setNbreJaime($ancien + 1 );
+        $em->persist($sujet);
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted=$serializer->normalize($sujet);
+        return new JsonResponse($formatted);
+
+    }
+
+    public function getvotesMAction($id)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $votes=array();
+        $vote1 = $em->getRepository(Sujet::class)->nbrevote1($id);
+        $vote2 = $em->getRepository(Sujet::class)->nbrevote2($id);
+        $vote3 = $em->getRepository(Sujet::class)->nbrevote3($id);
+        $vote4 = $em->getRepository(Sujet::class)->nbrevote4($id);
+        $vote5 = $em->getRepository(Sujet::class)->nbrevote5($id);
+        $vote6 = $em->getRepository(Sujet::class)->nbrevote6($id);
+
+        $data = array(
+            'vote1' => $vote1,
+        );
+
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted=$serializer->normalize($data);
+        return new JsonResponse($formatted);
+
+    }
+
+
+
+
+
+
+   
+
+
 
 
 

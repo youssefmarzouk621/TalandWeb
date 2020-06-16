@@ -140,7 +140,7 @@
 
                             <input id="rate" hidden  required {{ form_widget(reviewform.rate) }}
 
-
+                            <button id="add" hidden {{ form_widget(reviewform.Add) }}
 
                             {{ form_end(reviewform)  }}
 
@@ -220,7 +220,7 @@
             $('#stars li').on('click', function () {
                 var onStar = parseInt($(this).data('value'), 10); // The star currently selected
                 var stars = $(this).parent().children('li.star');
- $("#rate").val(onStar);
+                $("#rate").val(onStar);
                 for (i = 0; i < stars.length; i++) {
                     $(stars[i]).removeClass('selected');
                 }
@@ -228,7 +228,9 @@
                 for (i = 0; i < onStar; i++) {
                     $(stars[i]).addClass('selected');
                 }
-
+                if($("#rate").val() != 0){
+                    $("#add").trigger('click');
+                }
                 // JUST RESPONSE (Not needed)
                 var ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
                 $test = $("input[name='reviewrate']").val(ratingValue);

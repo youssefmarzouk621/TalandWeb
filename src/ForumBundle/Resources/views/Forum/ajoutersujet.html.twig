@@ -18,7 +18,7 @@
                                 {{ form_row(sujetform.Captcha) }}
                     </div>
 
-                       {{ form_widget(sujetform.Add, { 'attr': {'class': 'btn oneMusic-btn mt-30'} }) }}
+                   <button  onclick="run()" {{ form_widget(sujetform.Add, { 'attr': {'class': 'btn oneMusic-btn mt-30'} }) }} </button>
 
                     {{ form_end(sujetform) }}
               </div>
@@ -26,6 +26,35 @@
       </div>
     </div>
 
+    <script>
+
+
+
+        function run() {
+
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    onOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Forum addes succesfully wait for it to be accepted'
+                })
+
+
+        }
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 {% endblock %}
 

@@ -5,7 +5,9 @@
 {% block section %}
 
 
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
     <div class="blog-area section-padding-20">
 
@@ -14,9 +16,9 @@
                 <div class="blog-content">
                     <div class="post-meta d-flex mb-30">
 
-                        <h6 > <label id="label" > {{ forum.nbreJaime }} </label> <a href="{{path('aman',{'id':forum.idF})}}"
 
-                        class="generic-btn info-border radius"><i class="fa fa-heart" style="font-size:30px; color: deeppink"></i> </a></h6>
+
+
 
 
                     </div>
@@ -24,10 +26,141 @@
                     <a href="#">Added :{{ forum.date | date("m/d/Y") }}  </a>
 
                     <p>Description :{{ forum.descriptionF |raw  }}</p>
-                    <a href="{{ path('signaler',{'id':forum.idF})}}"> signaler</a>
+
+                   <a class="btn-danger" id="sin" href="{{ path('signaler',{'id':forum.idF})}}" >Signaler</a>
+
+
+
+
+                    <button id="favoris" onclick="favoris({{ forum.idF }})" class="btn-primary">Add to favorite</button>
+<br><br>
+                    <div style="text-align: center">
+                            <button onclick="vote({{ forum.idF }},1)" style="color: black;border-color: black;" class="btn btn-outline-light"><img style="margin-right: 5px;" class="inner-img" id="upvote" width="20" src="{{ asset('uploads/forum/vote/upvote.png') }}">Upvote<span id="span1" spanval="{{ votes[0] }}" style="margin-left: 5px;" class="badge badge-dark">{{ votes[0] }}</span></button>
+                            <button onclick="vote({{ forum.idF }},2)" style="color: black;border-color: black;" class="btn btn-outline-light"><img style="margin-right: 5px;" class="inner-img" id="funny"  width="20" src="{{ asset('uploads/forum/vote/funny.png') }}">Funny<span id="span2" spanval="{{ votes[1] }}" style="margin-left: 5px;" class="badge badge-dark">{{ votes[1] }}</span></button>
+                            <button onclick="vote({{ forum.idF }},3)" style="color: black;border-color: black;" class="btn btn-outline-light"><img style="margin-right: 5px;" class="inner-img" id="love"  width="20" src="{{ asset('uploads/forum/vote/love.png') }}">Love<span id="span3" spanval="{{ votes[2] }}" style="margin-left: 5px;" class="badge badge-dark">{{ votes[2] }}</span></button>
+                            <button onclick="vote({{ forum.idF }},4)" style="color: black;border-color: black;" class="btn btn-outline-light"><img style="margin-right: 5px;" class="inner-img" id="surprised"  width="20" src="{{ asset('uploads/forum/vote/surprised.png') }}">Surprised<span id="span4" spanval="{{ votes[3] }}" style="margin-left: 5px;" class="badge badge-dark">{{ votes[3] }}</span></button>
+                            <button onclick="vote({{ forum.idF }},5)" style="color: black;border-color: black;" class="btn btn-outline-light"><img style="margin-right: 5px;" class="inner-img" id="angry"  width="20" src="{{ asset('uploads/forum/vote/angry.png') }}">Angry<span id="span5" spanval="{{ votes[4] }}" style="margin-left: 5px;" class="badge badge-dark">{{ votes[4] }}</span></button>
+                            <button onclick="vote({{ forum.idF }},6)" style="color: black;border-color: black;" class="btn btn-outline-light"><img style="margin-right: 5px;" class="inner-img" id="sad" width="20" src="{{ asset('uploads/forum/vote/sad.png') }}">Sad<span id="span6" spanval="{{ votes[5] }}" style="margin-left: 5px;" class="badge badge-dark">{{ votes[5] }}</span></button>
+                    </div>
+
+        <br><br>
+
+
+
+
 
 
                 </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container">
+
+        <!-- Trigger the modal with a button -->
+        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Show reacts</button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog" >
+            <div class="modal-dialog"  >
+
+                <!-- Modal content-->
+                <div class="modal-content" >
+                    <div class="modal-header" >
+
+                        <ul class="nav nav-tabs" >
+                            <li class="active" style="text-align: center;"><a  data-toggle="tab" href="#all">All {{ reacts[7][0][1]}}</a></li>
+                            <li><a data-toggle="tab" href="#u1" ><img style="margin-right: 5px;" class="" id="upvote" width="20" src="{{ asset('uploads/forum/vote/upvote.png') }}">{{ votes[0] }}</a></li>
+                            &nbsp; <li><a data-toggle="tab" href="#u2"><img style="margin-right: 5px;" class="" id="funny" width="20" src="{{ asset('uploads/forum/vote/funny.png') }}">{{ votes[1] }}</a></li>
+                            &nbsp;<li><a data-toggle="tab" href="#u3"><img style="margin-right: 5px;" class="" id="love" width="20" src="{{ asset('uploads/forum/vote/love.png') }}">{{ votes[2] }}</a></li>
+                            &nbsp;<li><a data-toggle="tab" href="#u4"><img style="margin-right: 5px;" class="" id="surprised" width="20" src="{{ asset('uploads/forum/vote/surprised.png') }}">{{ votes[3] }}</a></li>
+                            &nbsp;<li><a data-toggle="tab" href="#u5"><img style="margin-right: 5px;" class="" id="upvote" width="20" src="{{ asset('uploads/forum/vote/angry.png') }}">{{ votes[4] }}</a></li>
+                            <li><a data-toggle="tab" href="#u6"><img style="margin-right: 5px;" class="" id="upvote" width="20" src="{{ asset('uploads/forum/vote/sad.png') }}">{{ votes[5] }}</a></li>
+                        </ul>
+
+                    </div>
+                    <div class="modal-body">
+                        <div class="tab-content">
+                            <div id="all" class="tab-pane fade in active ">
+
+                                <tr>
+                                    {% for i in reacts[6] %}
+                                        <th>
+                                            <h7><img id="img" src="{{ asset('uploads/forum/' ~ i.picture) }}" alt="" style="width: 50px;border-radius: 50%;">&nbsp;&nbsp;&nbsp;{{ i.username }}</h7><br>
+                                        </th>
+                                    {% endfor %}
+                                </tr>
+
+
+                            </div>
+                            <div id="u1" class="tab-pane fade ">
+
+                                <tr>
+                                    {% for i in reacts[0] %}
+                                        <th>
+                                            <h7><img id="img" src="{{ asset('uploads/forum/' ~ i.picture) }}" alt="" style="width: 50px;border-radius: 50%;">&nbsp;&nbsp;&nbsp;{{ i.username }}</h7><br>
+                                        </th>
+                                    {% endfor %}
+                                </tr>
+                            </div>
+                            <div id="u2" class="tab-pane fade ">
+
+                                <tr>
+                                    {% for i in reacts[1] %}
+                                        <th>
+                                            <h7><img id="img" src="{{ asset('uploads/forum/' ~ i.picture) }}" alt="" style="width: 50px;border-radius: 50%;">&nbsp;&nbsp;{{ i.username }}</h7><br>
+                                        </th>
+                                    {% endfor %}
+                                </tr>
+                            </div>
+                            <div id="u3" class="tab-pane fade ">
+
+                                <tr>
+                                    {% for i in reacts[2] %}
+                                        <th>
+                                            <h7><img id="img" src="{{ asset('uploads/forum/' ~ i.picture) }}" alt="" style="width: 50px;border-radius: 50%;">&nbsp;&nbsp;&nbsp;{{ i.username }}</h7><br>
+                                        </th>
+                                    {% endfor %}
+                                </tr>
+                            </div>
+                            <div id="u4" class="tab-pane fade ">
+
+                                <tr>
+                                    {% for i in reacts[3] %}
+                                        <th>
+                                            <h7><img id="img" src="{{ asset('uploads/forum/' ~ i.picture) }}" alt="" style="width: 50px;border-radius: 50%;">&nbsp;&nbsp;&nbsp;{{ i.username }}</h7><br>
+                                        </th>
+                                    {% endfor %}
+                                </tr>
+                            </div>
+                            <div id="u5" class="tab-pane fade ">
+
+                                <tr>
+                                    {% for i in reacts[4] %}
+                                        <th>
+                                            <h7><img id="img" src="{{ asset('uploads/forum/' ~ i.picture) }}" alt="" style="width: 50px;border-radius: 50%;">&nbsp;&nbsp;&nbsp;{{ i.username }}</h7><br>
+                                        </th>
+                                    {% endfor %}
+                                </tr>
+                            </div>
+                            <div id="u6" class="tab-pane fade ">
+
+                                <tr>
+                                    {% for i in reacts[5] %}
+                                        <th>
+                                            <h7><img id="img" src="{{ asset('uploads/forum/' ~ i.picture) }}" alt="" style="width: 50px;border-radius: 50%;">&nbsp;&nbsp;&nbsp;{{ i.username }}</h7><br>
+                                        </th>
+                                    {% endfor %}
+                                </tr>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -68,7 +201,11 @@
                                                 <div>
                                                     {% if user.id == comment.idUser.id %}
                                                         <a href="{{ path('modifier_comment',{'id':comment.idCom}) }}"  class="generic-btn info-border radius"><i class="fa fa-edit" style="font-size:30px;"></i> </a>
-                                                        <a href="{{path('supprimer_comment',{'id':comment.idCom})}}" class="generic-btn info-border radius"><i class="fa fa-trash" style="font-size:30px;color:red"></i> </a>
+                                                        <a onclick="supprimer({{ comment.idCom}})"  class="generic-btn info-border radius"><i class="fa fa-trash" style="font-size:30px;color:red"></i> </a>
+
+
+
+
 
                                                     {% endif %}
                                                 </div>
@@ -87,7 +224,7 @@
 
 
 
-                                    {{form_widget(form.descriptionCom)}}
+                                   <input     {{form_widget(form.descriptionCom)}}
 
 
 
@@ -120,9 +257,9 @@
 
 
 
-
-
     <style>
+
+
         /**
          * Oscuro: #283035
          * Azul: #03658c
@@ -389,15 +526,221 @@
                 width: 320px;
             }
         }
+
+
+        .inner-img {
+            transition: 0.3s;
+        }
+
+        .inner-img:hover {
+            transform: scale(1.3);
+        }
+
+    </style>
+    <style>
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted black;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+
+            /* Position the tooltip */
+            position: absolute;
+            z-index: 1;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+        }
     </style>
 
 
+
+
+
     <script>
+
+
+
+
+
         function myFunction() {
             $("#hayaaad").slideToggle(1500);
 
         }
+
+
+
+
+
+        function favoris(idforum){
+            $.ajax({//verif fav
+                url:'http://localhost/talandWEB/web/app_dev.php/Forum/veriffavoris/' + idforum,
+                success:function (data) {
+                    if (data=="alreadyadded"){
+                        Swal.fire({
+                            icon: 'error',
+                            width:470,
+                            title: 'Oops...',
+                            text: 'Subject alreday added to your favorite list!',
+                            timer: 3000,
+                            timerProgressBar:true,
+                            showConfirmButton:false
+                        })
+
+                    }
+                    else {
+                        //ajouter to fav
+                        $.ajax({
+                            url: 'http://localhost/talandWEB/web/app_dev.php/Forum/favoris/' + idforum ,
+                            success: function (data) {
+                                console.log("added to fav"+idforum);
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Subject is added to your favorite list!',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+
+
+                            },
+                            error: function (xhr, textStatus, errorThrown) {
+                                console.log("favoris request failed.");
+                            }
+
+                        });
+                    }
+
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log("error.");
+                }
+
+            });
+
+        }
+
+
+        function vote(idforum,id) {
+            $.ajax({//verifier
+                url: 'http://localhost/talandWEB/web/app_dev.php/Forum/verifvote/' + idforum,
+                success: function (data) {
+                    if (data=="voted"){
+                        //modifier
+                        $.ajax({
+                            url: 'http://localhost/talandWEB/web/app_dev.php/Forum/modifvote/' + idforum + '/' +id,
+                            success: function (data) {
+                                //location.reload();//https://www.youtube.com/results?search_query=go+dumb
+                                window.location.replace(window.location.href);
+                                document.getElementById("span1").style.display = "unset";
+                                document.getElementById("span2").style.display = "unset";
+                                document.getElementById("span3").style.display = "unset";
+                                document.getElementById("span4").style.display = "unset";
+                                document.getElementById("span5").style.display = "unset";
+                                document.getElementById("span6").style.display = "unset";
+
+                                console.log("modified"+idforum+" "+data+" "+id);
+                            },
+                            error: function (xhr, textStatus, errorThrown) {
+                                console.log("modify request failed.");
+                            }
+                        });
+
+                    }else{
+                        //ajouter
+                        $.ajax({
+                            url: 'http://localhost/talandWEB/web/app_dev.php/Forum/vote/' + idforum + "/" + id,
+                            success: function (data) {
+                                var span = "span"+id;
+                                var oldvalue=Number(document.getElementById(span).getAttribute("spanval"));
+
+                                document.getElementById(span).innerText = oldvalue+1;
+                                document.getElementById("span1").style.display = "unset";
+                                document.getElementById("span2").style.display = "unset";
+                                document.getElementById("span3").style.display = "unset";
+                                document.getElementById("span4").style.display = "unset";
+                                document.getElementById("span5").style.display = "unset";
+                                document.getElementById("span6").style.display = "unset";
+
+                                console.log(idforum+" "+data+" "+id);
+                            },
+                            error: function (xhr, textStatus, errorThrown) {
+                                console.log("vote request failed.");
+                            }
+                        });
+                    }
+
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log("verif request failed.");
+                }
+            });
+
+
+        }
     </script>
+
+    <script>
+
+        function supprimer(idforum){swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this subject!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+
+                    $.ajax({//verif fav
+                        url:'http://localhost/talandWEB/web/app_dev.php/Forum/supprimercomment/' + idforum,
+
+                        success:function (data) {
+                            if (data=="delete comment"){
+                                console.log("delete success"+idforum);
+                                window.location.replace(window.location.href);
+                                // window.location.href("http://localhost/talandWEB/web/app_dev.php/Forum/afficherforums");
+
+                            }
+
+
+
+
+                            else {
+
+                            }
+
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            console.log("error.");
+                        }
+
+                    });
+                } else {
+
+                }
+            });
+
+
+        }
+    </script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
 
 
 

@@ -2,6 +2,9 @@
 
 namespace ForumBundle\Repository;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+
 /**
  * SujetRepository
  *
@@ -55,7 +58,6 @@ class SujetRepository extends \Doctrine\ORM\EntityRepository
             ->where('r.id=:id' )
             ->setParameter('id', $id)
             ->getQuery()
-
             ->getSingleScalarResult();
     }
 
@@ -64,11 +66,6 @@ class SujetRepository extends \Doctrine\ORM\EntityRepository
             ->createQuery("select u.email from UserBundle:User u join ForumBundle:Sujet s where u.id=$id  ")
             ->setMaxResults(1)
           ->getSingleScalarResult();
-
-
-
-
-
     }
 
     public function countstrikesup()
@@ -89,6 +86,198 @@ class SujetRepository extends \Doctrine\ORM\EntityRepository
 
     }
 
+    public function sujet($id)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT c FROM ForumBundle:Sujet c WHERE  c.idUser=$id ");
+        return $query->getResult();
+
+    }
+
+    public function verifforumvoted($idf,$idu)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT COUNT(c) FROM ForumBundle:Vote c WHERE c.idforum ='$idf' AND c.idu='$idu' ");
+        try {
+            return $query->getSingleScalarResult();
+        } catch (NoResultException $e) {
+        } catch (NonUniqueResultException $e) {
+        }
+
+    }
+    public function veriffavorisadded($idf,$idu)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT COUNT(c) FROM ForumBundle:Favoris c WHERE c.idF ='$idf' AND c.idUser='$idu' ");
+        try {
+            return $query->getSingleScalarResult();
+        } catch (NoResultException $e) {
+        } catch (NonUniqueResultException $e) {
+        }
+
+    }
+    public function verifmodif($idf,$idu)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT c FROM ForumBundle:Vote c WHERE c.idforum ='$idf' AND c.idu='$idu' ");
+        return $query->getResult();
+
+    }
+
+    public function nbrevote($idf)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT count(c.id) FROM ForumBundle:Vote c  where c.idforum='$idf' group by c.vote ");
+        return $query->getResult();
+
+    }
+    public function nbrevote1($idf)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT count(c.id) FROM ForumBundle:Vote c  where c.idforum='$idf' and c.vote=1 ");
+        try {
+            return $query->getSingleScalarResult();
+        } catch (NoResultException $e) {
+        } catch (NonUniqueResultException $e) {
+        }
+
+    }
+    public function nbrevote2($idf)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT count(c.id) FROM ForumBundle:Vote c  where c.idforum='$idf' and c.vote=2 ");
+        try {
+            return $query->getSingleScalarResult();
+        } catch (NoResultException $e) {
+        } catch (NonUniqueResultException $e) {
+        }
+
+    }
+    public function nbrevote3($idf)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT count(c.id) FROM ForumBundle:Vote c  where c.idforum='$idf' and c.vote=3 ");
+        try {
+            return $query->getSingleScalarResult();
+        } catch (NoResultException $e) {
+        } catch (NonUniqueResultException $e) {
+        }
+
+    }
+    public function nbrevote4($idf)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT count(c.id) FROM ForumBundle:Vote c  where c.idforum='$idf' and c.vote=4 ");
+        try {
+            return $query->getSingleScalarResult();
+        } catch (NoResultException $e) {
+        } catch (NonUniqueResultException $e) {
+        }
+
+    }
+    public function nbrevote5($idf)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT count(c.id)  FROM ForumBundle:Vote c  where c.idforum='$idf' and c.vote=5 ");
+        try {
+            return $query->getSingleScalarResult();
+        } catch (NoResultException $e) {
+        } catch (NonUniqueResultException $e) {
+        }
+
+    }
+    public function nbrevote6($idf)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT count(c.id) FROM ForumBundle:Vote c  where c.idforum='$idf' and c.vote=6 ");
+        try {
+            return $query->getSingleScalarResult();
+        } catch (NoResultException $e) {
+        } catch (NonUniqueResultException $e) {
+        }
+
+    }
+
+
+    public function countupvote()
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT count(c.vote),s.descriptionF FROM ForumBundle:Vote c , ForumBundle:Sujet s WHERE c.vote=1 and s.idF
+            =c.idforum group by c.idforum ");
+        return $query->getResult();
+
+    }
+
+    public function signalerchart()
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT s.strike,s.descriptionF FROM ForumBundle:Sujet s where s.strike>=1 group by s.idF ");
+        return $query->getResult();
+
+    }
+    public function userparvote1($id)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT u.username,u.picture FROM UserBundle:User u ,ForumBundle:Vote v where v.idu=u.id and v.vote=1 and v.idforum='$id'  ");
+        return $query->getResult();
+
+    }
+    public function userparvote2($id)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT u.username,u.picture FROM UserBundle:User u ,ForumBundle:Vote v where v.idu=u.id and v.vote=2 and v.idforum='$id'  ");
+        return $query->getResult();
+
+    }
+    public function userparvote3($id)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT u.username,u.picture FROM UserBundle:User u ,ForumBundle:Vote v where v.idu=u.id and v.vote=3 and v.idforum='$id'  ");
+        return $query->getResult();
+
+    }
+    public function userparvote4($id)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT u.username,u.picture FROM UserBundle:User u ,ForumBundle:Vote v where v.idu=u.id and v.vote=4 and v.idforum='$id'  ");
+        return $query->getResult();
+
+    }
+    public function userparvote5($id)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT u.username,u.picture FROM UserBundle:User u ,ForumBundle:Vote v where v.idu=u.id and v.vote=5 and v.idforum='$id'  ");
+        return $query->getResult();
+    }
+    public function userparvote6($id)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT u.username,u.picture FROM UserBundle:User u ,ForumBundle:Vote v where v.idu=u.id and v.vote=6 and v.idforum='$id'  ");
+        return $query->getResult();
+
+    }
+    public function allvotes($id)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT u.username,u.picture FROM UserBundle:User u ,ForumBundle:Vote v where v.idu=u.id  and v.idforum='$id'  ");
+        return $query->getResult();
+
+    }
+    public function allvotesparsujet($id)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT count(v.vote) FROM ForumBundle:Vote v where  v.idforum='$id'  ");
+        return $query->getResult();
+
+    }
+
+    public function favorisconnecteduser($id)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("SELECT f FROM ForumBundle:Favoris f where  f.idUser='$id'  ");
+        return $query->getResult();
+
+    }
 
 
 

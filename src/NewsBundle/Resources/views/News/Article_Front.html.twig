@@ -1,9 +1,9 @@
 {% extends "default/LayoutFront.html.twig" %}
 {% block section %}
 
-    <a href="{{ path('trinbvue') }}">tri nbvue</a>
-    <a href="{{ path('plusrecent') }}">tri date plus recent</a>
-    <a href="{{ path('moinsrecent') }}">tri date moins recent</a>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+
 
     <!-- ##### Blog Area Start ##### -->
     <div class="blog-area section-padding-100">
@@ -14,6 +14,9 @@
             <input name="filter" type="text" class="form-control" placeholder="Rechercher Article">
         </div>
     </form>
+        <a class="btn-primary" href="{{ path('trinbvue') }}">tri nbvue</a>
+        <a href="{{ path('plusrecent') }}">tri date plus recent</a>
+        <a href="{{ path('moinsrecent') }}">tri date moins recent</a>
 
 
     <section class="events-area section-padding-100">
@@ -50,4 +53,18 @@
          class="oneMusic-pagination-area wow fadeInUp" data-wow-delay="300ms">
         {{ knp_pagination_render(articles) }}
     </div>
+    {% elseif is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+        <br><br><br>
+
+        <div class="alert alert-warning" role="alert">
+            <h3>
+                Oops
+                you can join us by clicking <a href="{{ path('fos_user_registration_register') }}">HERE</a>
+                Or if you already have an account click <a href="{{ path('fos_user_security_login') }}" >HERE</a> to connect !
+            </h3>
+
+        </div>
+    {% endif %}
+
+
 {% endblock %}

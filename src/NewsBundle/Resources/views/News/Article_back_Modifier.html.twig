@@ -14,13 +14,29 @@
                     <div class="card-body pt-0 pb-1">
                         <center >
                             <h1>Modifier un  Article</h1>
+
+                            <input onmouseenter="changeclass()" onkeyup="changeclass()" type="text" id="Nomarticle"  class="form-control is-invalid round "
+                                   placeholder="Nom Article :"    {{ form_widget(form.nomArticle) }}
+                            <span class="req" style="color: red; display: none" >6 characters required.</span>
+                            <br><br>
+                            <input   onkeyup="changeclass()"  rows="4" cols="50" type="text" id="contenuarticle"  class="form-control is-invalid round "
+                            {{ form_widget(form.contenuArticle) }}
+                            <span class="reqd" style="color: red; display: none" >10 characters required.</span>
+                            </br> </br>
+                            <input onkeyup="changeclass()"  type="text" id="titreevent"  class="form-control is-invalid round "
+                                   placeholder="Titre event :"    {{ form_widget(form.titreEvent) }}
+                            <span class="reqdd" style="color: red; display: none" >9 characters required.</span>
+                            </br> </br>
+                            <input   Image Article : {{ form_widget(form.imageArticle) }} </br> </br>
+
+
+
+
+
                             <br>
 
-                            Nom Article :  {{ form_widget(form.nomArticle) }} </br> </br>
-                            Contenu Article :  {{ form_widget(form.contenuArticle) }} </br> </br>
-                            &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Image Article :  {{ form_widget(form.imageArticle) }} </br> </br>
-                            Titre Event :  {{ form_widget(form.titreEvent) }}  </br> </br>
-                            <center> </center>
+                            <br>
+
 
 
                         </center>
@@ -41,6 +57,111 @@
             </div>
         </div>
     </div>
+
+
+    <script>
+
+
+        function changeclass() {
+
+
+
+            var description = $("#contenuarticle").val();
+            var nomarticle = $("#Nomarticle").val();
+            var titreevent=$("#titreevent").val();
+
+
+            if(description.length==0 || description.length<10)
+            {
+                $("#contenuarticle").removeClass("is-valid");
+                $("#contenuarticle").addClass('is-invalid');
+
+                $( ".reqd" ).css( "display", "block" );
+
+
+            }
+            if(titreevent.length==0 || titreevent.length<9)
+            {
+                $("#titreevent").removeClass("is-valid");
+                $("#titreevent").addClass('is-invalid');
+                $( ".reqdd" ).css( "display", "block" );
+
+
+            }
+
+            if(description.length==1 )
+            {
+                var txt = $( "#contenuarticle" ).val();
+                txt = txt.substring(0, 1).toUpperCase() + txt.substring(1);
+                $( "#contenuarticle" ).val(txt);
+
+
+            }
+            if(titreevent.length==1 )
+            {
+                var txt = $( "#titreevent" ).val();
+                txt = txt.substring(0, 1).toUpperCase() + txt.substring(1);
+                $( "#titreevent" ).val(txt);
+
+
+            }
+
+
+            if(nomarticle.length==1 )
+            {
+                var txt = $( "#Nomarticle" ).val();
+                txt = txt.substring(0, 1).toUpperCase() + txt.substring(1);
+                $( "#Nomarticle" ).val(txt);
+
+
+
+
+            }
+
+            else if(nomarticle.length==0 || nomarticle.length<6)
+            {
+                $("#Nomarticle").removeClass("is-valid");
+                $("#Nomarticle").addClass('is-invalid');
+
+                $( ".req" ).css( "display", "block" );
+
+
+            }
+
+
+
+            if(description.length>9)
+            {
+                $("#contenuarticle").removeClass("is-invalid");
+                $("#contenuarticle").addClass('is-valid');
+                $( ".reqd" ).css( "display", "none" );
+
+            }
+            if(nomarticle.length>5)
+            {
+                // $("#contenuarticle").after('<span style="color: red;">'+5+'characters required.<span>');
+                $("#Nomarticle").removeClass("is-invalid");
+                $("#Nomarticle").addClass('is-valid');
+                $( ".req" ).css( "display", "none" );
+
+            }
+            if(titreevent.length>8)
+            {
+                // $("#contenuarticle").after('<span style="color: red;">'+5+'characters required.<span>');
+                $("#titreevent").removeClass("is-invalid");
+                $("#titreevent").addClass('is-valid');
+                $( ".reqdd" ).css( "display", "none" );
+
+
+            }
+
+
+        }
+
+
+
+
+    </script>
 
 
 

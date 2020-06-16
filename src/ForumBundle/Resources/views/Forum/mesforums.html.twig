@@ -5,11 +5,14 @@
 
 
     <div class="blog-content">
-        <div  style="padding-left: 625px;padding-top: 10px"><a href="{{ path('publications') }}" class="btn oneMusic-btn mt-30"> Add Subject  </a></div>
+        <div  style="padding-left: 500px;padding-top: 10px">
+            <a href="{{ path('publications') }}" class="btn oneMusic-btn mt-30"> Add Subject  </a>
+            <a href="{{ path('favorisparuser') }}" class="btn oneMusic-btn mt-30"> Favoris  </a>
+        </div>
     </div>
+    <br>
 
-
-    {% for i in forums %}
+    {% for ii in forums %}
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-12 col-lg-8">
@@ -18,14 +21,14 @@
 
                     <div class="form-group">
 
-                        <a href="{{ path('modifier_sujet',{'id':i.idF}) }}"  class="generic-btn info-border radius"><i class="fa fa-edit" style="font-size:30px;"></i> </a>
-                        <a href="{{path('supprimer_sujet',{'id':i.idF})}}" class="generic-btn info-border radius"><i class="fa fa-trash" style="font-size:30px;color:red"></i> </a>
+                        <a href="{{ path('modifier_sujet',{'id':ii.idF}) }}"  class="generic-btn info-border radius"><i class="fa fa-edit" style="font-size:30px;"></i> </a>
+                        <a onclick="supprimer({{ ii.idF }})" class="generic-btn info-border radius"><i class="fa fa-trash" style="font-size:30px;color:red"></i> </a>
 
 
-                        <h4>Added :{{ i.date | date("m/d/Y")  }}  </h4>
+                        <h4>Added :{{ ii.date | date("m/d/Y")  }}  </h4>
                         <p>Published by :  <b>Me</b></p>
                         <div class="form-group">
-                        <h6> {{ i.descriptionF |raw  }} </h6>
+                        <h6> {{ ii.descriptionF |raw  }} </h6>
                         </div>
 
 
@@ -33,17 +36,98 @@
 
 
 
-
-
-
-
-
-
                 </div>
             </div>
         </div>
+
+
+
+
+
     </div>
+
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+
+            function supprimer(idforum){
+                swal({
+                    title: "Are you sure?",
+                    text: "Once deleted, you will not be able to recover this subject!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+
+                            $.ajax({//verif fav
+
+
+                                url:'http://localhost/talandWEB/web/app_dev.php/Forum/supprimersujey/' + idforum,
+
+                                success:function (data) {
+                                    if (data=="deleted"){
+                                        console.log("delete success"+idforum);
+                                        window.location.replace(window.location.href);
+                                        // window.location.href("http://localhost/talandWEB/web/app_dev.php/Forum/afficherforums");
+
+                                    }
+                                    else {
+
+                                    }
+
+                                },
+                                error: function (xhr, textStatus, errorThrown) {
+                                    console.log("error.");
+                                }
+
+                            });
+                        } else {
+
+                        }
+                    });
+
+
+            }
+        </script>
+
+        <script>
+
+
+
+
+            function run() {
+
+                swal({
+                    title: "Are you sure?",
+                    text: "Once deleted, you will not be able to recover this imaginary file!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            swal("Poof! Your imaginary file has been deleted!", {
+                                icon: "success",
+                            });
+                            window.location.replace(window.location.href);
+                        } else {
+
+                        }
+                    });
+            }
+
+        </script>
+
+
+
+
     {%  endfor %}
+
+
+
+
+
 
     {% elseif is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
         <br><br><br>

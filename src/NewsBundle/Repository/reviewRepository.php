@@ -24,7 +24,7 @@ class reviewRepository extends \Doctrine\ORM\EntityRepository
     public function avgstatrating()
     {
         $query = $this->getEntityManager()
-            ->createQuery("SELECT avg(c.rate),count(c.rate) FROM NewsBundle:review c group by c.idarticle ");
+            ->createQuery("SELECT avg(c.rate),n.nomArticle FROM NewsBundle:review c ,NewsBundle:News n where c.idarticle=n.idArticle group by c.idarticle ");
         return $query->getResult();
 
      /*   $dql = 'SELECT avg(c.rate),count(c.rate) NewsBundle\Entity\review  c group by c.idarticle';

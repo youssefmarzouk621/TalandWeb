@@ -25,13 +25,13 @@
                     <script>
                         dataSQL.push({{ i[1] }});
 
-                        dataNames.push("{{ i[2] }}");
+                        dataNames.push("{{ i.nomArticle }}");
                     </script>
                 {% endfor %}
                 <label></label>
                 <div class="chartjs-wrapper"><canvas id="chartjs-1" class="chartjs" width="undefined" height="undefined"></canvas>
-                    <script>new Chart(document.getElementById("chartjs-1"),{"type":"line","data":{"labels":dataNames,"datasets":[{"label":"Moyenne rating","data":dataSQL,"fill":false,
-                                    "backgroundColor":["rgba(87, 147, 250, 0.97)","rgba(87, 147, 250, 0.97)","rgba(255, 205, 86, 0.2)","rgba(75, 192, 192, 0.2)","rgba(54, 162, 235, 0.2)","rgba(153, 102, 255, 0.2)","rgba(201, 203, 207, 0.2)"],
+                    <script>new Chart(document.getElementById("chartjs-1"),{"type":"bar","data":{"labels":dataNames,"datasets":[{"label":"Moyenne rating","data":dataSQL,"fill":false,
+                                    "backgroundColor":["rgba(255, 99, 132, 0.6)","rgba(54, 162, 235, 0.6)","rgba(255, 205, 86, 0.2)","rgba(75, 192, 192, 0.2)","rgba(54, 162, 235, 0.2)","rgba(153, 102, 255, 0.2)","rgba(201, 203, 207, 0.2)"],
                                     "borderColor":["rgba(87, 147, 250, 0.97)","rgba(87, 147, 250, 0.97)","rgb(255, 205, 86)","rgb(75, 192, 192)","rgb(54, 162, 235)","rgb(153, 102, 255)","rgb(201, 203, 207)"],"borderWidth":1}]},
                             "options":{"scales":{"yAxes":[{"ticks":{"beginAtZero":true}}]}}});</script></div>
 

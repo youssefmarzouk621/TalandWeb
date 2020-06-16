@@ -7,7 +7,6 @@
     <div class="container" style="margin-top: 150px">
         <div class="row">
 
-            <p style="color: black" > Nombre de j'aime par Sujet</p>
             <br>
             <br>
 
@@ -23,17 +22,64 @@
 
 
                         <script>
-                            dataSQL.push({{ forum.nbreJaime }});
-                            dataNames.push("{{ forum.idF }}");
+                            dataSQL.push({{ forum[1] }});
+                            dataNames.push("{{ forum.descriptionF }}");
                         </script>
 
                 {% endfor %}
 
                 <div class="chartjs-wrapper"><canvas id="chartjs-1" class="chartjs" width="undefined" height="undefined"></canvas>
-                    <script>new Chart(document.getElementById("chartjs-1"),{"type":"line","data":{"labels":dataNames,"datasets":[{"label":"Nbre de jaime","data":dataSQL,"fill":false,
-                                    "backgroundColor":["rgba(87, 147, 250, 0.97)","rgba(87, 147, 250, 0.97)","rgba(255, 205, 86, 0.2)","rgba(75, 192, 192, 0.2)","rgba(54, 162, 235, 0.2)","rgba(153, 102, 255, 0.2)","rgba(201, 203, 207, 0.2)"],
-                                    "borderColor":["rgba(87, 147, 250, 0.97)","rgba(87, 147, 250, 0.97)","rgb(255, 205, 86)","rgb(75, 192, 192)","rgb(54, 162, 235)","rgb(153, 102, 255)","rgb(201, 203, 207)"],"borderWidth":1}]},
-                            "options":{"scales":{"yAxes":[{"ticks":{"beginAtZero":true}}]}}});</script></div>
+                    <script>new Chart(document.getElementById("chartjs-1"),{"type":"pie","data":{"labels":dataNames,"datasets":[{"label":"Nbre de Upvote","data":dataSQL,"fill":false,
+                                    "backgroundColor":[
+                                        'rgba(255, 99, 132, 0.6)',
+                                        'rgba(54, 162, 235, 0.6)',
+                                        'rgba(255, 206, 86, 0.6)',
+                                        'rgba(75, 192, 192, 0.6)',
+                                        'rgba(153, 102, 255, 0.6)',
+                                        'rgba(255, 159, 64, 0.6)',
+                                        'rgba(255, 99, 132, 0.6)'
+                                    ]
+                                    ,borderWidth:1,
+                                    borderColor:'#777',
+                                    hoverBorderWidth:3,
+                                    hoverBorderColor:'#000'
+                                }]
+                            },
+                            layout:{
+                            padding:{
+                                left:50,
+                                    right:0,
+                                    bottom:0,
+                                    top:0
+                            }
+                        },
+                        tooltips:{
+                            enabled:true
+                        },"options":{
+                            title:{
+                                display:true,
+                                    text:'Statistique Upvote par sujet',
+                                    fontSize:25
+                            },
+                            legend:{
+                                display:true,
+                                    position:'right',
+                                    labels:{
+                                    fontColor:'#000'
+                                }
+                            },
+                            layout:{
+                                padding:{
+                                    left:50,
+                                        right:0,
+                                        bottom:0,
+                                        top:0
+                                }
+                            },
+                            tooltips:{
+                                enabled:true
+                            }
+                        }});</script></div>
 
 
 
@@ -41,21 +87,7 @@
         </div>
 
     </div>
-    <div class="gap gap-small"></div>
 
-
-
-
-    <div class="row mt-1">
-        <div class="col-md-12 col-lg-6 col-xl-8">
-            <div class="card">
-
-                <div class="card-content mt-1">
-                    <div id="new-projects" class="height-400 GradientlineShadow"></div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 

@@ -39,3 +39,87 @@ moinsrecent:
 statrating:
     path:     /chartrating
     defaults: { _controller: NewsBundle:News:chartrating }
+
+
+
+
+
+
+
+
+
+
+newM:
+    path:     /newM
+    defaults: { _controller: NewsBundle:News:newM }
+
+supprimerArticle:
+    path:     /supprimerArticle/{id}
+    defaults: { _controller: NewsBundle:News:supprimerArticle }
+findarticle:
+    path:     /findarticle/{nomArticle}
+    defaults: { _controller: NewsBundle:News:findarticle }
+allArticle:
+    path:     /allArticle
+    defaults: { _controller: NewsBundle:News:allarticle }
+
+oneArticle:
+    path:     /oneArticle/{id}
+    defaults: { _controller: NewsBundle:News:oneArticle }
+updateArticle:
+    path:     /updateArticle/{id}/{nomarticle}/{contenuarticle}
+    defaults: { _controller: NewsBundle:News:updateArticle }
+ratearticle:
+    path:     /ratearticle/{id}/{rate}
+    defaults: { _controller: NewsBundle:News:ratearticle }
+ajoutarticle:
+    path:     /ajoutarticle/{nom}/{titreevent}/{contenu}/{image}
+    defaults: { _controller: NewsBundle:News:ajoutarticle }
+
+
+
+nbvue:
+    path:     /nbvue/{id}
+    defaults: { _controller: NewsBundle:News:nbvue }
+
+supparticle:
+    path:     /supparticle/{id}
+    defaults: { _controller: NewsBundle:News:supparticle }
+rateM:
+    path:     /rateM/{rate}/{idu}/{ida}
+    defaults: { _controller: NewsBundle:News:rateM }
+Statmobile:
+    path:     /Statmobile
+    defaults: { _controller: NewsBundle:News:Statmobile }
+Statmobile1:
+    path:     /Statmobile1
+    defaults: { _controller: NewsBundle:News:Statmobile1 }
+Statmobile2:
+    path:     /Statmobile2
+    defaults: { _controller: NewsBundle:News:Statmobile2 }
+imprimerM:
+    path:     /imprimerM/{id}
+    defaults: { _controller: NewsBundle:News:imprimerM }
+ratemoyenneM:
+    path:     /ratemoyenneM/{id}
+    defaults: { _controller: NewsBundle:News:ratemoyenneM }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -46,7 +46,7 @@ class Sujet
     /**
      * @var string
      *
-     * @ORM\Column(name="description_f", type="string", length=255, nullable=false)
+     * @ORM\Column(name="description_f", type="text", length=255, nullable=false)
      */
     private $descriptionF;
 

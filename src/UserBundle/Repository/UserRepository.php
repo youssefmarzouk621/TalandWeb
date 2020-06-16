@@ -11,5 +11,13 @@ namespace UserBundle\Repository;
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
 
+    public function login()
+    {
+        $query = $this->getEntityManager()->createQuery("Select u FROM UserBundle\Entity\User u ");
+        return $query->getResult();
+    }
+
+
+
 
 }

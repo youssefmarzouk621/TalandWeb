@@ -27,7 +27,8 @@
             </td>
             <td class="text-truncate">
                 <ul class="list-unstyled users-list m-0">
-            <a>{{ i.descriptionf | raw }}</a>
+
+                    <a>{{ censorF.censorString(i.descriptionf )['clean'] |raw  }}</a>
 
                 </ul>
             </td>

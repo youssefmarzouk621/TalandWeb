@@ -1,3 +1,18 @@
 user_homepage:
     path:     /
     defaults: { _controller: UserBundle:Default:index }
+finduser:
+    path:     /finduser/{email}
+    defaults: { _controller: UserBundle:User:finduser }
+newuser:
+    path:     /newuser
+    defaults: { _controller: UserBundle:User:new }
+edituser:
+    path:     /edituser/{id}
+    defaults: { _controller: UserBundle:User:edit }
+loginMobile:
+    path:     /loginMobile/{username}/{password}
+    defaults: { _controller: UserBundle:User:loginMobile }
+createUtilisateur:
+    path:     /createUtilisateur/{username}/{firstname}/{lastname}/{email}/{password}
+    defaults: { _controller: UserBundle:User:createUtilisateur }
